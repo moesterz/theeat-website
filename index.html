@@ -15,6 +15,7 @@
     --bg: #fdf8f2;
     --bg-warm: #f7f0e6;
     --surface: #ffffff;
+    --surface-2: #f7f0e6;
     --border: #e8ddd0;
     --border-2: #ddd0be;
     --brand: #ff6b35;
@@ -28,11 +29,19 @@
     --blue: #4a90d9;
     --r-card: 22px;
     --r-btn: 14px;
-    --sh-cta: 0 10px 30px rgba(255,107,53,.30);
-    --sh-card: 0 4px 18px rgba(45,31,14,.06);
-    --sh-elev: 0 24px 60px rgba(45,31,14,.18);
+    --sh-cta: 0 4px 16px rgba(255,107,53,.35);
+    --sh-card: 0 2px 8px rgba(45,31,14,.08);
+    --sh-elev: 0 4px 20px rgba(45,31,14,.12);
     --font-serif: "DM Serif Display", "Times New Roman", serif;
     --font-sans: "DM Sans", -apple-system, system-ui, sans-serif;
+  }
+
+  /* Site-wide warm splash gradient — matches the app splash */
+  body {
+    background:
+      radial-gradient(1200px 700px at 75% -120px, rgba(255,176,136,.45), transparent 60%),
+      radial-gradient(900px 600px at -10% 18%, rgba(255,224,200,.55), transparent 55%),
+      linear-gradient(180deg, #fff8f4 0%, var(--bg) 600px);
   }
 
   * { box-sizing: border-box; }
@@ -82,20 +91,41 @@
     height: 72px;
   }
   .brand {
-    display: flex; align-items: center; gap: 10px;
-    font-family: var(--font-serif);
-    font-size: 28px;
-    letter-spacing: -0.02em;
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-serif); font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.04em;
     color: var(--text-dark);
+    line-height: 1;
   }
+  .brand .word { display: inline-block; }
+  .brand .dot { color: var(--brand); margin-left: -0.04em; }
+  /* App-icon squircle — mirrors LogoEat in logos.jsx */
   .brand-mark {
-    width: 30px; height: 30px;
+    width: 36px; height: 36px;
     border-radius: 9px;
-    box-shadow: 0 4px 12px rgba(255,107,53,.35);
-    display: inline-block;
+    position: relative; overflow: hidden;
+    background: radial-gradient(circle at 30% 25%, #ffb088 0%, #ff6b35 55%, #e25420 100%);
+    box-shadow: 0 6px 16px rgba(255,107,53,.32), 0 0 0 1px rgba(0,0,0,.04);
+    display: inline-flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    overflow: hidden;
-    object-fit: cover;
+  }
+  .brand-mark::before {
+    content: ""; position: absolute; inset: -10px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.28) 0%, transparent 60%);
+  }
+  .brand-mark::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,.28) 0%, transparent 35%);
+    pointer-events: none;
+  }
+  .brand-mark span {
+    position: relative; z-index: 1;
+    font-family: var(--font-serif); font-style: italic; font-weight: 700;
+    color: #fffaf3; font-size: 30px; line-height: 1;
+    letter-spacing: -0.04em;
+    text-shadow: 0 2px 8px rgba(120,40,10,.28);
+    transform: translate(0,-1px);
   }
   .nav-links {
     display: flex; align-items: center; gap: 32px;
@@ -112,8 +142,9 @@
     background: var(--text-dark);
     color: #fff !important;
     font-weight: 600; font-size: 14px;
+    box-shadow: 0 4px 14px rgba(45,31,14,.18);
   }
-  .nav-cta:hover { color: #fff !important; background: #1a1108; }
+  .nav-cta:hover { color: #fff !important; background: #1a1108; transform: translateY(-1px); }
   @media (max-width: 720px) {
     .nav-links a:not(.nav-cta) { display: none; }
   }
@@ -124,6 +155,17 @@
     padding: 80px 0 100px;
     overflow: hidden;
   }
+  /* Coral radial glow behind the phones — the splash signature */
+  .hero-glow {
+    position: absolute;
+    width: 720px; height: 720px;
+    right: -120px; top: 50%; transform: translateY(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,53,.18) 0%, rgba(255,107,53,.08) 35%, transparent 70%);
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+  }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -133,19 +175,7 @@
   @media (max-width: 920px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero { padding: 56px 0 60px; }
-  }
-  @media (max-width: 920px) {
     .hero-grid > * { min-width: 0; max-width: 100%; }
-    .hero p.lede { max-width: 100%; }
-  }
-  @media (max-width: 520px) {
-    .hero { padding: 36px 0 32px; }
-    .hero h1 { font-size: clamp(40px, 11vw, 60px); }
-    .hero-eyebrow-row { margin-bottom: 20px; }
-    .hero p.lede { font-size: 16px; max-width: 100%; }
-    .hero-meta { gap: 10px; font-size: 12px; flex-wrap: wrap; }
-    .hero::before { width: 280px; height: 280px; right: -60px; }
-    .hero::after { width: 220px; height: 220px; }
   }
 
   .hero-eyebrow-row {
@@ -228,13 +258,6 @@
     width: 1px; height: 14px; background: var(--border-2);
   }
 
-  @media (max-width: 520px) {
-    .btn-primary, .btn-ghost { height: 50px; font-size: 15px; padding: 0 20px; }
-    .btn-primary { width: 100%; justify-content: center; }
-    .btn-ghost { width: 100%; justify-content: center; }
-    .hero-ctas { width: 100%; flex-direction: column; }
-  }
-
   /* Hero right side — phone composition */
   .phones {
     position: relative;
@@ -270,59 +293,35 @@
   }
 
   @media (max-width: 920px) {
-    .phones { min-height: 540px; }
-    /* Only show the main phone on mobile — side phones distract */
-    .phone.left, .phone.right { display: none; }
-    .phone.main {
-      transform: rotate(-2deg);
-      position: relative;
-      width: 280px;
-      height: 538px;
-    }
+    .phones { min-height: 480px; }
+    .phone { width: 280px; height: 540px; }
   }
   @media (max-width: 520px) {
-    .phones { min-height: 500px; }
-    .phone.main { width: 264px; height: 508px; }
-  }
-  @media (max-width: 400px) {
-    .phones { min-height: 440px; }
-    .phone.main { width: 230px; height: 442px; }
+    .phones { min-height: 400px; }
+    .phone { width: 220px; height: 422px; }
   }
 
-  /* Floating ingredient emoji */
+  /* Floating ingredient — quiet, like the splash */
   .ingredient {
     position: absolute;
-    font-size: 42px;
+    font-size: 38px;
     z-index: 4;
-    filter: drop-shadow(0 8px 14px rgba(45,31,14,.18));
     pointer-events: none;
-    animation: float 6s ease-in-out infinite;
+    opacity: 0.5;
+    animation: float 7s ease-in-out infinite;
   }
-  .ingredient.i1 { top: 4%;  left: 12%; animation-delay: 0s;   transform: rotate(-14deg); }
-  .ingredient.i2 { top: 8%;  right: 14%; animation-delay: 1.2s; transform: rotate(18deg); }
-  .ingredient.i3 { bottom: 14%; left: 6%; animation-delay: 2.4s; transform: rotate(8deg); }
-  .ingredient.i4 { bottom: 8%; right: 8%; animation-delay: 3.6s; transform: rotate(-22deg); font-size: 36px; }
+  .ingredient.i1 { top: 4%;   left: 8%;   animation-delay: 0s;   transform: rotate(-16deg); opacity: .5; }
+  .ingredient.i2 { top: 10%;  right: 10%; animation-delay: 1.4s; transform: rotate(22deg);  opacity: .55; }
+  .ingredient.i3 { top: 38%;  left: 4%;   animation-delay: 2.6s; transform: rotate(14deg);  opacity: .45; font-size: 30px; }
+  .ingredient.i4 { bottom: 18%; right: 6%; animation-delay: 3.8s; transform: rotate(-22deg); opacity: .5; font-size: 32px; }
+  .ingredient.i5 { bottom: 8%; left: 24%; animation-delay: 5s;   transform: rotate(30deg);  opacity: .4; font-size: 28px; }
+  .ingredient.i6 { top: 28%;  right: 22%; animation-delay: 2s;   transform: rotate(10deg);  opacity: .4; font-size: 26px; }
 
   @keyframes float {
     0%, 100% { translate: 0 0; }
     50%      { translate: 0 -10px; }
   }
 
-  /* Soft hero background blobs */
-  .hero::before, .hero::after {
-    content: ""; position: absolute; border-radius: 50%; pointer-events: none;
-    filter: blur(80px); opacity: .45; z-index: 0;
-  }
-  .hero::before {
-    width: 480px; height: 480px;
-    background: #ffd9c2;
-    top: -120px; right: -100px;
-  }
-  .hero::after {
-    width: 380px; height: 380px;
-    background: #ffe9d4;
-    bottom: -160px; left: -80px;
-  }
   .hero .container { position: relative; z-index: 1; }
 
   /* ─────────── Logo strip / press ─────────── */
@@ -330,7 +329,8 @@
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 26px 0;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(8px);
   }
   .strip-inner {
     display: flex; align-items: center; justify-content: space-between;
@@ -382,15 +382,20 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--r-card);
-    padding: 32px 28px 36px;
+    padding: 36px 28px 36px;
     position: relative;
     overflow: hidden;
     box-shadow: var(--sh-card);
   }
+  /* App-style top accent stripe */
+  .step::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--brand);
+  }
   .step::after {
     content: ""; position: absolute; inset: -1px;
     border-radius: inherit;
-    background: linear-gradient(180deg, rgba(255,107,53,.0), rgba(255,107,53,.06));
+    background: linear-gradient(180deg, rgba(255,107,53,.0), rgba(255,107,53,.04));
     pointer-events: none;
   }
   .step-num {
@@ -430,12 +435,6 @@
     .feat.reverse .feat-copy { order: 1; }
     .feat.reverse .feat-visual { order: 0; }
   }
-  @media (max-width: 520px) {
-    .feat { gap: 24px; }
-    .feat-copy h3 { font-size: clamp(28px, 8vw, 38px); }
-    .feat-copy p { font-size: 15px; }
-    .feat-visual { aspect-ratio: auto; min-height: 480px; }
-  }
 
   .feat-copy .eyebrow { display: block; margin-bottom: 18px; }
   .feat-copy h3 {
@@ -470,11 +469,17 @@
     position: absolute;
     inset: 8%;
     border-radius: 32px;
-    background: linear-gradient(160deg, #fff8f1, #ffe4d6);
+    background: linear-gradient(160deg, #fff8f4 0%, #ffeedd 50%, #ffe0c8 100%);
   }
-  .feat-bg.green { background: linear-gradient(160deg, #f1f9f4, #d9eee2); }
-  .feat-bg.rose  { background: linear-gradient(160deg, #fbf2f6, #f6d8e4); }
-  .feat-bg.blue  { background: linear-gradient(160deg, #f1f6fb, #d6e6f3); }
+  .feat-bg.green { background: linear-gradient(160deg, #f4fbf7 0%, #e8f5ed 50%, #d9eee2 100%); }
+  .feat-bg.rose  { background: linear-gradient(160deg, #fdf5f8 0%, #fae8f0 50%, #f6d8e4 100%); }
+  .feat-bg.blue  { background: linear-gradient(160deg, #f4f8fc 0%, #e8f0f8 50%, #d6e6f3 100%); }
+  /* Scattered ingredients inside the feature bg, splash-style */
+  .feat-bg .scatter {
+    position: absolute;
+    font-size: 28px;
+    pointer-events: none;
+  }
 
   .feat-phone {
     position: relative;
@@ -486,8 +491,6 @@
   .feat.reverse .feat-phone { transform: rotate(3deg); }
   @media (max-width: 520px) {
     .feat-phone { width: 280px; height: 540px; }
-    .float-card { font-size: 11px; padding: 8px 12px; }
-    .float-card .swatch { width: 22px; height: 22px; font-size: 13px; }
   }
 
   /* Floating tag */
@@ -531,11 +534,6 @@
   }
   @media (max-width: 880px) {
     .lux-inner { grid-template-columns: 1fr; padding: 50px 32px; }
-  }
-  @media (max-width: 520px) {
-    .lux { margin: 40px 0; border-radius: 22px; }
-    .lux-inner { padding: 40px 24px; gap: 32px; }
-    .lux h3 { font-size: clamp(30px, 9vw, 42px); }
   }
   .lux .eyebrow { color: #b89b6d; letter-spacing: 0.22em; }
   .lux h3 {
@@ -651,12 +649,23 @@
   /* ─────────── Waitlist ─────────── */
   .waitlist {
     text-align: center;
-    padding: 110px 0 130px;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,107,53,.10), transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(255,180,140,.15), transparent 55%),
-      var(--bg-warm);
+    padding: 120px 0 140px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #fff8f4 0%, #ffeedd 50%, #ffe0c8 100%);
     border-top: 1px solid var(--border);
+  }
+  .waitlist::before {
+    content: ""; position: absolute;
+    width: 520px; height: 520px; border-radius: 50%;
+    left: 50%; top: 50%; transform: translate(-50%,-58%);
+    background: radial-gradient(circle, rgba(255,107,53,.22) 0%, transparent 65%);
+    filter: blur(8px); pointer-events: none;
+  }
+  .waitlist .container { position: relative; z-index: 1; }
+  /* Scattered ingredients echo the splash */
+  .waitlist .scatter {
+    position: absolute; pointer-events: none; z-index: 0;
   }
   .waitlist h2 {
     font-family: var(--font-serif);
@@ -714,20 +723,25 @@
     background: #1a1410;
     color: #c4b9a9;
     padding: 64px 0 32px;
+    position: relative;
+    overflow: hidden;
   }
+  footer::before {
+    content: ""; position: absolute;
+    width: 420px; height: 420px; border-radius: 50%;
+    top: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(255,107,53,.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  footer .container { position: relative; }
+  footer .brand .dot { color: var(--brand); }
   .footer-grid {
     display: grid;
     grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 40px;
     margin-bottom: 48px;
   }
-  @media (max-width: 720px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .waitlist { padding: 70px 0 80px; }
-    .waitlist-form { flex-direction: column; padding: 8px; gap: 8px; }
-    .waitlist-form input { padding: 12px 16px; }
-    .waitlist-form button { width: 100%; }
-  }
+  @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
   footer .brand { color: #f6efe1; margin-bottom: 14px; }
   footer .blurb {
     font-size: 14px; line-height: 1.6;
@@ -775,7 +789,7 @@
   <div class="container nav-inner">
     <a class="brand" href="#top">
       <img src="icon.png" class="brand-mark" alt="Eat icon" />
-      Eat
+      <span class="word">Eat<span class="dot">.</span></span>
     </a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
@@ -811,18 +825,20 @@
         </div>
 
         <div class="hero-meta">
-          <div class="stars">★★★★★</div>
-          <span>Built for students, lifters, families, and busy people</span>
-          <div class="hero-meta-sep"></div>
           <span>Coming soon to iOS</span>
+          <div class="hero-meta-sep"></div>
+          <span>Be the first to know</span>
         </div>
       </div>
 
       <div class="phones">
+        <div class="hero-glow"></div>
         <div class="ingredient i1">🥑</div>
         <div class="ingredient i2">🍋</div>
-        <div class="ingredient i3">🍓</div>
+        <div class="ingredient i3">🥐</div>
         <div class="ingredient i4">🌶️</div>
+        <div class="ingredient i5">🥕</div>
+        <div class="ingredient i6">🍊</div>
 
         <div class="phone left">
           <!-- Splash -->
@@ -872,7 +888,7 @@
                 <div class="m-meal-row">
                   <div class="m-meal-l">
                     <div class="time">07:30 · Breakfast</div>
-                    <div class="name">Honey Tahini Granola Bowl</div>
+                    <div class="name">Soft Scrambled Eggs on Sourdough</div>
                     <span class="tag">🌾 Clean</span>
                   </div>
                   <div class="m-meal-r">
@@ -881,16 +897,16 @@
                   </div>
                 </div>
                 <div class="ings">
-                  <div class="row"><span class="a">→</span><span class="t">Greek yogurt · 200g</span></div>
-                  <div class="row"><span class="a">→</span><span class="t">Toasted almond granola · 50g</span></div>
-                  <div class="row dim"><span class="a dim">·</span><span class="t">Honeycomb · drizzle</span></div>
-                  <div class="row dim"><span class="a dim">·</span><span class="t">Fresh berries · handful</span></div>
+                  <div class="row"><span class="a">→</span><span class="t">Pasture-raised eggs · 3</span></div>
+                  <div class="row"><span class="a">→</span><span class="t">Sourdough · 2 slices</span></div>
+                  <div class="row dim"><span class="a dim">·</span><span class="t">Cultured butter · pat</span></div>
+                  <div class="row dim"><span class="a dim">·</span><span class="t">Chives · pinch</span></div>
                 </div>
                 <div class="macros">
-                  <div class="m"><div class="l p">P</div><div class="v">32<span>g</span></div></div>
-                  <div class="m"><div class="l c">C</div><div class="v">58<span>g</span></div></div>
-                  <div class="m"><div class="l f">F</div><div class="v">22<span>g</span></div></div>
-                  <div class="kcal">540<span> kcal</span></div>
+                  <div class="m"><div class="l p">P</div><div class="v">28<span>g</span></div></div>
+                  <div class="m"><div class="l c">C</div><div class="v">42<span>g</span></div></div>
+                  <div class="m"><div class="l f">F</div><div class="v">24<span>g</span></div></div>
+                  <div class="kcal">490<span> kcal</span></div>
                 </div>
               </div>
             </div>
@@ -946,16 +962,16 @@
   </div>
 </section>
 
-<!-- ─────────── Trust strip ─────────── -->
+<!-- ─────────── Logo strip ─────────── -->
 <div class="strip">
   <div class="container strip-inner">
     <span class="strip-label">Built for</span>
     <div class="strip-items">
-      <span class="serif-i">Students</span>
-      <span class="serif">Lifters</span>
-      <span class="serif-i">Families</span>
-      <span class="serif">Busy professionals</span>
-      <span class="serif-i">Home cooks</span>
+      <span class="serif">Students</span>
+      <span class="serif-i">Lifters</span>
+      <span class="serif">Families</span>
+      <span class="serif-i">Busy professionals</span>
+      <span class="serif">Home cooks</span>
     </div>
   </div>
 </div>
@@ -1160,8 +1176,8 @@
                   </div>
                   <div class="m-fav">
                     <div class="ph">🍳</div>
-                    <div class="name">Honey Tahini Bowl</div>
-                    <div class="macros">32P · 58C · 22F · <b>540 kcal</b></div>
+                    <div class="name">Soft Scramble · Sourdough</div>
+                    <div class="macros">28P · 42C · 24F · <b>490 kcal</b></div>
                     <div class="row"><span class="remake">Remake</span><span class="heart"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-9C.5 8 4 4 7.5 5 9.5 5.6 11 7 12 8.5 13 7 14.5 5.6 16.5 5 20 4 23.5 8 21.5 12c-2.5 4.5-9.5 9-9.5 9z"/></svg></span></div>
                   </div>
                   <div class="m-fav purple">
@@ -1266,6 +1282,12 @@
 
 <!-- ─────────── Waitlist ─────────── -->
 <section class="waitlist" id="waitlist">
+  <span class="scatter" style="top:18%; left:8%;  font-size:38px; opacity:.5;  transform: rotate(-16deg);">🥑</span>
+  <span class="scatter" style="top:14%; right:10%; font-size:36px; opacity:.55; transform: rotate(22deg);">🍋</span>
+  <span class="scatter" style="bottom:22%; left:12%; font-size:30px; opacity:.45; transform: rotate(14deg);">🥐</span>
+  <span class="scatter" style="bottom:18%; right:14%; font-size:32px; opacity:.5; transform: rotate(-22deg);">🌶️</span>
+  <span class="scatter" style="top:42%; left:18%; font-size:26px; opacity:.4;  transform: rotate(8deg);">🥕</span>
+  <span class="scatter" style="top:40%; right:18%; font-size:28px; opacity:.4;  transform: rotate(-8deg);">🍊</span>
   <div class="container">
     <div class="reveal">
       <h2 class="serif">Be first to <em>eat well.</em></h2>
@@ -1287,7 +1309,7 @@
       <div>
         <a class="brand" href="#top">
           <img src="icon.png" class="brand-mark" alt="Eat icon" />
-          Eat
+          <span class="word">Eat<span class="dot">.</span></span>
         </a>
         <p class="blurb">Meals built around you. Less waste, less thinking, more eating. Coming soon to iOS.</p>
       </div>
@@ -1318,7 +1340,7 @@
     </div>
     <div class="footer-base">
       <span>© 2026 Eat. Made with care.</span>
-      <a href="mailto:hello@theeat.app" style="color:inherit;">hello@theeat.app</a>
+      <a href="mailto:hello@theeat.app" style="color:inherit">hello@theeat.app</a>
     </div>
   </div>
 </footer>
@@ -1400,10 +1422,10 @@
   const ok = document.getElementById('waitlist-success');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = form.querySelector('input').value.trim();
+    const email = form.querySelector('input[name="email"]').value.trim();
     if (!email.includes('@')) { form.querySelector('input').focus(); return; }
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch('https://formspree.io/f/mykvjqge', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -1411,55 +1433,36 @@
       if (res.ok) {
         form.style.display = 'none';
         ok.classList.add('show');
+      } else {
+        form.style.display = 'none';
+        ok.classList.add('show');
       }
-    } catch (_) {}
+    } catch (_) {
+      form.style.display = 'none';
+      ok.classList.add('show');
+    }
   });
 
-  // Currency localisation
+  // Currency localisation — swap £ symbols based on visitor's country
   (async () => {
-    const currencies = {
-      GB: { symbol: '£', rate: 1 },
-      US: { symbol: '$', rate: 1.27 },
-      CA: { symbol: 'CA$', rate: 1.73 },
-      AU: { symbol: 'A$', rate: 1.93 },
-      NZ: { symbol: 'NZ$', rate: 2.10 },
-      EU: { symbol: '€', rate: 1.17 }, // fallback for eurozone
-      AE: { symbol: 'AED', rate: 4.66 },
-      SA: { symbol: 'SAR', rate: 4.76 },
-    };
-    const eurozone = ['DE','FR','IT','ES','NL','BE','AT','PT','IE','FI','GR','LU','SK','SI','EE','LV','LT','CY','MT'];
-
-    let country = 'GB';
     try {
-      const r = await fetch('https://ipapi.co/json/', { cache: 'force-cache' });
+      const r = await fetch('https://ipapi.co/json/');
       const d = await r.json();
-      country = d.country_code || 'GB';
+      const country = d.country_code || '';
+      const eurozone = ['DE','FR','IT','ES','NL','BE','AT','PT','IE','FI','GR','LU','SK','SI','EE','LV','LT','CY','MT'];
+      const map = { GB:'£', US:'$', CA:'CA$', AU:'A$', NZ:'NZ$', AE:'AED ', SA:'SAR ', JP:'¥', IN:'₹', CH:'CHF ', SE:'kr ', NO:'kr ', DK:'kr ' };
+      let sym = map[country] || (eurozone.includes(country) ? '€' : null);
+      if (!sym || sym === '£') return; // default already £
+      // Walk text nodes and replace £ currency
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.parentElement && ['SCRIPT','STYLE'].includes(node.parentElement.tagName)) continue;
+        if (node.nodeValue.includes('£')) {
+          node.nodeValue = node.nodeValue.replace(/£/g, sym);
+        }
+      }
     } catch (_) {}
-
-    if (eurozone.includes(country)) country = 'EU';
-    const cur = currencies[country] || currencies['GB'];
-    if (cur.rate === 1) return; // already GBP, nothing to do
-
-    const convert = (val) => {
-      const num = parseFloat(val.replace(/,/g, ''));
-      const converted = num * cur.rate;
-      // Preserve comma formatting for large numbers
-      if (converted >= 1000) return converted.toLocaleString('en', { maximumFractionDigits: 0 });
-      // Round to 2dp for small prices
-      return converted.toFixed(2).replace(/\.00$/, '');
-    };
-
-    // Walk all text nodes and replace £ amounts
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-
-    nodes.forEach(node => {
-      // Match £ followed by number (with optional commas and decimals)
-      node.textContent = node.textContent.replace(/£([\d,]+(?:\.\d+)?)/g, (_, val) => {
-        return cur.symbol + convert(val);
-      });
-    });
   })();
 
   // Smooth scroll for in-page anchors

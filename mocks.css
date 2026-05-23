@@ -860,24 +860,3 @@
   font-size: 12px; font-weight: 600;
   box-shadow: 0 4px 14px rgba(255,107,53,.30);
 }
-
-/* ═════════════════ Mobile — scale phones down ═════════════════ */
-@media (max-width: 920px) {
-  .m-phone {
-    transform: scale(0.82);
-    transform-origin: top center;
-    margin-bottom: -120px; /* claw back the scaled-down empty space */
-  }
-}
-@media (max-width: 520px) {
-  .m-phone {
-    transform: scale(0.78);
-    margin-bottom: -150px;
-  }
-}
-@media (max-width: 400px) {
-  .m-phone {
-    transform: scale(0.68);
-    margin-bottom: -210px;
-  }
-}
