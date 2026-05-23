@@ -1415,6 +1415,53 @@
     } catch (_) {}
   });
 
+  // Currency localisation
+  (async () => {
+    const currencies = {
+      GB: { symbol: '£', rate: 1 },
+      US: { symbol: '$', rate: 1.27 },
+      CA: { symbol: 'CA$', rate: 1.73 },
+      AU: { symbol: 'A$', rate: 1.93 },
+      NZ: { symbol: 'NZ$', rate: 2.10 },
+      EU: { symbol: '€', rate: 1.17 }, // fallback for eurozone
+      AE: { symbol: 'AED', rate: 4.66 },
+      SA: { symbol: 'SAR', rate: 4.76 },
+    };
+    const eurozone = ['DE','FR','IT','ES','NL','BE','AT','PT','IE','FI','GR','LU','SK','SI','EE','LV','LT','CY','MT'];
+
+    let country = 'GB';
+    try {
+      const r = await fetch('https://ipapi.co/json/', { cache: 'force-cache' });
+      const d = await r.json();
+      country = d.country_code || 'GB';
+    } catch (_) {}
+
+    if (eurozone.includes(country)) country = 'EU';
+    const cur = currencies[country] || currencies['GB'];
+    if (cur.rate === 1) return; // already GBP, nothing to do
+
+    const convert = (val) => {
+      const num = parseFloat(val.replace(/,/g, ''));
+      const converted = num * cur.rate;
+      // Preserve comma formatting for large numbers
+      if (converted >= 1000) return converted.toLocaleString('en', { maximumFractionDigits: 0 });
+      // Round to 2dp for small prices
+      return converted.toFixed(2).replace(/\.00$/, '');
+    };
+
+    // Walk all text nodes and replace £ amounts
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(node => {
+      // Match £ followed by number (with optional commas and decimals)
+      node.textContent = node.textContent.replace(/£([\d,]+(?:\.\d+)?)/g, (_, val) => {
+        return cur.symbol + convert(val);
+      });
+    });
+  })();
+
   // Smooth scroll for in-page anchors
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
