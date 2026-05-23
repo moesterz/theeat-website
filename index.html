@@ -1266,8 +1266,12 @@
     <div class="reveal">
       <h2 class="serif">Be first to <em>eat well.</em></h2>
       <p>Drop your email. We'll send your invite the day we launch. No spam, no newsletter, no nonsense.</p>
-      <iframe data-tally-src="https://tally.so/embed/yPdyW6?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="120" frameborder="0" marginheight="0" marginwidth="0" title="Eat waitlist" style="margin-top:24px;"></iframe>
-      <div class="meta" style="margin-top:12px;">Coming soon to iOS · Be the first to know</div>
+      <form class="waitlist-form" id="waitlist-form" action="https://formspree.io/f/mykvjqge" method="POST" novalidate>
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" />
+        <button type="submit">Join waitlist</button>
+      </form>
+      <div class="waitlist-success" id="waitlist-success">✓ You're in. Welcome to the table.</div>
+      <div class="meta">Coming soon to iOS · Be the first to know</div>
     </div>
   </div>
 </section>
@@ -1387,8 +1391,25 @@
     }
   });
 
-  // Tally embed loader
-  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+  // Waitlist form — Formspree
+  const form = document.getElementById('waitlist-form');
+  const ok = document.getElementById('waitlist-success');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.querySelector('input').value.trim();
+    if (!email.includes('@')) { form.querySelector('input').focus(); return; }
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        ok.classList.add('show');
+      }
+    } catch (_) {}
+  });
 
   // Smooth scroll for in-page anchors
   document.querySelectorAll('a[href^="#"]').forEach(a => {
