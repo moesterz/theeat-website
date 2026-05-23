@@ -134,14 +134,18 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero { padding: 56px 0 60px; }
   }
+  @media (max-width: 920px) {
+    .hero-grid > * { min-width: 0; max-width: 100%; }
+    .hero p.lede { max-width: 100%; }
+  }
   @media (max-width: 520px) {
     .hero { padding: 36px 0 32px; }
-    .hero h1 {
-      font-size: clamp(40px, 11vw, 60px);
-    }
+    .hero h1 { font-size: clamp(40px, 11vw, 60px); }
     .hero-eyebrow-row { margin-bottom: 20px; }
-    .hero p.lede { font-size: 16px; }
+    .hero p.lede { font-size: 16px; max-width: 100%; }
     .hero-meta { gap: 10px; font-size: 12px; flex-wrap: wrap; }
+    .hero::before { width: 280px; height: 280px; right: -60px; }
+    .hero::after { width: 220px; height: 220px; }
   }
 
   .hero-eyebrow-row {
