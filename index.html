@@ -806,9 +806,9 @@
 
         <div class="hero-meta">
           <div class="stars">★★★★★</div>
-          <span>1,200+ on the waitlist</span>
+          <span>Built for students, lifters, families, and busy people</span>
           <div class="hero-meta-sep"></div>
-          <span>Launching Fall 2026</span>
+          <span>Coming soon to iOS</span>
         </div>
       </div>
 
@@ -940,16 +940,16 @@
   </div>
 </section>
 
-<!-- ─────────── Logo strip ─────────── -->
+<!-- ─────────── Trust strip ─────────── -->
 <div class="strip">
   <div class="container strip-inner">
-    <span class="strip-label">As eaten by</span>
+    <span class="strip-label">Built for</span>
     <div class="strip-items">
-      <span class="serif-i">Bon Appétit</span>
-      <span class="serif">Wired</span>
-      <span class="serif-i">The Cut</span>
-      <span class="serif">Eater</span>
-      <span class="serif-i">Bloomberg</span>
+      <span class="serif-i">Students</span>
+      <span class="serif">Lifters</span>
+      <span class="serif-i">Families</span>
+      <span class="serif">Busy professionals</span>
+      <span class="serif-i">Home cooks</span>
     </div>
   </div>
 </div>
@@ -1269,7 +1269,7 @@
         <button type="submit">Join waitlist</button>
       </form>
       <div class="waitlist-success" id="waitlist-success">✓ You're in. Welcome to the table.</div>
-      <div class="meta">1,200+ already in line · Launching Fall 2026</div>
+      <div class="meta">Coming soon to iOS · Be the first to know</div>
     </div>
   </div>
 </section>
@@ -1312,7 +1312,7 @@
     </div>
     <div class="footer-base">
       <span>© 2026 Eat. Made with care.</span>
-      <span>Hello@eat.app</span>
+      <a href="mailto:hello@theeat.app" style="color:inherit;">hello@theeat.app</a>
     </div>
   </div>
 </footer>
@@ -1334,7 +1334,7 @@
   const faqs = [
     {
       q: "When does Eat launch?",
-      a: "We're targeting Fall 2026 on iOS. Waitlist members get invited first, with two weeks of free Lux included."
+      a: "We're launching soon on iOS. Waitlist members get invited first, with two weeks of free Lux included."
     },
     {
       q: "Can I use it if I have dietary restrictions?",
@@ -1389,13 +1389,22 @@
     }
   });
 
-  // Waitlist form
+  // Waitlist form — submits to Tally
   const form = document.getElementById('waitlist-form');
   const ok = document.getElementById('waitlist-success');
-  form.addEventListener('submit', (e) => {
+  const TALLY_FORM_ID = 'REPLACE_WITH_YOUR_TALLY_FORM_ID'; // e.g. 'wkP4jz'
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = form.querySelector('input').value.trim();
     if (!email.includes('@')) { form.querySelector('input').focus(); return; }
+    try {
+      await fetch(`https://tally.so/r/${TALLY_FORM_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+        mode: 'no-cors'
+      });
+    } catch (_) {}
     form.style.display = 'none';
     ok.classList.add('show');
   });
