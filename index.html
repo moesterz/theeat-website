@@ -133,6 +133,15 @@
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero { padding: 56px 0 60px; }
   }
+  @media (max-width: 520px) {
+    .hero { padding: 36px 0 32px; }
+    .hero h1 {
+      font-size: clamp(40px, 11vw, 60px);
+    }
+    .hero-eyebrow-row { margin-bottom: 20px; }
+    .hero p.lede { font-size: 16px; }
+    .hero-meta { gap: 10px; font-size: 12px; flex-wrap: wrap; }
+  }
 
   .hero-eyebrow-row {
     display: inline-flex; align-items: center; gap: 10px;
@@ -214,6 +223,13 @@
     width: 1px; height: 14px; background: var(--border-2);
   }
 
+  @media (max-width: 520px) {
+    .btn-primary, .btn-ghost { height: 50px; font-size: 15px; padding: 0 20px; }
+    .btn-primary { width: 100%; justify-content: center; }
+    .btn-ghost { width: 100%; justify-content: center; }
+    .hero-ctas { width: 100%; flex-direction: column; }
+  }
+
   /* Hero right side — phone composition */
   .phones {
     position: relative;
@@ -249,12 +265,23 @@
   }
 
   @media (max-width: 920px) {
-    .phones { min-height: 480px; }
-    .phone { width: 280px; height: 540px; }
+    .phones { min-height: 540px; }
+    /* Only show the main phone on mobile — side phones distract */
+    .phone.left, .phone.right { display: none; }
+    .phone.main {
+      transform: rotate(-2deg);
+      position: relative;
+      width: 280px;
+      height: 538px;
+    }
   }
   @media (max-width: 520px) {
-    .phones { min-height: 400px; }
-    .phone { width: 220px; height: 422px; }
+    .phones { min-height: 500px; }
+    .phone.main { width: 264px; height: 508px; }
+  }
+  @media (max-width: 400px) {
+    .phones { min-height: 440px; }
+    .phone.main { width: 230px; height: 442px; }
   }
 
   /* Floating ingredient emoji */
@@ -398,6 +425,12 @@
     .feat.reverse .feat-copy { order: 1; }
     .feat.reverse .feat-visual { order: 0; }
   }
+  @media (max-width: 520px) {
+    .feat { gap: 24px; }
+    .feat-copy h3 { font-size: clamp(28px, 8vw, 38px); }
+    .feat-copy p { font-size: 15px; }
+    .feat-visual { aspect-ratio: auto; min-height: 480px; }
+  }
 
   .feat-copy .eyebrow { display: block; margin-bottom: 18px; }
   .feat-copy h3 {
@@ -448,6 +481,8 @@
   .feat.reverse .feat-phone { transform: rotate(3deg); }
   @media (max-width: 520px) {
     .feat-phone { width: 280px; height: 540px; }
+    .float-card { font-size: 11px; padding: 8px 12px; }
+    .float-card .swatch { width: 22px; height: 22px; font-size: 13px; }
   }
 
   /* Floating tag */
@@ -491,6 +526,11 @@
   }
   @media (max-width: 880px) {
     .lux-inner { grid-template-columns: 1fr; padding: 50px 32px; }
+  }
+  @media (max-width: 520px) {
+    .lux { margin: 40px 0; border-radius: 22px; }
+    .lux-inner { padding: 40px 24px; gap: 32px; }
+    .lux h3 { font-size: clamp(30px, 9vw, 42px); }
   }
   .lux .eyebrow { color: #b89b6d; letter-spacing: 0.22em; }
   .lux h3 {
@@ -676,7 +716,13 @@
     gap: 40px;
     margin-bottom: 48px;
   }
-  @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .waitlist { padding: 70px 0 80px; }
+    .waitlist-form { flex-direction: column; padding: 8px; gap: 8px; }
+    .waitlist-form input { padding: 12px 16px; }
+    .waitlist-form button { width: 100%; }
+  }
   footer .brand { color: #f6efe1; margin-bottom: 14px; }
   footer .blurb {
     font-size: 14px; line-height: 1.6;
