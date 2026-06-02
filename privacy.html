@@ -8,57 +8,84 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #fff8f4; color: #2d1f0e; font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
-    a.back { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #ff6b35; font-size: 14px; font-weight: 500; margin-bottom: 48px; }
-    h1 { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1.05; margin-bottom: 8px; }
-    .date { color: #9c8572; font-size: 14px; margin-bottom: 48px; }
-    h2 { font-family: 'DM Serif Display', serif; font-size: 24px; margin: 40px 0 12px; }
-    p { color: #5c3d1e; margin-bottom: 16px; }
-    ul { margin: 0 0 16px 20px; color: #5c3d1e; }
+    body { font-family: 'DM Sans', sans-serif; background: #fdf8f2; color: #2d1f0e; line-height: 1.7; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 60px 24px 100px; }
+    .logo { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 28px; color: #ff6b35; margin-bottom: 48px; display: block; text-decoration: none; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: 36px; margin-bottom: 8px; }
+    .updated { color: #9c8572; font-size: 13px; margin-bottom: 40px; }
+    h2 { font-size: 18px; font-weight: 600; margin: 36px 0 12px; }
+    p { margin-bottom: 16px; color: #5c3d1e; }
+    a { color: #ff6b35; }
+    ul { padding-left: 20px; margin-bottom: 16px; color: #5c3d1e; }
     li { margin-bottom: 6px; }
-    footer { text-align: center; color: #9c8572; font-size: 13px; margin-top: 64px; padding-top: 32px; border-top: 1px solid #e8ddd0; }
-    footer a { color: #ff6b35; text-decoration: none; }
+    hr { border: none; border-top: 1px solid #e8ddd0; margin: 40px 0; }
+    .highlight { background: #fff0ea; border-left: 3px solid #ff6b35; padding: 14px 18px; border-radius: 6px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a class="back" href="/">← Back to Eat</a>
+    <a class="logo" href="/">e.</a>
     <h1>Privacy Policy</h1>
-    <p class="date">Last updated: May 2025</p>
+    <p class="updated">Last updated: 1 June 2026</p>
 
-    <p>Eat ("we", "our", or "us") is committed to protecting your privacy. This policy explains what data we collect, how we use it, and your rights.</p>
+    <div class="highlight">
+      <strong>The short version:</strong> Eat never sells your data. We collect only what we need to run the service. Your meal preferences stay on your device unless you choose to sync them.
+    </div>
 
-    <h2>What we collect</h2>
+    <p>This Privacy Policy describes how Eat collects, uses, and protects your personal information when you use the Eat app and website (theeat.app).</p>
+
+    <h2>1. What We Collect</h2>
+    <p><strong>Account information:</strong> Name, email address, date of birth, and password (securely hashed). If you sign in with Apple or Google, we receive only the information you authorise.</p>
+    <p><strong>Questionnaire data:</strong> Age, weight, height, dietary restrictions, food preferences, budget, and goals — used solely to generate your meal plan.</p>
+    <p><strong>Usage data:</strong> Basic anonymised analytics such as which features you use and crash reports. Never linked to your identity.</p>
+    <p><strong>Payment information:</strong> We do not store payment details. All billing is handled by Apple through the App Store.</p>
+
+    <h2>2. What We Do Not Collect</h2>
     <ul>
-      <li><strong>Account information</strong> — name, email address, and authentication details when you sign up.</li>
-      <li><strong>Questionnaire data</strong> — your dietary goals, restrictions, food preferences, and body statistics. This is used solely to generate your meal plan.</li>
-      <li><strong>Usage data</strong> — how you interact with the app, to improve the experience.</li>
-      <li><strong>Location</strong> — only if you allow it, to find nearby supermarkets. Never stored on our servers.</li>
+      <li>We do not collect your precise location</li>
+      <li>We do not access your contacts, camera, or microphone without explicit permission</li>
+      <li>We do not build advertising profiles</li>
+      <li>We do not sell or rent your data to third parties — ever</li>
     </ul>
 
-    <h2>What we never do</h2>
+    <h2>3. How We Use Your Data</h2>
     <ul>
-      <li>We never sell your data to third parties.</li>
-      <li>We never share your personal information with advertisers.</li>
-      <li>We never store your grocery list data beyond your active session.</li>
+      <li>Generate personalised meal plans using AI</li>
+      <li>Remember your preferences between sessions</li>
+      <li>Send transactional emails (account verification, subscription receipts)</li>
+      <li>Improve the service</li>
     </ul>
 
-    <h2>How we use your data</h2>
-    <p>Your data is used to personalise your meal plans, generate your grocery list, and improve the Eat experience. Meal plans are generated using Claude AI (Anthropic) — your questionnaire data is sent to their API to produce your plan. Anthropic's privacy policy applies to this processing.</p>
+    <h2>4. AI Processing</h2>
+    <p>Your meal preferences are sent to Claude (Anthropic) to generate your plan. This is processed under Anthropic's data policies. We do not use your data to train AI models.</p>
 
-    <h2>Subscriptions</h2>
-    <p>Subscription payments are handled entirely by Apple via StoreKit. We never see or store your payment information.</p>
+    <h2>5. Data Storage & Security</h2>
+    <p>Account data is stored securely using Firebase (Google Cloud). Plan data is stored locally on your device and optionally synced if you are signed in. We use industry-standard encryption for all data in transit and at rest.</p>
 
-    <h2>Data retention</h2>
-    <p>You can delete your account and all associated data at any time from the Profile tab in the app. Upon deletion, all personal data is permanently removed within 30 days.</p>
+    <h2>6. Your Rights (UK/EEA)</h2>
+    <p>Under UK GDPR, you have the right to access, correct, delete, or port your data. Contact us at <a href="mailto:privacy@theeat.app">privacy@theeat.app</a> to exercise any of these rights.</p>
 
-    <h2>Contact</h2>
-    <p>Questions about your privacy? Email us at <a href="mailto:hello@theeat.app" style="color:#ff6b35;">hello@theeat.app</a></p>
+    <h2>7. Children</h2>
+    <p>Eat is not intended for children under 13. Household member data (such as children added by a parent) is managed by the account holder.</p>
 
-    <footer>
-      <p>© 2025 Eat · <a href="/terms.html">Terms of Use</a> · <a href="/">Home</a></p>
-    </footer>
+    <h2>8. Third-Party Services</h2>
+    <ul>
+      <li><strong>Firebase (Google)</strong> — authentication and cloud storage</li>
+      <li><strong>Anthropic Claude</strong> — AI meal plan generation</li>
+      <li><strong>Spoonacular</strong> — food photography</li>
+      <li><strong>Apple App Store</strong> — subscription billing</li>
+      <li><strong>Cloudflare</strong> — API proxy and security</li>
+    </ul>
+
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this policy periodically. Continued use of Eat after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>10. Contact</h2>
+    <p>For privacy questions: <a href="mailto:privacy@theeat.app">privacy@theeat.app</a></p>
+    <p>Eat is operated by Mohammed Alsafwani, United Kingdom.</p>
+
+    <hr>
+    <p style="font-size:13px; color:#9c8572;">© 2026 Eat. All rights reserved. · <a href="/terms.html">Terms of Use</a></p>
   </div>
 </body>
 </html>
