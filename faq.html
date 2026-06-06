@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FAQ — Eat.</title>
+<meta name="description" content="Frequently asked questions about Eat — the iOS meal planning app." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fdf8f2; --bg-warm: #f7f0e6; --surface: #ffffff;
+    --border: #e8ddd0; --border-2: #ddd0be;
+    --brand: #ff6b35; --brand-light: #fff0ea; --brand-medium: #ffe4d6;
+    --text-dark: #2d1f0e; --text-mid: #5c3d1e; --muted: #9c8572;
+    --r-card: 22px; --r-btn: 14px;
+    --sh-card: 0 2px 8px rgba(45,31,14,.08);
+    --sh-elev: 0 4px 20px rgba(45,31,14,.12);
+    --font-serif: "DM Serif Display","Times New Roman",serif;
+    --font-sans: "DM Sans",-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text-dark);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--brand);color:#fff}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(253,248,242,0.88);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+  .nav.scrolled{border-bottom-color:var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1240px;margin:0 auto;padding:0 32px}
+  .brand{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-serif);font-size:26px;letter-spacing:-.04em;color:var(--text-dark);line-height:1}
+  .brand .dot{color:var(--brand)}
+  .brand-mark{width:36px;height:36px;border-radius:9px;background:radial-gradient(circle at 30% 25%,#ffb088 0%,#ff6b35 55%,#e25420 100%);box-shadow:0 6px 16px rgba(255,107,53,.32),0 0 0 1px rgba(0,0,0,.04);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden}
+  .brand-mark::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.28) 0%,transparent 35%);pointer-events:none}
+  .brand-mark span{position:relative;z-index:1;font-family:var(--font-serif);font-style:italic;font-weight:700;color:#fffaf3;font-size:30px;line-height:1;letter-spacing:-.04em;text-shadow:0 2px 8px rgba(120,40,10,.28);transform:translate(0,-1px)}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a{font-size:14px;font-weight:500;color:var(--text-mid);transition:color .15s}
+  .nav-links a:hover{color:var(--brand)}
+  .nav-cta{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 18px;border-radius:var(--r-btn);background:var(--text-dark);color:#fff!important;font-weight:600;font-size:14px;box-shadow:0 4px 14px rgba(45,31,14,.18)}
+  .nav-cta:hover{background:#1a1108;transform:translateY(-1px)}
+  @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}.nav-inner{padding:0 22px}}
+
+  .container{max-width:1240px;margin:0 auto;padding:0 32px}
+  @media(max-width:720px){.container{padding:0 22px}}
+
+  /* Hero */
+  .page-hero{padding:72px 0 60px;border-bottom:1px solid var(--border);background:radial-gradient(900px 500px at 50% -80px,rgba(255,176,136,.25),transparent 60%)}
+  .page-hero-inner{max-width:760px;margin:0 auto;padding:0 32px;text-align:center}
+  .eyebrow{font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
+  .page-hero h1{font-family:var(--font-serif);font-weight:400;font-size:clamp(44px,6vw,72px);line-height:1.02;letter-spacing:-.025em;margin:0 0 16px}
+  .page-hero h1 em{font-style:italic;color:var(--brand)}
+  .page-hero p{font-size:18px;line-height:1.55;color:var(--text-mid);margin:0 auto 36px;max-width:480px}
+
+  /* Topic chips */
+  .topic-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;background:var(--surface);border:1px solid var(--border);border-radius:999px;font-size:14px;font-weight:500;color:var(--text-mid);cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+  .chip:hover,.chip.active{background:var(--brand-light);border-color:var(--brand-medium);color:var(--brand)}
+  @media(max-width:720px){.page-hero-inner{padding:0 22px}}
+
+  /* FAQ body */
+  .faq-body{padding:72px 0 80px}
+  .faq-group{max-width:1240px;margin:0 auto 60px;padding:0 32px}
+  @media(max-width:720px){.faq-group{padding:0 22px}}
+
+  .faq-group-head{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  .faq-group-icon{width:40px;height:40px;border-radius:12px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .faq-group-head h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(22px,2.5vw,30px);letter-spacing:-.01em;margin:0}
+  .faq-group-head h2 em{font-style:italic;color:var(--brand)}
+
+  .faq-list{border-top:1px solid var(--border)}
+  .faq-item{border-bottom:1px solid var(--border)}
+  .faq-q{width:100%;background:none;border:none;padding:20px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;text-align:left;font-family:var(--font-serif);font-size:clamp(18px,1.8vw,23px);font-weight:400;letter-spacing:-.01em;color:var(--text-dark);cursor:pointer}
+  .faq-q .icon{width:30px;height:30px;flex-shrink:0;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .15s;color:var(--text-mid)}
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);background:var(--brand);color:#fff;border-color:var(--brand)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .32s ease}
+  .faq-a-inner{padding:0 0 20px;font-size:15px;line-height:1.65;color:var(--text-mid);max-width:640px}
+  .faq-a-inner a{color:var(--brand);font-weight:600}
+
+  /* Still need help */
+  .help-cta{padding:0 0 100px}
+  .help-card{max-width:760px;margin:0 auto;background:linear-gradient(140deg,#fff8f4,#ffeedd);border:1px solid var(--brand-medium);border-radius:var(--r-card);padding:48px;text-align:center}
+  .help-card h2{font-family:var(--font-serif);font-weight:400;font-size:clamp(28px,3.5vw,42px);letter-spacing:-.02em;margin:0 0 12px}
+  .help-card h2 em{font-style:italic;color:var(--brand)}
+  .help-card p{font-size:16px;color:var(--text-mid);margin:0 0 28px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.55}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:var(--r-btn);background:var(--brand);color:#fff;font-weight:600;font-size:15px;box-shadow:0 4px 16px rgba(255,107,53,.35);transition:transform .12s,box-shadow .12s}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(255,107,53,.40)}
+
+  footer{background:#1a1410;color:#c4b9a9;padding:64px 0 32px;position:relative;overflow:hidden}
+  footer::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;top:-200px;right:-100px;background:radial-gradient(circle,rgba(255,107,53,.10) 0%,transparent 60%);pointer-events:none}
+  footer .container{position:relative}
+  footer .brand{color:#f6efe1;margin-bottom:14px}
+  footer .brand .dot{color:var(--brand)}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+  @media(max-width:720px){.footer-grid{grid-template-columns:1fr 1fr}}
+  .blurb{font-size:14px;line-height:1.6;max-width:320px;color:#98897a}
+  .footer-col h4{font-family:var(--font-sans);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b89b6d;margin:0 0 18px}
+  .footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+  .footer-col a{font-size:14px;color:#c4b9a9;transition:color .15s}
+  .footer-col a:hover{color:#f6efe1}
+  .footer-base{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid #2c2419;font-size:12px;color:#98897a;flex-wrap:wrap;gap:16px}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><span>e.</span></span>
+      <span>Eat<span class="dot">.</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#features">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+      <a href="https://apps.apple.com/app/eat" class="nav-cta">Download</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">FAQ</span>
+    <h1>Questions, <em>answered.</em></h1>
+    <p>Everything you need to know about Eat, from getting started to Lux tasting menus.</p>
+    <div class="topic-chips">
+      <a href="#getting-started" class="chip">Getting started</a>
+      <a href="#account-billing" class="chip">Account &amp; billing</a>
+      <a href="#features" class="chip">Features</a>
+      <a href="#privacy" class="chip">Privacy &amp; data</a>
+    </div>
+  </div>
+</div>
+
+<div class="faq-body">
+
+  <div class="faq-group" id="getting-started">
+    <div class="faq-group-head">
+      <div class="faq-group-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" stroke="#ff6b35" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>Getting <em>started</em></h2>
+    </div>
+    <div class="faq-list" id="faq-start"></div>
+  </div>
+
+  <div class="faq-group" id="account-billing">
+    <div class="faq-group-head">
+      <div class="faq-group-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#ff6b35" stroke-width="2"/><path d="M2 10h20" stroke="#ff6b35" stroke-width="2"/></svg>
+      </div>
+      <h2>Account &amp; <em>billing</em></h2>
+    </div>
+    <div class="faq-list" id="faq-billing"></div>
+  </div>
+
+  <div class="faq-group" id="features">
+    <div class="faq-group-head">
+      <div class="faq-group-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="#ff6b35" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="#ff6b35" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="#ff6b35" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="#ff6b35" stroke-width="2"/></svg>
+      </div>
+      <h2>Features &amp; <em>how-tos</em></h2>
+    </div>
+    <div class="faq-list" id="faq-features"></div>
+  </div>
+
+  <div class="faq-group" id="privacy">
+    <div class="faq-group-head">
+      <div class="faq-group-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#ff6b35" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>Privacy &amp; <em>data</em></h2>
+    </div>
+    <div class="faq-list" id="faq-privacy"></div>
+  </div>
+
+</div>
+
+<div class="help-cta">
+  <div class="container">
+    <div class="help-card">
+      <h2>Still need <em>help?</em></h2>
+      <p>Our team typically replies within one business day.</p>
+      <a href="support.html" class="btn-primary">
+        Go to support
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand-mark"><span>e.</span></span>
+          <span>Eat<span class="dot">.</span></span>
+        </a>
+        <p class="blurb">Meals built around you. Less waste, less thinking, more eating. Available now on iOS.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="index.html#lux">Eat Lux</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="mailto:hello@theeat.app">Contact us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 Eat.</span>
+      <span><a href="mailto:hello@theeat.app" style="color:inherit">hello@theeat.app</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 8), {passive:true});
+
+  const groups = {
+    'faq-start': [
+      { q: "How do I get started?", a: "Download Eat from the App Store, create a free account and complete a short onboarding (about 3 minutes). Your first week's meal plan is generated right away. No payment required to start." },
+      { q: "What does Eat ask me during setup?", a: "Your goal (fat loss, muscle gain, maintain, feel better), dietary restrictions and allergies, cooking skill and available time, the stores you shop at, and anything already in your fridge you'd like to use up. You can update all of this in Settings at any time." },
+      { q: "Does Eat work if I have dietary restrictions?", a: "Yes. Eat supports vegan, vegetarian, pescatarian, gluten-free, dairy-free, nut-free, low-FODMAP, halal, kosher and many more. Tell Eat what you can't eat once, and you'll never see it in your plan again." },
+      { q: "Do I need an account to use it?", a: "You can browse without an account, but you need one to generate plans, save meals and sync across devices. Creating an account is free." },
+      { q: "Which iPhone do I need?", a: "Eat requires iOS 17 or later. It runs on iPhone SE (3rd gen) and any iPhone released since 2020." },
+    ],
+    'faq-billing': [
+      { q: "What are the pricing plans?", a: "Solo £4.99/mo (1 person), Power £9.99/mo (adds Photo → Macros and unlimited saves), Household £14.99/mo (up to 5 profiles), Lux £20/mo (fine-dining tasting menus). <a href='pricing.html'>Compare all features →</a>" },
+      { q: "How do I upgrade or downgrade?", a: "Go to Settings → Subscription inside the app. Upgrades take effect immediately (prorated). Downgrades take effect at the next renewal date." },
+      { q: "How do I cancel?", a: "Go to Settings → Apple ID → Subscriptions on your iPhone, find Eat, and tap Cancel. You keep access until the end of your billing period." },
+      { q: "Can I get a refund?", a: "Refunds are handled by Apple. Visit <a href='https://reportaproblem.apple.com' target='_blank'>reportaproblem.apple.com</a> within 90 days of purchase. Email <a href='mailto:support@theeat.app'>support@theeat.app</a> if you need help." },
+      { q: "Is there a free trial?", a: "Your first week is free when you download the app. No payment details are required to get your first plan." },
+    ],
+    'faq-features': [
+      { q: "How do I swap a meal?", a: "Tap any meal in your plan, then tap the swap icon (two arrows) in the top right. Eat suggests alternatives that match your goals and preferences, or you can describe what you're in the mood for." },
+      { q: "How does Photo → Macros work?", a: "Available on Power, Household and Lux. Point your camera at any meal — Eat uses AI to identify the food and estimate macros and calories. Use the ±1g steppers to adjust any value and everything recalculates. Photos are processed then deleted; we never store them." },
+      { q: "Which UK stores does it support?", a: "Sainsbury's, Tesco, Aldi, Lidl, Waitrose, M&S and Ocado on launch. Your list is always one-tap copyable for any other shop." },
+      { q: "How does Cook Mode work?", a: "Tap any meal → Start cooking. Cook Mode walks you through each step with timers, ingredient quantities for your serving size, and tap-to-complete steps. Your screen stays on throughout." },
+      { q: "What is Eat Lux?", a: "Lux (£20/mo) is for nights when dinner is the occasion. It generates fine-dining tasting menus with wine pairings, uses an editorial dark-and-gold theme, and has a course-by-course cook mode that feels like a private chef in your ear." },
+      { q: "Can multiple people share one subscription?", a: "Household tier (£14.99/mo) supports up to 5 separate profiles. Each person gets their own goals, preferences and meal plan. A shared grocery list merges everything automatically." },
+    ],
+    'faq-privacy': [
+      { q: "Do you sell my data?", a: "No. Never. Your food preferences are yours. We don't sell to advertisers, we don't share with third parties, and you can delete everything in one tap. <a href='privacy.html'>Read our full privacy policy →</a>" },
+      { q: "How do I delete my account and data?", a: "Settings → Account → Delete account inside the app. This permanently deletes all your personal data within 30 days. The action is irreversible." },
+      { q: "Where is my data stored?", a: "On servers in the European Union, encrypted in transit (TLS 1.2+) and at rest. Access is restricted to the small team that needs it to operate and improve the service." },
+      { q: "What happens to my food photos?", a: "Photos you submit to the Photo → Macros scanner are processed by our AI to extract macro information, then immediately deleted. We never store your food photos." },
+    ],
+  };
+
+  Object.entries(groups).forEach(([id, faqs]) => {
+    const list = document.getElementById(id);
+    faqs.forEach((f, i) => {
+      const item = document.createElement('div');
+      item.className = 'faq-item' + (i === 0 ? ' open' : '');
+      item.innerHTML = `<button class="faq-q" type="button"><span>${f.q}</span><span class="icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></button><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
+      list.appendChild(item);
+    });
+  });
+
+  document.querySelectorAll('.faq-item.open .faq-a').forEach(a => a.style.maxHeight = a.scrollHeight + 'px');
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.faq-q'); if (!btn) return;
+    const item = btn.closest('.faq-item');
+    const list = item.closest('.faq-list');
+    const a = item.querySelector('.faq-a');
+    const open = item.classList.contains('open');
+    list.querySelectorAll('.faq-item').forEach(el => { el.classList.remove('open'); el.querySelector('.faq-a').style.maxHeight = '0'; });
+    if (!open) { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; }
+  });
+</script>
+</body>
+</html>
