@@ -471,6 +471,8 @@
   .feat-visual {
     position: relative;
     aspect-ratio: 1 / 1;
+    overflow: hidden;
+    padding: 5%;
     display: flex; align-items: center; justify-content: center;
   }
   .feat-bg {
@@ -492,13 +494,14 @@
   .feat-phone {
     position: relative;
     width: 340px;
-    height: 652px;
+    height: auto;
+    max-height: 100%;
     max-width: 80%;
     transform: rotate(-3deg);
   }
   .feat.reverse .feat-phone { transform: rotate(3deg); }
   @media (max-width: 520px) {
-    .feat-phone { width: 280px; height: 540px; }
+    .feat-phone { width: 280px; height: auto; }
   }
 
   /* Floating tag */
@@ -1256,12 +1259,12 @@
   }
   @media (max-width: 720px) {
     .features { gap: 56px; padding: 0; }
-    .feat-visual { aspect-ratio: 3/2; min-height: 220px; }
+    .feat-visual { aspect-ratio: 3/2; min-height: 220px; overflow: hidden; }
     .feat-copy h3 { font-size: clamp(26px, 7vw, 42px); }
     .feat-copy p { font-size: 15px; }
     .feat-visual .float-card { font-size: 11px; padding: 8px 10px; max-width: 180px; }
     .feat-visual .float-card .icon { width: 26px; height: 26px; font-size: 13px; }
-    .feat-phone { width: 180px !important; height: 345px !important; }
+    .feat-phone { width: auto !important; height: auto !important; max-height: 260px !important; }
   }
 
   /* ── Tier cards (Household + Lux) ───────── */
