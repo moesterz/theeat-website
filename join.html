@@ -1,106 +1,214 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>You're invited to Eat.</title>
-<meta name="description" content="You've been invited to Eat, a personal meal plan, grocery list and cook mode built around your goals, taste and budget. Available on iOS." />
-<meta property="og:title" content="You're invited to Eat." />
-<meta property="og:description" content="A friend invited you to Eat, meal plans built around you. Less waste. Less thinking. More eating." />
-<meta property="og:image" content="https://theeat.app/preview.png" />
-<meta property="og:url" content="https://theeat.app/join" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://theeat.app/preview.png" />
-<link rel="icon" type="image/png" href="icon.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>You've been invited to Eat</title>
+<meta name="description" content="A friend invited you to Eat, a personal meal plan, grocery list and cook mode built around your goals, taste and budget. Coming soon on iOS."/>
+<meta property="og:title" content="You've been invited to Eat."/>
+<meta property="og:description" content="A friend invited you to Eat, meal plans built around you. Your first week is on them."/>
+<meta property="og:image" content="https://theeat.app/preview.png"/>
+<meta property="og:url" content="https://theeat.app/join"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://theeat.app/preview.png"/>
+<link rel="icon" type="image/png" href="icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #fdf8f2; --surface: #ffffff; --surface-2: #f7f0e6;
-    --border: #e8ddd0; --brand: #ff6b35; --brand-light: #fff0ea;
-    --text-dark: #2d1f0e; --text-mid: #5c3d1e; --muted: #9c8572;
-    --r-card: 22px; --r-btn: 14px;
-    --sh-cta: 0 4px 16px rgba(255,107,53,.35);
-    --sh-card: 0 2px 8px rgba(45,31,14,.08);
-    --font-serif: "DM Serif Display", "Times New Roman", serif;
-    --font-sans: "DM Sans", -apple-system, system-ui, sans-serif;
+    --bg1:#ffe7d8; --bg2:#fff1e8; --bg3:#faf3ea;
+    --card:#ffffff; --text:#2d1f0e; --mid:#5c3d1e; --muted:#9c8572;
+    --accent:#ff6b35; --accentDim:#ff9260; --border:#ece2d6; --surface:#f7f0e6;
+    --serif:'DM Serif Display', Georgia, serif;
+    --sans:'DM Sans', system-ui, sans-serif;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; color: var(--text-dark); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  html, body { height: 100%; }
   body {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 28px;
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    color: var(--text);
     background:
-      radial-gradient(1200px 700px at 75% -120px, rgba(255,176,136,.45), transparent 60%),
-      radial-gradient(900px 600px at -10% 18%, rgba(255,224,200,.55), transparent 55%),
-      linear-gradient(180deg, #fff8f4 0%, var(--bg) 600px);
+      radial-gradient(120% 80% at 50% -10%, var(--bg1) 0%, var(--bg2) 38%, var(--bg3) 78%);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
   }
-  a { color: inherit; text-decoration: none; }
-  .serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; }
-  .serif-i { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--brand); }
-  .eyebrow { font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 
   .card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-card);
-    box-shadow: var(--sh-card); max-width: 440px; width: 100%; padding: 40px 32px; text-align: center;
+    width: 100%;
+    max-width: 460px;
+    background: var(--card);
+    border-radius: 32px;
+    padding: 44px 40px 32px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.8) inset,
+      0 40px 80px -28px rgba(120,60,20,0.28),
+      0 12px 28px -16px rgba(120,60,20,0.18);
+    text-align: center;
   }
-  .logo {
-    width: 76px; height: 76px; margin: 0 auto 22px; display: block;
-    /* drop-shadow follows the icon's own rounded silhouette (no boxy halo) */
-    filter: drop-shadow(0 6px 14px rgba(255,107,53,.30));
-  }
-  h1 { font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 14px 0 10px; }
-  p.sub { color: var(--text-mid); font-size: 15px; line-height: 1.5; margin: 0 0 24px; }
 
-  .code-box {
-    display: none; align-items: center; justify-content: center; gap: 10px;
-    background: var(--surface-2); border: 1px dashed var(--border); border-radius: 14px;
-    padding: 14px 16px; margin: 0 0 24px;
+  /* App icon with soft glow */
+  .icon-wrap { display:flex; justify-content:center; margin-bottom: 26px; }
+  .icon-glow { position: relative; }
+  .icon-glow::before {
+    content:""; position:absolute; inset:-26%;
+    background: radial-gradient(circle, rgba(255,107,53,0.34), transparent 68%);
+    filter: blur(6px); z-index:0;
   }
-  .code-box .lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .code-box .code { font-family: var(--font-serif); font-size: 20px; letter-spacing: 0.08em; color: var(--text-dark); }
+  .icon-glow img {
+    position: relative; z-index:1;
+    width: 84px; height: 84px; border-radius: 21px; display:block;
+    box-shadow: 0 8px 20px -6px rgba(255,107,53,0.5);
+  }
 
+  /* Referrer chip */
+  .referrer {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 6px 14px 6px 6px;
+    background: var(--surface);
+    border-radius: 99px;
+    margin-bottom: 22px;
+  }
+  .avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(140deg, var(--accent), var(--accentDim));
+    color: #fff; font-weight: 700; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(255,107,53,0.4);
+  }
+  .referrer span { font-size: 13px; font-weight: 600; color: var(--mid); white-space: nowrap; }
+  .referrer span b { color: var(--text); font-weight: 700; }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: .19em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 40px; line-height: 1.08; letter-spacing: -0.01em;
+    margin-bottom: 18px; text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .lede {
+    font-size: 15.5px; line-height: 1.62; color: var(--mid);
+    max-width: 36ch; margin: 0 auto 26px; text-wrap: pretty;
+  }
+  .lede b { font-weight: 700; color: var(--text); }
+
+  /* Free-week banner */
+  .gift {
+    display: flex; align-items: center; gap: 11px;
+    text-align: left;
+    padding: 13px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff3ec, #ffe9df);
+    border: 1px solid #ffd9c7;
+    margin-bottom: 26px;
+  }
+  .gift svg { flex-shrink: 0; }
+  .gift-txt { font-size: 13px; line-height: 1.4; color: var(--mid); }
+  .gift-txt b { color: var(--text); font-weight: 700; }
+
+  /* CTA */
   .cta {
-    display: block; width: 100%; background: var(--brand); color: #fff; font-weight: 600; font-size: 16px;
-    padding: 16px; border-radius: var(--r-btn); border: 0; box-shadow: var(--sh-cta); margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; height: 58px;
+    border: none; border-radius: 17px; cursor: pointer;
+    background: linear-gradient(140deg, var(--accent), #ff7d44);
+    color: #fff; font-family: var(--sans); font-size: 16.5px; font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -8px rgba(255,107,53,0.7), 0 2px 0 rgba(255,255,255,0.25) inset;
+    transition: transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
   }
-  .ghost { display: block; color: var(--muted); font-size: 13px; font-weight: 600; padding: 8px; }
-  .foot { margin-top: 22px; font-size: 12px; color: var(--muted); }
+  .cta:hover { box-shadow: 0 14px 30px -8px rgba(255,107,53,0.8); transform: translateY(-1px); }
+  .cta:active { transform: scale(.985); }
+  .cta svg { margin-top: -2px; }
+
+  .secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 18px;
+    font-size: 14px; font-weight: 600; color: var(--mid);
+    text-decoration: none;
+    transition: gap .2s ease, color .2s ease;
+  }
+  .secondary:hover { color: var(--accent); gap: 9px; }
+
+  .divider { height: 1px; background: var(--border); margin: 26px 0 18px; }
+  .foot { font-size: 12.5px; color: var(--muted); }
+  .foot .dot { color: var(--border); margin: 0 8px; }
+
+  @media (max-width: 480px) {
+    .card { padding: 38px 26px 28px; border-radius: 28px; }
+    h1 { font-size: 34px; }
+    .lede { font-size: 15px; }
+  }
 </style>
 </head>
 <body>
   <main class="card">
-    <img class="logo" src="icon.png" alt="Eat app icon" width="72" height="72" />
-    <div class="eyebrow">You've been invited</div>
-    <h1>Meals built <span class="serif-i">around you.</span></h1>
-    <p class="sub">A friend invited you to <strong>Eat</strong>, a personal meal plan, grocery list and cook mode tailored to your goals, your taste and your budget.</p>
-
-    <div class="code-box" id="codeBox">
-      <span class="lbl">Invite code</span>
-      <span class="code" id="codeText"></span>
+    <div class="icon-wrap">
+      <div class="icon-glow"><img src="icon-eat.png" alt="Eat app icon"/></div>
     </div>
 
-    <!-- When the App Store listing is live, swap this href for the App Store URL
-         (optionally append the ref so the invite is credited). -->
-    <a class="cta" id="getApp" href="https://theeat.app">Get Eat on iOS</a>
-    <a class="ghost" href="https://theeat.app">Learn more about Eat →</a>
+    <div class="referrer">
+      <div class="avatar" id="avatar">♥</div>
+      <span id="ref-chip">A friend invited you</span>
+    </div>
 
-    <div class="foot">Coming soon to the App Store.</div>
+    <div class="eyebrow">You've been invited</div>
+    <h1>Meals built <em>around you.</em></h1>
+    <p class="lede" id="lede">Someone invited you to <b>Eat</b>, a personal meal plan, grocery list and cook mode tailored to your goals, your taste and your budget.</p>
+
+    <div class="gift">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ff6b35" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18"/><path d="M12 8v13"/>
+        <path d="M12 8S10.5 3.5 8 4.2C6.2 4.7 6.4 7.4 8.4 8M12 8s1.5-4.5 4-3.8c1.8.5 1.6 3.2-.4 3.8"/>
+      </svg>
+      <div class="gift-txt" id="gift-txt"><b>Your first week is on us.</b> Start free, no charge until you're hooked.</div>
+    </div>
+
+    <!-- When the App Store listing is live, swap href for the App Store URL. -->
+    <a class="cta" id="cta" href="https://theeat.app">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .7 1.1 1.6 2.3 2.8 2.2 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1.1 2.7-2.1.8-1.2 1.2-2.4 1.2-2.4s-2.3-.9-2.3-3.5zM14.2 5.9c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.3-.6.7-1.1 1.7-1 2.7 1 0 2-.5 2.7-1.1z"/></svg>
+      Get Eat on iOS
+    </a>
+
+    <a class="secondary" href="https://theeat.app">Learn more about Eat <span aria-hidden="true">→</span></a>
+
+    <div class="divider"></div>
+    <div class="foot">Coming soon to the App Store <span class="dot">·</span> iPhone &amp; iPad</div>
   </main>
 
   <script>
-    // Read & sanitise the referral code (alphanumeric only, no injection).
+    // Referral link shapes:
+    //   ?ref=CODE        — the share code (captured so the invite is credited on sign-up)
+    //   ?from=Name       — optional inviter name (personalises the page)
+    // With no name we keep the clean "A friend invited you" fallback (no fake name).
     (function () {
-      var params = new URLSearchParams(window.location.search);
-      var ref = (params.get("ref") || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 16);
-      if (ref) {
-        document.getElementById("codeText").textContent = ref.toUpperCase();
-        document.getElementById("codeBox").style.display = "flex";
-        try { localStorage.setItem("eat_ref", ref); } catch (e) {}
-        // Try to open the app if it's installed (universal/custom-scheme deep link).
-        // Harmless no-op on desktop / when the app isn't installed.
-        // window.location = "eat://join?ref=" + ref;
+      var params = new URLSearchParams(location.search);
+
+      // Capture & stash the referral code (alphanumeric only).
+      var ref = (params.get('ref') || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 16);
+      if (ref) { try { localStorage.setItem('eat_ref', ref); } catch (e) {} }
+
+      // Personalise from a name if one was passed.
+      var raw = (params.get('from') || params.get('name') || '').trim();
+      var name = raw.replace(/[^a-zA-ZÀ-ɏ'’\- ]/g, '').slice(0, 24);
+      if (name) {
+        var cap = name.charAt(0).toUpperCase() + name.slice(1);
+        document.getElementById('avatar').textContent = cap.charAt(0).toUpperCase();
+        document.getElementById('ref-chip').innerHTML = '<b>' + cap + '</b> invited you';
+        document.getElementById('lede').innerHTML =
+          '<b>' + cap + '</b> uses <b>Eat</b>, a personal meal plan, grocery list and cook mode tailored to your goals, your taste and your budget.';
+        document.getElementById('gift-txt').innerHTML =
+          '<b>Your first week is on ' + cap + '.</b> Start free, no charge until you\'re hooked.';
       }
     })();
   </script>
