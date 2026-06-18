@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>You're invited to Eat.</title>
-<meta name="description" content="You've been invited to Eat — a personal meal plan, grocery list and cook mode built around your goals, taste and budget. Available on iOS." />
+<meta name="description" content="You've been invited to Eat, a personal meal plan, grocery list and cook mode built around your goals, taste and budget. Available on iOS." />
 <meta property="og:title" content="You're invited to Eat." />
-<meta property="og:description" content="A friend invited you to Eat — meal plans built around you. Less waste. Less thinking. More eating." />
+<meta property="og:description" content="A friend invited you to Eat, meal plans built around you. Less waste. Less thinking. More eating." />
 <meta property="og:image" content="https://theeat.app/preview.png" />
 <meta property="og:url" content="https://theeat.app/join" />
 <meta property="og:type" content="website" />
@@ -46,11 +46,10 @@
     box-shadow: var(--sh-card); max-width: 440px; width: 100%; padding: 40px 32px; text-align: center;
   }
   .logo {
-    width: 64px; height: 64px; border-radius: 18px; background: var(--brand);
-    display: flex; align-items: center; justify-content: center; margin: 0 auto 22px;
-    box-shadow: var(--sh-cta);
+    width: 76px; height: 76px; margin: 0 auto 22px; display: block;
+    /* drop-shadow follows the icon's own rounded silhouette (no boxy halo) */
+    filter: drop-shadow(0 6px 14px rgba(255,107,53,.30));
   }
-  .logo span { font-family: var(--font-serif); font-style: italic; color: #fff; font-size: 34px; line-height: 1; }
   h1 { font-family: var(--font-serif); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 14px 0 10px; }
   p.sub { color: var(--text-mid); font-size: 15px; line-height: 1.5; margin: 0 0 24px; }
 
@@ -72,10 +71,10 @@
 </head>
 <body>
   <main class="card">
-    <div class="logo"><span>e</span></div>
+    <img class="logo" src="icon.png" alt="Eat app icon" width="72" height="72" />
     <div class="eyebrow">You've been invited</div>
     <h1>Meals built <span class="serif-i">around you.</span></h1>
-    <p class="sub">A friend invited you to <strong>Eat</strong> — a personal meal plan, grocery list and cook mode tailored to your goals, your taste and your budget.</p>
+    <p class="sub">A friend invited you to <strong>Eat</strong>, a personal meal plan, grocery list and cook mode tailored to your goals, your taste and your budget.</p>
 
     <div class="code-box" id="codeBox">
       <span class="lbl">Invite code</span>
@@ -91,7 +90,7 @@
   </main>
 
   <script>
-    // Read & sanitise the referral code (alphanumeric only — no injection).
+    // Read & sanitise the referral code (alphanumeric only, no injection).
     (function () {
       var params = new URLSearchParams(window.location.search);
       var ref = (params.get("ref") || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 16);
