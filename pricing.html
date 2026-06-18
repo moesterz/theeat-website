@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pricing — Eat.</title>
-<meta name="description" content="Simple, honest pricing. Solo £4.99, Power £9.99, Household £14.99, Lux £20/mo." />
+<meta name="description" content="Simple, honest pricing. Solo £4.99/mo or Power £9.99/mo. Cancel anytime." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -268,6 +268,13 @@
     .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   }
 
+  /* ── Household + Lux HIDDEN until ready (re-enable: delete this block) ── */
+  .price-card.household, .price-card.lux { display: none !important; }
+  #compareTable thead th.household-col,
+  #compareTable thead th.lux-col { display: none !important; }
+  #compareTable tbody td:nth-child(4),
+  #compareTable tbody td:nth-child(5) { display: none !important; }
+  #compareTable tbody tr.hh-only { display: none !important; }
 </style>
 </head>
 <body>
@@ -370,7 +377,7 @@
       <p>Everything included across all four plans at a glance.</p>
     </div>
     <div class="table-wrap reveal">
-      <table>
+      <table id="compareTable">
         <thead>
           <tr>
             <th style="width:36%">Feature</th>
@@ -396,13 +403,8 @@
           <tr><td class="table-section-head" colspan="5">Advanced features</td></tr>
           <tr><td>Photo → Macros AI scanner</td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td></tr>
           <tr><td>Multiple profiles</td><td>1</td><td>1</td><td>Up to 5</td><td>Up to 5</td></tr>
-          <tr><td>Shared grocery list</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td></tr>
-          <tr><td>Mixed-goal household planning</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td></tr>
-          <tr><td class="table-section-head" colspan="5">Eat Lux</td></tr>
-          <tr><td>Fine-dining tasting menus</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td></tr>
-          <tr><td>Wine pairings</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td></tr>
-          <tr><td>Lux editorial theme (Dark + Light)</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td></tr>
-          <tr><td>Course-by-course cook mode</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td></tr>
+          <tr class="hh-only"><td>Shared grocery list</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td></tr>
+          <tr class="hh-only"><td>Mixed-goal household planning</td><td><span class="check-n">–</span></td><td><span class="check-n">–</span></td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -435,7 +437,6 @@
           <li><a href="index.html#how">How it works</a></li>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="index.html#lux">Eat Lux</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -474,7 +475,7 @@
     { q: "Can I switch plans?", a: "Yes. Upgrade or downgrade at any time from Settings → Subscription inside the app. Upgrades take effect immediately (prorated). Downgrades take effect at the next renewal date." },
     { q: "Do you offer a free trial?", a: "Yes — your first week is free when you download the app. No payment details required to start." },
     { q: "Can I get a refund?", a: "Refunds are handled by Apple. Visit <a href='https://reportaproblem.apple.com' target='_blank'>reportaproblem.apple.com</a> within 90 days of purchase. If you have trouble, email <a href='mailto:support@theeat.app'>support@theeat.app</a> and we'll help." },
-    { q: "Is there a family or annual discount?", a: "Household tier already covers up to 5 people for £14.99/mo, making it the most cost-effective for shared use. Annual billing coming soon — join our support mailing list to be notified." },
+    { q: "Is there an annual discount?", a: "Annual billing is coming soon — join our support mailing list to be notified." },
   ];
 
   const list = document.getElementById('faq-list');
