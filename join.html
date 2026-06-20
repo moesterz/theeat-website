@@ -174,17 +174,6 @@
       <div class="gift-txt" id="gift-txt"><b>Your first week is on us.</b> Start free, no charge until you're hooked.</div>
     </div>
 
-    <!-- Visible invite code so a fresh App Store install can enter it in-app
-         (the ?ref= link can't deep-link into an app that isn't installed yet). -->
-    <div id="code-wrap" style="display:none; margin:4px 0 22px;">
-      <div style="font-size:11px; font-weight:700; letter-spacing:0.12em; color:var(--mid); text-transform:uppercase; margin-bottom:8px;">Your invite code</div>
-      <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-        <span id="code-val" style="font-family:'DM Serif Display',serif; font-size:28px; letter-spacing:3px; color:var(--text);">––––––</span>
-        <button id="code-copy" type="button" style="border:1px solid #e8ddd0; background:#fff; color:#ff6b35; font-weight:700; font-size:13px; padding:8px 14px; border-radius:10px; cursor:pointer;">Copy</button>
-      </div>
-      <div style="font-size:12.5px; color:var(--mid); margin-top:10px; line-height:1.5;">After you install Eat, tap <b>"Have an invite code?"</b> on the plans screen and enter this code so your friend gets their free week.</div>
-    </div>
-
     <!-- When the App Store listing is live, swap href for the App Store URL. -->
     <a class="cta" id="cta" href="https://theeat.app">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .7 1.1 1.6 2.3 2.8 2.2 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1.1 2.7-2.1.8-1.2 1.2-2.4 1.2-2.4s-2.3-.9-2.3-3.5zM14.2 5.9c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.3-.6.7-1.1 1.7-1 2.7 1 0 2-.5 2.7-1.1z"/></svg>
@@ -208,20 +197,19 @@
       // Capture & stash the referral code (alphanumeric only).
       var ref = (params.get('ref') || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 16);
       if (ref) {
-        try { localStorage.setItem('eat_ref', ref); } catch (e) {}
         var code = ref.toUpperCase();
-        var wrap = document.getElementById('code-wrap');
-        var val = document.getElementById('code-val');
-        if (wrap && val) {
-          val.textContent = code;
-          wrap.style.display = 'block';
-          var btn = document.getElementById('code-copy');
-          if (btn) btn.addEventListener('click', function () {
-            if (navigator.clipboard) navigator.clipboard.writeText(code);
-            btn.textContent = 'Copied';
-            setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
-          });
-        }
+        try { localStorage.setItem('eat_ref', code); } catch (e) {}
+        // No codes shown to the user. When they tap "Get Eat" (a user gesture, so
+        // iOS Safari allows the clipboard write), drop "EAT-REF:<CODE>" onto the
+        // clipboard. On the app's first-ever launch it reads that and credits the
+        // referrer automatically — no typing, no code UI.
+        var cta = document.getElementById('cta');
+        if (cta) cta.addEventListener('click', function (e) {
+          if (!navigator.clipboard) return;            // no API → just navigate
+          e.preventDefault();                          // finish the copy first
+          var go = function () { window.location.href = cta.getAttribute('href'); };
+          navigator.clipboard.writeText('EAT-REF:' + code).then(go, go);
+        });
       }
 
       // Personalise from a name if one was passed.
