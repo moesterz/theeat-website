@@ -34,6 +34,60 @@
     "foot.contact": { en: "Contact us", ar: "تواصل معنا" },
     "foot.privacy": { en: "Privacy policy", ar: "سياسة الخصوصية" },
     "foot.terms":   { en: "Terms of use", ar: "شروط الاستخدام" },
+    "foot.howitworks": { en: "How it works", ar: "كيف يعمل" },
+    "foot.features": { en: "Features", ar: "المميزات" },
+
+    // ── home: "built for" strip ──
+    "strip.builtFor":      { en: "Built for", ar: "مصمّم لـ" },
+    "strip.students":      { en: "Students", ar: "الطلاب" },
+    "strip.lifters":       { en: "Lifters", ar: "رافعي الأثقال" },
+    "strip.families":      { en: "Families", ar: "العائلات" },
+    "strip.professionals": { en: "Busy professionals", ar: "المحترفون المشغولون" },
+    "strip.homecooks":     { en: "Home cooks", ar: "طهاة المنزل" },
+
+    // ── home: how it works ──
+    "how.eyebrow": { en: "How it works", ar: "كيف يعمل" },
+    "how.h2":  { en: "Three minutes to<br/><em>a full week</em> of meals.", ar: "ثلاث دقائق تكفي<br/>لـ<em>أسبوع كامل</em> من الوجبات." },
+    "how.p":   { en: "No spreadsheet. No paywalls hiding the good stuff. Just a quick conversation, and a plan that feels like it was made for you. Because it was.", ar: "بلا جداول. وبلا حجبٍ للمميزات خلف الدفع. مجرّد محادثة سريعة، وخطة تشعر أنها صُمّمت لك. لأنها كذلك فعلاً." },
+    "how.s1h": { en: "Tell us about <em class=\"serif-i\">you</em>", ar: "أخبرنا <em class=\"serif-i\">عنك</em>" },
+    "how.s1p": { en: "Your goals, your taste, your dislikes, your schedule. Even what's already in your fridge. We listen first, plan second.", ar: "أهدافك، وذوقك، وما لا تحب، وجدولك. وحتى ما يوجد في ثلاجتك. نستمع أولاً، ونخطّط ثانياً." },
+    "how.s2h": { en: "Get a plan that <em class=\"serif-i\">fits</em>", ar: "احصل على خطة <em class=\"serif-i\">تناسبك</em>" },
+    "how.s2p": { en: "A full week of meals tailored to your goal, your cooking level, and the time you actually have. Swap anything in one tap.", ar: "أسبوع كامل من الوجبات مُفصّل على هدفك، ومستوى طبخك، والوقت المتاح لك فعلاً. بدّل أي وجبة بنقرة واحدة." },
+    "how.s3h": { en: "Shop, cook, <em class=\"serif-i\">enjoy</em>", ar: "تسوّق، اطبخ، <em class=\"serif-i\">استمتع</em>" },
+    "how.s3p": { en: "Auto-built grocery lists. Step-by-step cook mode. Smart leftovers. The boring parts of eating well, finally automated.", ar: "قوائم تسوّق تُبنى تلقائياً. وضع طبخ خطوة بخطوة. بقايا ذكية. أخيراً، أصبحت الأجزاء المملّة من الأكل الصحي تلقائية." },
+
+    // ── home: features ──
+    "f1.eyebrow": { en: "Personal · Not generic", ar: "شخصي · ليس عاماً" },
+    "f1.h": { en: "A plan that knows the <em class=\"serif-i\">difference</em> between Tuesday and Saturday.", ar: "خطة تعرف <em class=\"serif-i\">الفرق</em> بين الثلاثاء والسبت." },
+    "f1.p": { en: "Most meal apps give you the same seven recipes everyone else gets. Eat builds a plan around your real life. Quick lunches on workdays, something slower on weekends, lighter when you said you wanted lighter.", ar: "معظم تطبيقات الوجبات تمنحك نفس الوصفات السبع التي يحصل عليها الجميع. أما Eat فيبني خطة حول حياتك الحقيقية: غداء سريع في أيام العمل، وشيء على مهل في العطلة، وأخفّ حين تطلب الأخفّ." },
+    "f1.b1": { en: "Adapts to your goals: fat loss, muscle, just feel better", ar: "يتكيّف مع أهدافك: خسارة الدهون، أو بناء العضلات، أو مجرد الشعور بتحسّن" },
+    "f1.b2": { en: "Remembers what you loved and hated", ar: "يتذكّر ما أحببته وما كرهته" },
+    "f1.b3": { en: "Respects your schedule and energy", ar: "يحترم جدولك وطاقتك" },
+    "f1.cardLabel": { en: "Lose 5lb · 12 weeks", ar: "خسارة ٥ أرطال · ١٢ أسبوعاً" },
+    "f1.cardMeta": { en: "On track this week", ar: "على المسار هذا الأسبوع" },
+
+    "f2.eyebrow": { en: "Less waste · Lower cost", ar: "هدر أقل · تكلفة أقل" },
+    "f2.h": { en: "Use what you <em class=\"serif-i\">already have</em> first.", ar: "استخدم ما <em class=\"serif-i\">لديك</em> أولاً." },
+    "f2.p": { en: "Half a bag of rice. Three eggs. That sad bunch of spinach. Tell Eat what's already in your fridge, and your plan starts there, saving you the average household's £1,200 in annual food waste.", ar: "نصف كيس أرز. ثلاث بيضات. تلك الحزمة الذابلة من السبانخ. أخبر Eat بما في ثلاجتك، فتبدأ خطتك من هناك، موفّراً ما يعادل ١٢٠٠£ من هدر الطعام السنوي لمتوسط الأسرة." },
+    "f2.b1": { en: "Auto-generated grocery list, store-aware", ar: "قائمة تسوّق تلقائية، تراعي متاجرك" },
+    "f2.b2": { en: "Smart leftovers, one cook two meals", ar: "بقايا ذكية، طبخة واحدة لوجبتين" },
+    "f2.b3": { en: "Optional pantry scan", ar: "مسح اختياري للمؤن" },
+    "f2.cardLabel": { en: "Saved £42", ar: "وفّرت ٤٢£" },
+    "f2.cardMeta": { en: "this week", ar: "هذا الأسبوع" },
+
+    "f3.eyebrow": { en: "Save · Remake · Share", ar: "احفظ · أعِد · شارك" },
+    "f3.h": { en: "The meals you loved, <em class=\"serif-i\">one tap</em> away.", ar: "الوجبات التي أحببتها، على <em class=\"serif-i\">بُعد نقرة</em>." },
+    "f3.p": { en: "Save anything you love and it stays in your library forever. Remake any meal in one tap, with the macros and grocery list automatically pulled forward. Share favourites with anyone in your household.", ar: "احفظ أي وجبة تحبها وتبقى في مكتبتك للأبد. أعِد تحضير أي وجبة بنقرة واحدة، مع جلب الماكروز وقائمة التسوّق تلقائياً. وشارك المفضّلة مع أي فرد في منزلك." },
+    "f3.b1": { en: "Unlimited saved meals · no caps", ar: "وجبات محفوظة بلا حدود · بلا قيود" },
+    "f3.b2": { en: "Smart \"Remake\" pulls forward the shop", ar: "‏«إعادة» ذكية تجلب قائمة التسوّق تلقائياً" },
+    "f3.b3": { en: "Family share, one library multiple cooks", ar: "مشاركة عائلية، مكتبة واحدة لعدة طهاة" },
+    "f3.cardLabel": { en: "62 saved", ar: "٦٢ محفوظة" },
+    "f3.cardMeta": { en: "Across 4 categories", ar: "في ٤ فئات" },
+
+    // ── home: closing CTA ──
+    "cta.h2":   { en: "Ready to <em>eat well?</em>", ar: "جاهز <em>لتأكل جيداً؟</em>" },
+    "cta.p":    { en: "Start planning in minutes. Your first week is on us.", ar: "ابدأ التخطيط في دقائق. أسبوعك الأول علينا." },
+    "cta.meta": { en: "7-day free trial · Cancel anytime · Solo from £4.99/mo", ar: "تجربة مجانية ٧ أيام · ألغِ في أي وقت · Solo من ٤٫٩٩£ شهرياً" },
   };
 
   function pickLang() {
