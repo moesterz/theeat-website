@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="mocks.css" />
 <style>
   :root {
@@ -1297,6 +1298,12 @@
     .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   }
 
+  /* ── Arabic / RTL ── */
+  html[dir="rtl"] body{font-family:"Tajawal","DM Sans",-apple-system,system-ui,sans-serif}
+  html[dir="rtl"] .serif,html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3{font-family:"Amiri","DM Serif Display",serif}
+  html[dir="rtl"] .phones{direction:ltr}
+  .lang-btn{background:none;border:0;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;color:#5c3d1e;padding:0}
+  .lang-btn:hover{color:#ff6b35}
 </style>
 </head>
 <body>
@@ -1309,10 +1316,11 @@
       
     </a>
         <nav class="nav-links">
-      <a href="pricing.html">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="login.html">Sign in</a>
-      <a href="checkout.html" class="nav-cta">Get Eat</a>
+      <a href="pricing.html" data-i18n="nav.pricing">Pricing</a>
+      <a href="faq.html" data-i18n="nav.faq">FAQ</a>
+      <a href="login.html" data-i18n="nav.signin">Sign in</a>
+      <button type="button" class="lang-btn" data-lang-btn>عربي</button>
+      <a href="checkout.html" class="nav-cta" data-i18n="nav.getEat">Get Eat</a>
     </nav>
   </div>
 </header>
@@ -1324,25 +1332,25 @@
       <div class="hero-copy">
         <div class="hero-eyebrow-row">
           <span class="dot"></span>
-          <span>Available on iOS</span>
+          <span data-i18n="hero.available">Available on iOS</span>
         </div>
-        <h1 class="serif">Meals<br/>built <em>around you.</em></h1>
-        <p class="lede">Tell Eat what you like, what you don't, and what's in your fridge. We'll plan the week, write your grocery list, and walk you through cooking, so you can stop thinking about food and just eat.</p>
+        <h1 class="serif" data-i18n-html="hero.h1">Meals<br/>built <em>around you.</em></h1>
+        <p class="lede" data-i18n="hero.lede">Tell Eat what you like, what you don't, and what's in your fridge. We'll plan the week, write your grocery list, and walk you through cooking, so you can stop thinking about food and just eat.</p>
 
         <div class="hero-ctas">
           <a href="checkout.html" class="btn-appstore">
-            <span class="appstore-text"><small>Your first week is free</small><strong>Start your free week</strong></span>
+            <span class="appstore-text"><small data-i18n="hero.ctaSmall">Your first week is free</small><strong data-i18n="hero.ctaStrong">Start your free week</strong></span>
           </a>
           <a href="#how" class="btn-ghost">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-            See how it works
+            <span data-i18n="hero.see">See how it works</span>
           </a>
         </div>
 
         <div class="hero-meta">
-          <span>7-day free trial</span>
+          <span data-i18n="hero.metaTrial">7-day free trial</span>
           <div class="hero-meta-sep"></div>
-          <span>Solo from £4.99/mo</span>
+          <span data-i18n="hero.metaFrom">Solo from £4.99/mo</span>
         </div>
       </div>
 
@@ -1880,5 +1888,6 @@
 </script>
 
 <script src="currency.js"></script>
+<script src="lang.js"></script>
 </body>
 </html>
