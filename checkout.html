@@ -324,7 +324,7 @@
     const payLabel = () => (plan() === "solo" ? "Start free trial" : "Subscribe");
     function render() {
       const annual = sw.dataset.annual === "true", p = plan(), P = PRICES[CUR];
-      const hasTrial = (p === "solo");              // Power has no free trial — charged today
+      const hasTrial = (p === "solo" && !userTrialed);   // Solo trial, but only if this account hasn't trialed before
       const total = annual ? P.yr[p] : P.mo[p];
       const per = annual ? " / year" : " / month";
       for (const k of ["solo", "power"]) {
@@ -356,8 +356,8 @@
 
     // ── Require a signed-in Eat account (Firebase) before checkout ──
     const btn = $("pay-btn"), err = $("err"), payHint = $("pay-hint");
-    let user = null;
-    onAuthStateChanged(auth, (u) => {
+    let user = null, userTrialed = false;
+    onAuthStateChanged(auth, async (u) => {
       user = u;
       if (u) {
         $("auth-out").hidden = true; $("auth-in").hidden = false;
@@ -366,9 +366,17 @@
         $("acct-email").textContent = u.email || "";
         $("acct-avatar").textContent = (name[0] || "E").toUpperCase();
         btn.disabled = false; payHint.style.display = "none";
+        // Has this account already used a free trial? (then Solo is charged today too)
+        try {
+          const token = await u.getIdToken();
+          const s = await (await fetch(WORKER + "/subscription/status", { headers: { Authorization: "Bearer " + token } })).json();
+          userTrialed = !!s.trialed;
+        } catch (_) { userTrialed = false; }
+        render();
       } else {
         $("auth-out").hidden = false; $("auth-in").hidden = true;
         btn.disabled = true; payHint.style.display = "";
+        userTrialed = false; render();
       }
     });
     $("acct-switch").addEventListener("click", async () => { await signOut(auth); });
