@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Checkout — Eat.</title>
-<meta name="description" content="Start your free week of Eat. Choose Solo or Power, you won't be charged for 7 days." />
+<meta name="description" content="Start your Eat subscription. Solo includes a free week. Choose Solo or Power, cancel anytime." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -178,8 +178,8 @@
 
   <header class="wrap co-head">
     <span class="eyebrow">Checkout</span>
-    <h1>Start your <em>free week.</em></h1>
-    <p class="lede">Pick a plan, you won't be charged for 7 days, and you can cancel any time before then.</p>
+    <h1>Choose your <em>plan.</em></h1>
+    <p class="lede">Solo comes with a free week. Power starts today. Cancel anytime.</p>
   </header>
 
   <main class="wrap">
@@ -259,19 +259,19 @@
         </div>
         <div class="sum-rows">
           <div class="sum-row"><span id="sum-line-lbl">Power, monthly</span><span class="v" id="sum-line-val">£9.99</span></div>
-          <div class="sum-row free"><span>7-day free trial</span><span class="v" id="sum-trial-val">–£9.99</span></div>
+          <div class="sum-row free" id="sum-trial-row"><span>7-day free trial</span><span class="v" id="sum-trial-val">–£9.99</span></div>
         </div>
-        <div class="sum-due"><span class="lbl">Due today</span><span class="amt">£0.00</span></div>
-        <p class="sum-after">Then <b id="sum-after-amt">£9.99 / month</b> starting <b id="sum-date">—</b>, and you can cancel any time before then.</p>
+        <div class="sum-due"><span class="lbl">Due today</span><span class="amt" id="sum-due-val">£0.00</span></div>
+        <p class="sum-after" id="sum-after">Then <b id="sum-after-amt">£9.99 / month</b> starting <b id="sum-date">—</b>, cancel anytime before then.</p>
         <button type="submit" class="btn" id="pay-btn" disabled>Start free trial</button>
-        <div class="pay-hint" id="pay-hint">Sign in above to start your trial.</div>
+        <div class="pay-hint" id="pay-hint">Sign in above to continue.</div>
         <div class="err" id="err"></div>
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Secured by Stripe
         </div>
         <ul class="recap">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2f9e5f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No charge for 7 days</li>
+          <li id="recap-trial"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2f9e5f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>No charge for 7 days</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2f9e5f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cancel anytime, in two taps</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2f9e5f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Switch plans whenever you like</li>
         </ul>
@@ -321,8 +321,12 @@
       const d = new Date(); d.setDate(d.getDate() + 7);
       return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     }
+    const payLabel = () => (plan() === "solo" ? "Start free trial" : "Subscribe");
     function render() {
       const annual = sw.dataset.annual === "true", p = plan(), P = PRICES[CUR];
+      const hasTrial = (p === "solo");              // Power has no free trial — charged today
+      const total = annual ? P.yr[p] : P.mo[p];
+      const per = annual ? " / year" : " / month";
       for (const k of ["solo", "power"]) {
         const amtEl = document.querySelector('.plan-opt[data-plan="' + k + '"] .amt');
         if (amtEl) amtEl.textContent = annual ? fmt(P.yr[k]) : fmt(P.mo[k]);
@@ -333,19 +337,19 @@
       $("sum-name").textContent = PLANS[p].name;
       $("sum-sub").textContent = PLANS[p].sub;
       $("sum-cadence").textContent = annual ? ", annual" : ", monthly";
-      if (annual) {
-        const total = P.yr[p];
-        $("sum-line-lbl").textContent = PLANS[p].name + ", annual";
-        $("sum-line-val").textContent = fmt(total);
+      $("sum-line-lbl").textContent = PLANS[p].name + (annual ? ", annual" : ", monthly");
+      $("sum-line-val").textContent = fmt(total);
+      $("sum-trial-row").style.display = hasTrial ? "" : "none";
+      $("recap-trial").style.display = hasTrial ? "" : "none";
+      if (hasTrial) {
         $("sum-trial-val").textContent = "–" + fmt(total);
-        $("sum-after-amt").textContent = fmt(total) + " / year";
+        $("sum-due-val").textContent = fmt(0);
+        $("sum-after").innerHTML = "Then <b>" + fmt(total) + per + "</b> starting <b>" + trialEnd() + "</b>, cancel anytime before then.";
       } else {
-        $("sum-line-lbl").textContent = PLANS[p].name + ", monthly";
-        $("sum-line-val").textContent = fmt(P.mo[p]);
-        $("sum-trial-val").textContent = "–" + fmt(P.mo[p]);
-        $("sum-after-amt").textContent = fmt(P.mo[p]) + " / month";
+        $("sum-due-val").textContent = fmt(total);
+        $("sum-after").innerHTML = "Renews automatically at <b>" + fmt(total) + per + "</b>. Cancel anytime.";
       }
-      $("sum-date").textContent = trialEnd();
+      $("pay-btn").textContent = payLabel();
     }
     sw.addEventListener("click", () => { sw.dataset.annual = sw.dataset.annual !== "true"; render(); });
     document.querySelectorAll('input[name="plan"]').forEach(r => r.addEventListener("change", render));
@@ -390,7 +394,7 @@
         if (data.url) { window.location.href = data.url; return; }
         err.textContent = "Couldn't start checkout, please try again.";
       } catch (_) { err.textContent = "Network error, please try again."; }
-      btn.disabled = false; btn.textContent = "Start free trial";
+      btn.disabled = false; btn.textContent = payLabel();
     });
     render();
   </script>
