@@ -9,7 +9,7 @@
   var P = {
     gbp: { sym: "£",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 49.99, power: 99.99 } },
     usd: { sym: "$",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 49.99, power: 99.99 } },
-    sar: { sym: "SAR ", dp: 0, mo: { solo: 20,   power: 40 },   yr: { solo: 200,   power: 400 } },
+    sar: { sym: "SAR ", dp: 2, mo: { solo: 19.99, power: 39.99 }, yr: { solo: 199.99, power: 399.99 } },
   };
   function fmt(cur, n) { return P[cur].sym + Number(n).toFixed(P[cur].dp); }
   function fill(cur) {
