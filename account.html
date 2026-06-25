@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your account — Eat.</title>
+<meta name="description" content="Manage your Eat account and subscription." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fdf8f2; --bg-warm: #f7f0e6; --surface: #ffffff;
+    --border: #e8ddd0; --border-2: #ddd0be;
+    --brand: #ff6b35; --blue: #4a90d9; --text-dark: #2d1f0e; --text-mid: #5c3d1e; --muted: #9c8572;
+    --green: #2f9e5f;
+    --font-serif: "DM Serif Display","Times New Roman",serif;
+    --font-sans: "DM Sans",-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text-dark);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--brand);color:#fff}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(253,248,242,0.88);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1240px;margin:0 auto;padding:0 32px}
+  .brand{display:inline-flex;align-items:center;gap:12px}
+  .brand-mark{width:36px;height:36px;border-radius:9px;background:radial-gradient(circle at 30% 25%,#ffb088 0%,#ff6b35 55%,#e25420 100%);box-shadow:0 6px 16px rgba(255,107,53,.32),0 0 0 1px rgba(0,0,0,.04);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden}
+  .brand-mark::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.28) 0%,transparent 35%)}
+  .brand-mark span{position:relative;z-index:1;font-family:var(--font-serif);font-style:italic;font-weight:700;color:#fffaf3;font-size:30px;line-height:1;letter-spacing:-.04em;text-shadow:0 2px 8px rgba(120,40,10,.28);transform:translate(0,-1px)}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
+  .nav-links a:hover{color:var(--brand)}
+  .nav-cta{background:transparent;border:1.5px solid var(--border-2);color:var(--text-dark) !important;display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:14px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--font-sans)}
+  .nav-cta:hover{border-color:var(--brand);color:var(--brand) !important}
+  @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}.nav-inner{padding:0 22px}}
+
+  .main{flex:1;width:100%;max-width:680px;margin:0 auto;padding:46px 24px 64px}
+  .page-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(30px,5vw,40px);letter-spacing:-.02em;margin:0 0 4px}
+  .page-title em{font-style:italic;color:var(--brand)}
+  .page-sub{color:var(--text-mid);margin:0 0 28px;font-size:15px}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:0 2px 8px rgba(45,31,14,.06);padding:26px 26px;margin-bottom:18px}
+  .card h2{font-family:var(--font-serif);font-weight:400;font-size:20px;margin:0 0 18px;letter-spacing:-.01em}
+
+  .who{display:flex;align-items:center;gap:16px}
+  .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(140deg,#ffb088,#ff6b35);color:#fff;font-family:var(--font-serif);font-size:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .who-name{font-weight:600;font-size:17px}
+  .who-email{color:var(--muted);font-size:14px;margin-top:2px}
+
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px}
+  .badge.active{background:#e7f6ec;color:#1e7a45}
+  .badge.none{background:var(--bg-warm);color:var(--muted)}
+  .sub-tier{font-family:var(--font-serif);font-size:24px;margin:14px 0 2px}
+  .sub-note{color:var(--muted);font-size:13.5px;line-height:1.5}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+  .btn{height:48px;padding:0 22px;border:0;border-radius:13px;background:linear-gradient(140deg,var(--brand),#ff7d44);color:#fff;font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.3);display:inline-flex;align-items:center;justify-content:center;transition:transform .15s,opacity .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:disabled{opacity:.6;cursor:default;transform:none}
+  .btn-ghost{height:48px;padding:0 22px;border:1.5px solid var(--border-2);border-radius:13px;background:var(--surface);color:var(--text-dark);font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
+  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+  .msg{font-size:13px;margin-top:14px;line-height:1.5;min-height:16px}
+  .msg.ok{color:var(--green)} .msg.err{color:#d24b32}
+
+  .sync{display:flex;gap:11px;align-items:flex-start;background:var(--bg-warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;font-size:13px;color:var(--text-mid);line-height:1.55}
+  .sync strong{color:var(--text-dark)}
+  .loading{color:var(--muted);font-size:14px;padding:8px 0}
+  @media(max-width:520px){.main{padding:32px 18px 48px}.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html"><span class="brand-mark"><span>e.</span></span></a>
+      <nav class="nav-links">
+        <a href="pricing.html">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <button class="nav-cta" id="signout">Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <div id="loading" class="loading">Loading your account…</div>
+
+    <div id="content" style="display:none">
+      <h1 class="page-title">Your <em>account.</em></h1>
+      <p class="page-sub">Manage your details and subscription.</p>
+
+      <div class="card">
+        <div class="who">
+          <div class="avatar" id="avatar">E</div>
+          <div>
+            <div class="who-name" id="who-name">—</div>
+            <div class="who-email" id="who-email">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Subscription</h2>
+        <div id="sub-loading" class="loading">Checking your subscription…</div>
+        <div id="sub-body" style="display:none">
+          <span class="badge" id="sub-badge"></span>
+          <div class="sub-tier" id="sub-tier"></div>
+          <div class="sub-note" id="sub-note"></div>
+          <div class="actions" id="sub-actions"></div>
+          <div class="msg" id="sub-msg"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Using the app</h2>
+        <div class="sync">
+          <span aria-hidden="true">📱</span>
+          <div>Sign into the Eat app with <strong id="sync-email">this email</strong> and your subscription unlocks automatically — no codes, no extra steps.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { auth, WORKER } from "./firebase-init.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    const $ = id => document.getElementById(id);
+    const TIER = { power: "Power", solo: "Solo" };
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { location.replace("login.html?next=account.html"); return; }
+      try { await user.reload(); } catch (_) {}
+      user = auth.currentUser || user;
+      $("loading").style.display = "none";
+      $("content").style.display = "";
+
+      const name = user.displayName || (user.email || "").split("@")[0];
+      const email = user.email || "";
+      $("who-name").textContent = name;
+      $("who-email").textContent = email;
+      $("sync-email").textContent = email || "this email";
+      $("avatar").textContent = (name[0] || "E").toUpperCase();
+
+      await loadSubscription(email);
+    });
+
+    async function loadSubscription(email) {
+      const badge = $("sub-badge"), tier = $("sub-tier"), note = $("sub-note"), actions = $("sub-actions");
+      try {
+        const r = await fetch(WORKER + "/subscription/status?email=" + encodeURIComponent(email));
+        const d = await r.json().catch(() => ({}));
+        $("sub-loading").style.display = "none";
+        $("sub-body").style.display = "";
+        if (d.active) {
+          badge.className = "badge active"; badge.textContent = "Active";
+          tier.textContent = "Eat " + (TIER[d.tier] || "Power");
+          note.textContent = "Your subscription is active. Manage billing, switch plans, or cancel any time.";
+          actions.innerHTML = '<button class="btn-ghost" id="manage">Manage billing</button>';
+          $("manage").onclick = manageBilling;
+        } else {
+          badge.className = "badge none"; badge.textContent = "No active plan";
+          tier.textContent = "Free";
+          note.textContent = "You don't have an active subscription yet. Start your free week any time.";
+          actions.innerHTML = '<a class="btn" href="checkout.html">Start your free week</a>';
+        }
+      } catch (_) {
+        $("sub-loading").style.display = "none"; $("sub-body").style.display = "";
+        $("sub-msg").className = "msg err"; $("sub-msg").textContent = "Couldn't load your subscription. Please refresh.";
+      }
+    }
+
+    async function manageBilling() {
+      const email = auth.currentUser?.email; const m = $("sub-msg");
+      if (!email) return;
+      const btn = $("manage"); btn.disabled = true; btn.textContent = "Sending…";
+      m.className = "msg"; m.textContent = "";
+      try {
+        await fetch(WORKER + "/stripe/portal", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        m.className = "msg ok"; m.textContent = "We've emailed you a secure link to manage your billing. Check your inbox.";
+      } catch (_) { m.className = "msg err"; m.textContent = "Network error, please try again."; }
+      btn.disabled = false; btn.textContent = "Manage billing";
+    }
+
+    $("signout").addEventListener("click", async () => { await signOut(auth); location.replace("login.html"); });
+  </script>
+</body>
+</html>
