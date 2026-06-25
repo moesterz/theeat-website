@@ -135,21 +135,19 @@
       <h2>2. What data we <em>collect</em></h2>
       <p>We collect only what we need to give you a meal plan that actually works for you.</p>
       <ul>
-        <li><strong>Account data</strong> — your email address, name (optional), and authentication token when you create an account.</li>
-        <li><strong>Food preferences</strong> — dietary requirements, allergies, dislikes, goals, cooking style and any craving prompts you type. This is the heart of what makes your plan yours.</li>
-        <li><strong>Plan and meal data</strong> — the plans we generate, the meals you save, your grocery lists, and cook-mode progress.</li>
-        <li><strong>Photo data (Power / Household / Lux only)</strong> — photos you submit to the Photo → Macros scanner are processed to extract macro information and then deleted. We do not store your food photos.</li>
-        <li><strong>Usage data</strong> — which screens you visit, features you use, and basic device/OS info. Used only to improve the app. Never linked to ad profiles.</li>
-        <li><strong>Crash and diagnostic data</strong> — anonymous crash logs to fix bugs. No personal information is included.</li>
+        <li><strong>Account data</strong> — your email address, name, date of birth, and a user ID when you create an account.</li>
+        <li><strong>Food preferences</strong> — dietary requirements, allergies, dislikes, goals, cooking style and any craving prompts you type. This stays on your device and is sent to our AI only to generate your plan.</li>
+        <li><strong>Plan and meal data</strong> — the plans we generate, the meals you save, your grocery lists, and cook-mode progress. These are stored on your device.</li>
+        <li><strong>Photo data (Power only)</strong> — photos you submit to the photo logging scanner are processed to estimate macros and then discarded. We do not store your food photos.</li>
+        <li><strong>Approximate location</strong> — coarse location, used to suggest nearby supermarkets and regional prices. We do not collect your precise location.</li>
       </ul>
     </div>
 
     <div class="doc-section">
       <h2>3. How we use your data</h2>
       <ul>
-        <li>To generate and improve your meal plans using our AI models.</li>
-        <li>To maintain your account, process your subscription, and send you essential service emails (receipts, password resets).</li>
-        <li>To improve the app — aggregate, anonymised usage patterns help us prioritise features and fix problems.</li>
+        <li>To generate your meal plans, grocery lists and macro estimates.</li>
+        <li>To maintain your account, process your subscription, and send essential service emails (verification codes, receipts).</li>
         <li>To comply with legal obligations where required by law.</li>
       </ul>
       <p>We do not use your personal data for advertising, do not build ad profiles, and do not share personal data with third-party marketers.</p>
@@ -159,17 +157,17 @@
       <h2>4. Who we share data <em>with</em></h2>
       <p>We share your data only with the handful of trusted service providers we need to run the app:</p>
       <ul>
-        <li><strong>Cloud infrastructure</strong> — servers and databases hosted on AWS (EU regions) that store and process your data on our behalf.</li>
-        <li><strong>Payment processing</strong> — Apple handles all subscription billing via In-App Purchase. We never receive or store your card details.</li>
-        <li><strong>AI processing</strong> — meal-plan generation uses large language models. Food preference data is sent to these models only to generate your plan and is not used to train third-party models.</li>
-        <li><strong>Analytics</strong> — we use aggregate, anonymised analytics. No personally identifiable data leaves the app in analytics events.</li>
+        <li><strong>Authentication</strong> — Google Firebase Authentication manages account sign-in (email, Google, Apple).</li>
+        <li><strong>Backend &amp; storage</strong> — Cloudflare (Workers and KV) stores your account, subscription status and date of birth, and routes app requests.</li>
+        <li><strong>Payment processing</strong> — on iOS, Apple handles billing via In-App Purchase; on the web, Stripe processes subscriptions. We never receive or store your card details.</li>
+        <li><strong>AI processing</strong> — meal-plan generation and photo macro estimates use large language models (Anthropic). Your data is sent only to provide the feature and is not used to train third-party models.</li>
       </ul>
       <p>All third-party providers are bound by data processing agreements and are prohibited from using your data for any purpose other than providing services to us.</p>
     </div>
 
     <div class="doc-section">
       <h2>5. Data storage &amp; security</h2>
-      <p>Your data is stored on servers in the European Union. We use industry-standard encryption in transit (TLS 1.2+) and at rest. Access is restricted to personnel who need it to operate and improve the service.</p>
+      <p>Your account data is held by our infrastructure providers (Google Firebase and Cloudflare) and may be processed in the United States and other countries where they operate. We use industry-standard encryption in transit (TLS 1.2+). Access is restricted to personnel who need it to operate the service.</p>
       <p>We retain account and meal-plan data for as long as your account is active. If you delete your account, all personal data is deleted within 30 days. Anonymised, aggregated data (with no link to you) may be retained for product improvement.</p>
     </div>
 
