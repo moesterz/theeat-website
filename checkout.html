@@ -191,7 +191,7 @@
             <span class="on" id="lbl-mo">Monthly</span>
             <button type="button" class="switch" id="switch" data-annual="false" aria-label="Toggle annual billing"><span class="knob"></span></button>
             <span id="lbl-yr">Annual</span>
-            <span class="save-pill">Save ~30%</span>
+            <span class="save-pill">2 months free</span>
           </div>
           <div class="plan-opts">
             <label class="plan-opt" data-plan="solo">
@@ -307,9 +307,9 @@
     // Local pricing — Stripe carries GBP/USD/SAR amounts on each price; the worker
     // picks the currency by country, and we display the matching one here.
     const PRICES = {
-      gbp:  { sym: "£",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 41.99, power: 83.99 } },
-      usd:  { sym: "$",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 41.99, power: 83.99 } },
-      sar:  { sym: "SAR ", dp: 0, mo: { solo: 20,   power: 40 },   yr: { solo: 168,   power: 336 } },
+      gbp:  { sym: "£",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 49.99, power: 99.99 } },
+      usd:  { sym: "$",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 49.99, power: 99.99 } },
+      sar:  { sym: "SAR ", dp: 0, mo: { solo: 20,   power: 40 },   yr: { solo: 200,   power: 400 } },
     };
     let CUR = "gbp";
     const $ = id => document.getElementById(id);
