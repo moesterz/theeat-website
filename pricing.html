@@ -309,7 +309,7 @@
       <div class="price-card solo">
         <div class="price-badge ghost" aria-hidden="true">placeholder</div>
         <div class="price-tier">Solo</div>
-        <div class="price-amount"><sup>£</sup>4.99<sub>/mo</sub></div>
+        <div class="price-amount"><span data-price="solo.mo">£4.99</span><sub>/mo</sub></div>
         <div class="price-tagline">Personal planning for one.</div>
         <hr class="price-divider" />
         <ul class="price-features">
@@ -324,7 +324,7 @@
       <div class="price-card power">
         <div class="price-badge">Most popular</div>
         <div class="price-tier">Power</div>
-        <div class="price-amount"><sup>£</sup>9.99<sub>/mo</sub></div>
+        <div class="price-amount"><span data-price="power.mo">£9.99</span><sub>/mo</sub></div>
         <div class="price-tagline">For the food-obsessed.</div>
         <hr class="price-divider" />
         <ul class="price-features">
@@ -352,8 +352,8 @@
         <thead>
           <tr>
             <th style="width:36%">Feature</th>
-            <th><span class="tier-label">Solo</span><span class="tier-price">£4.99/mo</span></th>
-            <th class="power-col"><span class="tier-label">Power</span><span class="tier-price">£9.99/mo</span></th>
+            <th><span class="tier-label">Solo</span><span class="tier-price" data-price="solo.mo" data-price-suffix="/mo">£4.99/mo</span></th>
+            <th class="power-col"><span class="tier-label">Power</span><span class="tier-price" data-price="power.mo" data-price-suffix="/mo">£9.99/mo</span></th>
             <th class="household-col"><span class="tier-label">Household</span><span class="tier-price">£14.99/mo</span></th>
             <th class="lux-col"><span class="tier-label">Lux</span><span class="tier-price">£20/mo</span></th>
           </tr>
