@@ -135,6 +135,14 @@
   .btn:disabled{opacity:.6;cursor:default;transform:none}
   .secure{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px;font-size:12px;color:var(--muted)}
   .err{color:#d24b32;font-size:13px;text-align:center;margin-top:12px;min-height:16px}
+  .acct-btn{display:inline-flex;align-items:center;justify-content:center;height:50px;padding:0 22px;border-radius:13px;background:var(--text-dark);color:#fdf8f2;font-family:var(--font-sans);font-weight:600;font-size:15px}
+  .acct-btn:hover{background:#1a1108}
+  .acct-row{display:flex;align-items:center;gap:14px}
+  .acct-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(140deg,#ffb088,#ff6b35);color:#fff;font-family:var(--font-serif);font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .acct-meta{flex:1;min-width:0}
+  .acct-name{font-weight:600;font-size:15.5px}
+  .acct-email{color:var(--muted);font-size:13px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acct-switch{flex-shrink:0;background:none;border:0;color:var(--brand);font-weight:600;font-size:13px;cursor:pointer;font-family:var(--font-sans)}
   .recap{list-style:none;margin:20px 0 0;padding-top:18px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
   .recap li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text-mid);line-height:1.4}
   .recap svg{flex-shrink:0;margin-top:1px}
@@ -162,7 +170,7 @@
       <nav class="nav-links">
         <a href="pricing.html">Pricing</a>
         <a href="faq.html">FAQ</a>
-        <a href="signin.html">Sign in</a>
+        <a href="login.html">Sign in</a>
         <a href="checkout.html" class="nav-cta">Get Eat</a>
       </nav>
     </div>
@@ -214,30 +222,24 @@
         </section>
 
         <section class="step card">
-          <div class="step-head"><div class="step-num">2</div><h2>Verify your email</h2></div>
-          <div class="field">
-            <label for="email">Email address</label>
-            <div class="email-row">
-              <input class="input" type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email"/>
-              <button type="button" class="btn-code" id="send-code">Send code</button>
+          <div class="step-head"><div class="step-num">2</div><h2>Your account</h2></div>
+
+          <div id="auth-out">
+            <p style="font-size:14px;color:var(--text-mid);line-height:1.6;margin:0 0 16px">Sign in or create your Eat account to continue. Your subscription links to this account, so it unlocks automatically in the app.</p>
+            <a class="acct-btn" href="login.html?next=checkout.html">Sign in or create account</a>
+          </div>
+
+          <div id="auth-in" hidden>
+            <div class="acct-row">
+              <div class="acct-avatar" id="acct-avatar">E</div>
+              <div class="acct-meta">
+                <div class="acct-name" id="acct-name">—</div>
+                <div class="acct-email" id="acct-email">—</div>
+              </div>
+              <button type="button" class="acct-switch" id="acct-switch">Not you?</button>
             </div>
+            <p style="font-size:12.5px;color:var(--muted);margin:14px 0 0;line-height:1.5">Your plan links to this account. Sign into the Eat app with the same account and it unlocks automatically.</p>
           </div>
-
-          <div class="verify-row" id="verify-row" hidden>
-            <label for="code">Enter the 6-digit code we emailed you</label>
-            <div class="email-row">
-              <input class="input code-input" type="text" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••"/>
-              <button type="button" class="btn-code" id="verify-code">Verify</button>
-            </div>
-            <div class="vmsg" id="vmsg"></div>
-          </div>
-
-          <div class="verified-badge" id="verified-badge" hidden>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2f9e5f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Email verified</span>
-          </div>
-
-          <p style="font-size:12.5px;color:var(--muted);margin:12px 0 0;line-height:1.5">We verify your email so your subscription syncs to the app. Sign into Eat with this same email and your plan unlocks automatically.</p>
         </section>
 
         <section class="step card">
@@ -262,7 +264,7 @@
         <div class="sum-due"><span class="lbl">Due today</span><span class="amt">£0.00</span></div>
         <p class="sum-after">Then <b id="sum-after-amt">£9.99 / month</b> starting <b id="sum-date">—</b>, and you can cancel any time before then.</p>
         <button type="submit" class="btn" id="pay-btn" disabled>Start free trial</button>
-        <div class="pay-hint" id="pay-hint">Verify your email above to start your trial.</div>
+        <div class="pay-hint" id="pay-hint">Sign in above to start your trial.</div>
         <div class="err" id="err"></div>
         <div class="secure">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -293,151 +295,88 @@
     </div>
   </footer>
 
-  <script>
-    (function () {
-      const WORKER = "https://eat-claude-proxy.mohammed-alsafwani.workers.dev";
-      const PLANS = {
-        solo:  { name: "Solo",  sub: "Your personalised weekly plan, just for you", ico: "icon-solo.png" },
-        power: { name: "Power", sub: "Everything in Solo, plus photo and barcode logging and recipe import", ico: "icon-power.png" },
-      };
-      const MO = { solo: 4.99, power: 9.99 };          // per month
-      const YR_TOTAL = { solo: 41.90, power: 83.90 };  // billed yearly
-      const sw = document.getElementById("switch");
-      const lblMo = document.getElementById("lbl-mo"), lblYr = document.getElementById("lbl-yr");
-      const gbp = n => "£" + n.toFixed(2);
-      const plan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "power";
-      function trialEnd() {
-        const d = new Date(); d.setDate(d.getDate() + 7);
-        return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  <script type="module">
+    import { auth } from "./firebase-init.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    const WORKER = "https://eat-claude-proxy.mohammed-alsafwani.workers.dev";
+    const PLANS = {
+      solo:  { name: "Solo",  sub: "Your personalised weekly plan, just for you", ico: "icon-solo.png" },
+      power: { name: "Power", sub: "Everything in Solo, plus photo and barcode logging and recipe import", ico: "icon-power.png" },
+    };
+    const MO = { solo: 4.99, power: 9.99 };          // per month
+    const YR_TOTAL = { solo: 41.90, power: 83.90 };  // billed yearly
+    const $ = id => document.getElementById(id);
+    const sw = $("switch");
+    const lblMo = $("lbl-mo"), lblYr = $("lbl-yr");
+    const gbp = n => "£" + n.toFixed(2);
+    const plan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "power";
+    function trialEnd() {
+      const d = new Date(); d.setDate(d.getDate() + 7);
+      return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    }
+    function render() {
+      const annual = sw.dataset.annual === "true", p = plan(), P = PLANS[p];
+      document.querySelectorAll(".amt").forEach(el => { if (el.dataset.mo) el.textContent = annual ? el.dataset.yr : el.dataset.mo; });
+      document.querySelectorAll("[data-per]").forEach(el => el.textContent = annual ? "/ mo, billed yearly" : "/ month");
+      lblMo.classList.toggle("on", !annual); lblYr.classList.toggle("on", annual);
+      $("sum-ico").src = P.ico;
+      $("sum-name").textContent = P.name;
+      $("sum-sub").textContent = P.sub;
+      $("sum-cadence").textContent = annual ? ", annual" : ", monthly";
+      if (annual) {
+        const total = YR_TOTAL[p];
+        $("sum-line-lbl").textContent = P.name + ", annual";
+        $("sum-line-val").textContent = gbp(total);
+        $("sum-trial-val").textContent = "–" + gbp(total);
+        $("sum-after-amt").textContent = gbp(total) + " / year (" + gbp(total / 12) + "/mo)";
+      } else {
+        $("sum-line-lbl").textContent = P.name + ", monthly";
+        $("sum-line-val").textContent = gbp(MO[p]);
+        $("sum-trial-val").textContent = "–" + gbp(MO[p]);
+        $("sum-after-amt").textContent = gbp(MO[p]) + " / month";
       }
-      function render() {
-        const annual = sw.dataset.annual === "true", p = plan(), P = PLANS[p];
-        document.querySelectorAll(".amt").forEach(el => { if (el.dataset.mo) el.textContent = annual ? el.dataset.yr : el.dataset.mo; });
-        document.querySelectorAll("[data-per]").forEach(el => el.textContent = annual ? "/ mo, billed yearly" : "/ month");
-        lblMo.classList.toggle("on", !annual); lblYr.classList.toggle("on", annual);
-        document.getElementById("sum-ico").src = P.ico;
-        document.getElementById("sum-name").textContent = P.name;
-        document.getElementById("sum-sub").textContent = P.sub;
-        document.getElementById("sum-cadence").textContent = annual ? ", annual" : ", monthly";
-        if (annual) {
-          const total = YR_TOTAL[p];
-          document.getElementById("sum-line-lbl").textContent = P.name + ", annual";
-          document.getElementById("sum-line-val").textContent = gbp(total);
-          document.getElementById("sum-trial-val").textContent = "–" + gbp(total);
-          document.getElementById("sum-after-amt").textContent = gbp(total) + " / year (" + gbp(total / 12) + "/mo)";
-        } else {
-          document.getElementById("sum-line-lbl").textContent = P.name + ", monthly";
-          document.getElementById("sum-line-val").textContent = gbp(MO[p]);
-          document.getElementById("sum-trial-val").textContent = "–" + gbp(MO[p]);
-          document.getElementById("sum-after-amt").textContent = gbp(MO[p]) + " / month";
-        }
-        document.getElementById("sum-date").textContent = trialEnd();
+      $("sum-date").textContent = trialEnd();
+    }
+    sw.addEventListener("click", () => { sw.dataset.annual = sw.dataset.annual !== "true"; render(); });
+    document.querySelectorAll('input[name="plan"]').forEach(r => r.addEventListener("change", render));
+
+    // ── Require a signed-in Eat account (Firebase) before checkout ──
+    const btn = $("pay-btn"), err = $("err"), payHint = $("pay-hint");
+    let user = null;
+    onAuthStateChanged(auth, (u) => {
+      user = u;
+      if (u) {
+        $("auth-out").hidden = true; $("auth-in").hidden = false;
+        const name = u.displayName || (u.email || "").split("@")[0];
+        $("acct-name").textContent = name;
+        $("acct-email").textContent = u.email || "";
+        $("acct-avatar").textContent = (name[0] || "E").toUpperCase();
+        btn.disabled = false; payHint.style.display = "none";
+      } else {
+        $("auth-out").hidden = false; $("auth-in").hidden = true;
+        btn.disabled = true; payHint.style.display = "";
       }
-      sw.addEventListener("click", () => { sw.dataset.annual = sw.dataset.annual !== "true"; render(); });
-      document.querySelectorAll('input[name="plan"]').forEach(r => r.addEventListener("change", render));
+    });
+    $("acct-switch").addEventListener("click", async () => { await signOut(auth); });
 
-      const btn = document.getElementById("pay-btn"), err = document.getElementById("err");
-      const payHint = document.getElementById("pay-hint");
-
-      // ── Email verification (6-digit code, reuses the app's worker flow) ──
-      const emailEl = document.getElementById("email");
-      const sendBtn = document.getElementById("send-code");
-      const verifyRow = document.getElementById("verify-row");
-      const codeEl = document.getElementById("code");
-      const verifyBtn = document.getElementById("verify-code");
-      const vmsg = document.getElementById("vmsg");
-      const verifiedBadge = document.getElementById("verified-badge");
-      let verified = false, verifiedEmail = "";
-      const validEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
-      function setPay() { btn.disabled = !verified; payHint.style.display = verified ? "none" : ""; }
-      setPay();
-
-      sendBtn.addEventListener("click", async () => {
-        const email = emailEl.value.trim().toLowerCase();
-        vmsg.className = "vmsg"; vmsg.textContent = "";
-        if (!validEmail(email)) { verifyRow.hidden = false; vmsg.className = "vmsg err"; vmsg.textContent = "Please enter a valid email address."; return; }
-        sendBtn.disabled = true; sendBtn.textContent = "Sending…";
-        try {
-          const r = await fetch(WORKER + "/send-verification?email=" + encodeURIComponent(email));
-          const d = await r.json().catch(() => ({}));
-          if (r.ok && d.ok) {
-            verifyRow.hidden = false; codeEl.focus();
-            vmsg.className = "vmsg ok"; vmsg.textContent = "Code sent to " + email + ". Check your inbox (and spam).";
-            sendBtn.textContent = "Resend code";
-          } else if (d.detail === "wait_60s" || d.error === "too_soon") {
-            verifyRow.hidden = false;
-            vmsg.className = "vmsg err"; vmsg.textContent = "Please wait a minute before requesting another code.";
-            sendBtn.textContent = "Resend code";
-          } else if (d.error === "rate_limited") {
-            vmsg.className = "vmsg err"; vmsg.textContent = "Too many code requests today, please try again tomorrow.";
-            sendBtn.textContent = "Send code";
-          } else {
-            vmsg.className = "vmsg err"; vmsg.textContent = "Couldn't send the code, please try again.";
-            sendBtn.textContent = "Send code";
-          }
-        } catch (_) { vmsg.className = "vmsg err"; vmsg.textContent = "Network error, please try again."; sendBtn.textContent = "Send code"; }
-        sendBtn.disabled = false;
-      });
-
-      async function doVerify() {
-        const email = emailEl.value.trim().toLowerCase();
-        const code = codeEl.value.replace(/\s/g, "");
-        vmsg.className = "vmsg"; vmsg.textContent = "";
-        if (code.length < 6) { vmsg.className = "vmsg err"; vmsg.textContent = "Enter the 6-digit code."; return; }
-        verifyBtn.disabled = true; verifyBtn.textContent = "Verifying…";
-        try {
-          const r = await fetch(WORKER + "/verify-code", {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, code }),
-          });
-          const d = await r.json().catch(() => ({}));
-          if (d.ok) {
-            verified = true; verifiedEmail = email;
-            verifyRow.hidden = true; verifiedBadge.hidden = false;
-            emailEl.readOnly = true; sendBtn.style.display = "none";
-            err.textContent = ""; setPay();
-          } else {
-            const map = { incorrect: "That code isn't right, try again.", expired: "That code expired, request a new one.", too_many_attempts: "Too many tries, request a new code." };
-            vmsg.className = "vmsg err"; vmsg.textContent = map[d.error] || "Couldn't verify, please try again.";
-            verifyBtn.disabled = false; verifyBtn.textContent = "Verify";
-          }
-        } catch (_) { vmsg.className = "vmsg err"; vmsg.textContent = "Network error, please try again."; verifyBtn.disabled = false; verifyBtn.textContent = "Verify"; }
-      }
-      verifyBtn.addEventListener("click", doVerify);
-      codeEl.addEventListener("input", () => { if (codeEl.value.replace(/\s/g, "").length === 6) doVerify(); });
-
-      // Editing the email after verifying resets the verified state.
-      emailEl.addEventListener("input", () => {
-        if (verified && emailEl.value.trim().toLowerCase() !== verifiedEmail) {
-          verified = false; verifiedBadge.hidden = true; emailEl.readOnly = false;
-          sendBtn.style.display = ""; sendBtn.disabled = false; sendBtn.textContent = "Send code";
-          setPay();
-        }
-      });
-
-      document.getElementById("co-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = emailEl.value.trim().toLowerCase();
-        err.textContent = "";
-        if (!validEmail(email)) { err.textContent = "Please enter a valid email address."; return; }
-        if (!verified || email !== verifiedEmail) {
-          err.textContent = "Please verify your email first.";
-          verifyRow.hidden = false; codeEl.focus(); return;
-        }
-        btn.disabled = true; btn.textContent = "Loading…";
-        try {
-          const r = await fetch(WORKER + "/stripe/create-checkout", {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly" }),
-          });
-          const data = await r.json();
-          if (data.url) { window.location.href = data.url; return; }
-          err.textContent = "Couldn't start checkout, please try again.";
-        } catch (_) { err.textContent = "Network error, please try again."; }
-        btn.disabled = false; btn.textContent = "Start free trial";
-      });
-      render();
-    })();
+    $("co-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      err.textContent = "";
+      if (!user) { location.href = "login.html?next=checkout.html"; return; }
+      btn.disabled = true; btn.textContent = "Loading…";
+      try {
+        const r = await fetch(WORKER + "/stripe/create-checkout", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: user.email, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly" }),
+        });
+        const data = await r.json();
+        if (data.url) { window.location.href = data.url; return; }
+        err.textContent = "Couldn't start checkout, please try again.";
+      } catch (_) { err.textContent = "Network error, please try again."; }
+      btn.disabled = false; btn.textContent = "Start free trial";
+    });
+    render();
   </script>
 </body>
 </html>
