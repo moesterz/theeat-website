@@ -104,6 +104,10 @@
           <label for="name">Name</label>
           <input class="input" type="text" id="name" autocomplete="name" placeholder="Your name"/>
         </div>
+        <div class="field" id="dob-field" style="display:none">
+          <label for="dob">Date of birth</label>
+          <input class="input" type="date" id="dob" autocomplete="bday"/>
+        </div>
         <div class="field">
           <label for="email">Email address</label>
           <input class="input" type="email" id="email" autocomplete="email" placeholder="you@email.com"/>
@@ -135,7 +139,7 @@
   </main>
 
   <script type="module">
-    import { auth, googleProvider, appleProvider } from "./firebase-init.js";
+    import { auth, googleProvider, appleProvider, WORKER } from "./firebase-init.js";
     import {
       signInWithEmailAndPassword, createUserWithEmailAndPassword,
       signInWithPopup, sendPasswordResetEmail, updateProfile, onAuthStateChanged
@@ -154,6 +158,7 @@
       $("tab-in").classList.toggle("on", !up);
       $("tab-up").classList.toggle("on", up);
       $("name-field").style.display = up ? "" : "none";
+      $("dob-field").style.display = up ? "" : "none";
       $("forgot-row").style.display = up ? "none" : "";
       $("title").innerHTML = up ? "Create your <em>account.</em>" : "Welcome <em>back.</em>";
       $("subtitle").textContent = up ? "One account for the app and the web." : "Sign in to manage your plan and subscription.";
@@ -177,17 +182,39 @@
       "auth/popup-closed-by-user": "Sign-in was cancelled.",
     }[code] || "Something went wrong, please try again.");
 
+    function ageFrom(dob) {
+      const d = new Date(dob); if (isNaN(d)) return null;
+      const t = new Date(); let a = t.getFullYear() - d.getFullYear();
+      const m = t.getMonth() - d.getMonth();
+      if (m < 0 || (m === 0 && t.getDate() < d.getDate())) a--;
+      return a;
+    }
+
     $("form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = $("email").value.trim(), password = $("password").value, name = $("name").value.trim();
+      const dob = $("dob").value;
       msg("");
       if (!email) return msg("Please enter your email.");
       if (!password) return msg("Please enter your password.");
+      if (mode === "up") {
+        if (!dob) return msg("Please enter your date of birth.");
+        const age = ageFrom(dob);
+        if (age === null || age > 120) return msg("Please enter a valid date of birth.");
+        if (age < 13) return msg("You must be at least 13 to use Eat.");
+      }
       $("submit").disabled = true; $("submit").textContent = "Please wait…";
       try {
         if (mode === "up") {
           const cred = await createUserWithEmailAndPassword(auth, email, password);
           if (name) { try { await updateProfile(cred.user, { displayName: name }); } catch (_) {} }
+          try {
+            const idToken = await cred.user.getIdToken();
+            await fetch(WORKER + "/profile", {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ idToken, birthday: dob, name }),
+            });
+          } catch (_) { /* non-blocking: account is created even if profile save fails */ }
         } else {
           await signInWithEmailAndPassword(auth, email, password);
         }
