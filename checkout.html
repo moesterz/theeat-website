@@ -304,37 +304,46 @@
       solo:  { name: "Solo",  sub: "Your personalised weekly plan, just for you", ico: "icon-solo.png" },
       power: { name: "Power", sub: "Everything in Solo, plus photo and barcode logging and recipe import", ico: "icon-power.png" },
     };
-    const MO = { solo: 4.99, power: 9.99 };          // per month
-    const YR_TOTAL = { solo: 41.99, power: 83.99 };  // billed yearly
+    // Local pricing — Stripe carries GBP/USD/SAR amounts on each price; the worker
+    // picks the currency by country, and we display the matching one here.
+    const PRICES = {
+      gbp:  { sym: "£",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 41.99, power: 83.99 } },
+      usd:  { sym: "$",    dp: 2, mo: { solo: 4.99, power: 9.99 }, yr: { solo: 41.99, power: 83.99 } },
+      sar:  { sym: "SAR ", dp: 0, mo: { solo: 20,   power: 40 },   yr: { solo: 168,   power: 336 } },
+    };
+    let CUR = "gbp";
     const $ = id => document.getElementById(id);
     const sw = $("switch");
     const lblMo = $("lbl-mo"), lblYr = $("lbl-yr");
-    const gbp = n => "£" + n.toFixed(2);
+    const fmt = n => PRICES[CUR].sym + Number(n).toFixed(PRICES[CUR].dp);
     const plan = () => (document.querySelector('input[name="plan"]:checked') || {}).value || "power";
     function trialEnd() {
       const d = new Date(); d.setDate(d.getDate() + 7);
       return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     }
     function render() {
-      const annual = sw.dataset.annual === "true", p = plan(), P = PLANS[p];
-      document.querySelectorAll(".amt").forEach(el => { if (el.dataset.mo) el.textContent = annual ? el.dataset.yr : el.dataset.mo; });
+      const annual = sw.dataset.annual === "true", p = plan(), P = PRICES[CUR];
+      for (const k of ["solo", "power"]) {
+        const amtEl = document.querySelector('.plan-opt[data-plan="' + k + '"] .amt');
+        if (amtEl) amtEl.textContent = annual ? fmt(P.yr[k] / 12) : fmt(P.mo[k]);
+      }
       document.querySelectorAll("[data-per]").forEach(el => el.textContent = annual ? "/ mo, billed yearly" : "/ month");
       lblMo.classList.toggle("on", !annual); lblYr.classList.toggle("on", annual);
-      $("sum-ico").src = P.ico;
-      $("sum-name").textContent = P.name;
-      $("sum-sub").textContent = P.sub;
+      $("sum-ico").src = PLANS[p].ico;
+      $("sum-name").textContent = PLANS[p].name;
+      $("sum-sub").textContent = PLANS[p].sub;
       $("sum-cadence").textContent = annual ? ", annual" : ", monthly";
       if (annual) {
-        const total = YR_TOTAL[p];
-        $("sum-line-lbl").textContent = P.name + ", annual";
-        $("sum-line-val").textContent = gbp(total);
-        $("sum-trial-val").textContent = "–" + gbp(total);
-        $("sum-after-amt").textContent = gbp(total) + " / year (" + gbp(total / 12) + "/mo)";
+        const total = P.yr[p];
+        $("sum-line-lbl").textContent = PLANS[p].name + ", annual";
+        $("sum-line-val").textContent = fmt(total);
+        $("sum-trial-val").textContent = "–" + fmt(total);
+        $("sum-after-amt").textContent = fmt(total) + " / year";
       } else {
-        $("sum-line-lbl").textContent = P.name + ", monthly";
-        $("sum-line-val").textContent = gbp(MO[p]);
-        $("sum-trial-val").textContent = "–" + gbp(MO[p]);
-        $("sum-after-amt").textContent = gbp(MO[p]) + " / month";
+        $("sum-line-lbl").textContent = PLANS[p].name + ", monthly";
+        $("sum-line-val").textContent = fmt(P.mo[p]);
+        $("sum-trial-val").textContent = "–" + fmt(P.mo[p]);
+        $("sum-after-amt").textContent = fmt(P.mo[p]) + " / month";
       }
       $("sum-date").textContent = trialEnd();
     }
@@ -360,6 +369,12 @@
     });
     $("acct-switch").addEventListener("click", async () => { await signOut(auth); });
 
+    // Detect the visitor's currency (by country, via the worker) before first paint.
+    try {
+      const g = await (await fetch(WORKER + "/geo")).json();
+      if (g && PRICES[g.currency]) CUR = g.currency;
+    } catch (_) {}
+
     $("co-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       err.textContent = "";
@@ -369,7 +384,7 @@
         const idToken = await user.getIdToken();
         const r = await fetch(WORKER + "/stripe/create-checkout", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ idToken, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly" }),
+          body: JSON.stringify({ idToken, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly", currency: CUR }),
         });
         const data = await r.json();
         if (data.url) { window.location.href = data.url; return; }
