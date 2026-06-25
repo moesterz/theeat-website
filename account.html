@@ -145,7 +145,8 @@
     async function loadSubscription(email) {
       const badge = $("sub-badge"), tier = $("sub-tier"), note = $("sub-note"), actions = $("sub-actions");
       try {
-        const r = await fetch(WORKER + "/subscription/status?email=" + encodeURIComponent(email));
+        const token = await auth.currentUser.getIdToken();
+        const r = await fetch(WORKER + "/subscription/status", { headers: { "Authorization": "Bearer " + token } });
         const d = await r.json().catch(() => ({}));
         $("sub-loading").style.display = "none";
         $("sub-body").style.display = "";

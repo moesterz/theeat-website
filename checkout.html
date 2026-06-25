@@ -366,9 +366,10 @@
       if (!user) { location.href = "login.html?next=checkout.html"; return; }
       btn.disabled = true; btn.textContent = "Loading…";
       try {
+        const idToken = await user.getIdToken();
         const r = await fetch(WORKER + "/stripe/create-checkout", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.email, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly" }),
+          body: JSON.stringify({ idToken, plan: plan(), period: sw.dataset.annual === "true" ? "annual" : "monthly" }),
         });
         const data = await r.json();
         if (data.url) { window.location.href = data.url; return; }
