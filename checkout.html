@@ -325,9 +325,9 @@
       const annual = sw.dataset.annual === "true", p = plan(), P = PRICES[CUR];
       for (const k of ["solo", "power"]) {
         const amtEl = document.querySelector('.plan-opt[data-plan="' + k + '"] .amt');
-        if (amtEl) amtEl.textContent = annual ? fmt(P.yr[k] / 12) : fmt(P.mo[k]);
+        if (amtEl) amtEl.textContent = annual ? fmt(P.yr[k]) : fmt(P.mo[k]);
       }
-      document.querySelectorAll("[data-per]").forEach(el => el.textContent = annual ? "/ mo, billed yearly" : "/ month");
+      document.querySelectorAll("[data-per]").forEach(el => el.textContent = annual ? "/ year" : "/ month");
       lblMo.classList.toggle("on", !annual); lblYr.classList.toggle("on", annual);
       $("sum-ico").src = PLANS[p].ico;
       $("sum-name").textContent = PLANS[p].name;
