@@ -1,189 +1,432 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Your account — Eat.</title>
-<meta name="description" content="Manage your Eat account and subscription." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eat — Your account</title>
+<meta name="description" content="Manage your Eat plan, billing and details."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="site.css"/>
 <style>
-  :root {
-    --bg: #fdf8f2; --bg-warm: #f7f0e6; --surface: #ffffff;
-    --border: #e8ddd0; --border-2: #ddd0be;
-    --brand: #ff6b35; --blue: #4a90d9; --text-dark: #2d1f0e; --text-mid: #5c3d1e; --muted: #9c8572;
-    --green: #2f9e5f;
-    --font-serif: "DM Serif Display","Times New Roman",serif;
-    --font-sans: "DM Sans",-apple-system,system-ui,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text-dark);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--brand);color:#fff}
+  body { --acc: var(--solo); --acc-deep: var(--solo-deep); --acc-soft: var(--solo-soft); }
+  body.power-mode { --acc: var(--power); --acc-deep: var(--power-deep); --acc-soft: var(--power-soft); }
+  .nav-links a.nav-cta::before { background: linear-gradient(120deg, var(--acc), var(--acc-deep)); }
+  .nav-links a.active { color: var(--acc); }
 
-  .nav{position:sticky;top:0;z-index:50;background:rgba(253,248,242,0.88);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--border)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1240px;margin:0 auto;padding:0 32px}
-  .brand{display:inline-flex;align-items:center;gap:12px}
-  .brand-mark{width:36px;height:36px;border-radius:9px;background:radial-gradient(circle at 30% 25%,#ffb088 0%,#ff6b35 55%,#e25420 100%);box-shadow:0 6px 16px rgba(255,107,53,.32),0 0 0 1px rgba(0,0,0,.04);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden}
-  .brand-mark::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.28) 0%,transparent 35%)}
-  .brand-mark span{position:relative;z-index:1;font-family:var(--font-serif);font-style:italic;font-weight:700;color:#fffaf3;font-size:30px;line-height:1;letter-spacing:-.04em;text-shadow:0 2px 8px rgba(120,40,10,.28);transform:translate(0,-1px)}
-  .nav-links{display:flex;align-items:center;gap:30px;font-size:15px;font-weight:500}
-  .nav-links a:hover{color:var(--brand)}
-  .nav-cta{background:transparent;border:1.5px solid var(--border-2);color:var(--text-dark) !important;display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:14px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--font-sans)}
-  .nav-cta:hover{border-color:var(--brand);color:var(--brand) !important}
-  @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}.nav-inner{padding:0 22px}}
+  .ac-head { padding-top: 150px; padding-bottom: 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .ac-hello { display: flex; align-items: center; gap: 20px; }
+  .ac-avatar { position: relative; width: 78px; height: 78px; border-radius: 50%; background: linear-gradient(140deg, var(--acc), var(--acc-deep)); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 34px; box-shadow: 0 18px 36px -14px rgba(0,0,0,.35); transition: background .6s ease, transform .4s var(--ease-spring); border: none; padding: 0; cursor: pointer; overflow: visible; background-size: cover; background-position: center; }
+  .ac-avatar.has-photo { color: transparent; }
+  .ac-avatar::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid var(--acc); opacity: .35; transition: border-color .6s ease, transform .4s var(--ease-spring), opacity .3s ease; }
+  .ac-hello:hover .ac-avatar { transform: rotate(-4deg) scale(1.05); }
+  .ac-hello:hover .ac-avatar::before { transform: scale(1.06); opacity: .6; }
+  .ac-avatar .photo { position: absolute; inset: 0; border-radius: 50%; background-size: cover; background-position: center; display: none; }
+  .ac-avatar.has-photo .photo { display: block; }
+  .ac-avatar .cam { position: absolute; right: -4px; bottom: -4px; width: 30px; height: 30px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--line-2); display: flex; align-items: center; justify-content: center; color: var(--mid); box-shadow: 0 6px 14px -6px rgba(90,45,10,.4); transition: transform .3s var(--ease-spring), background .2s ease; }
+  .ac-avatar:hover .cam { transform: scale(1.15); background: var(--cream-2); }
+  .ac-avatar:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+  .avatar-remove { display: none; font-size: 12px; font-weight: 700; color: var(--faint); background: none; border: none; cursor: pointer; font-family: var(--sans); padding: 4px 0 0; }
+  .avatar-remove:hover { color: #c23c15; }
+  .ac-avatar.has-photo ~ div .avatar-remove { display: inline-block; }
+  .ac-hello h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.6vw, 52px); line-height: 1; letter-spacing: -0.02em; }
+  .ac-hello h1 em { font-style: italic; color: var(--acc); transition: color .6s ease; }
+  .ac-hello .since { font-size: 13.5px; color: var(--faint); font-weight: 600; margin-top: 8px; }
+  .ac-signout { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 99px; border: 1.5px solid var(--line-2); background: var(--paper); font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--mid); text-decoration: none; cursor: pointer; transition: transform .25s var(--ease-spring), border-color .2s ease; }
+  .ac-signout:hover { transform: translateY(-2px); border-color: var(--faint); }
 
-  .main{flex:1;width:100%;max-width:680px;margin:0 auto;padding:46px 24px 64px}
-  .page-title{font-family:var(--font-serif);font-weight:400;font-size:clamp(30px,5vw,40px);letter-spacing:-.02em;margin:0 0 4px}
-  .page-title em{font-style:italic;color:var(--brand)}
-  .page-sub{color:var(--text-mid);margin:0 0 28px;font-size:15px}
+  .ac-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; margin-top: 40px; align-items: start; }
+  .ac-col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:22px;box-shadow:0 2px 8px rgba(45,31,14,.06);padding:26px 26px;margin-bottom:18px}
-  .card h2{font-family:var(--font-serif);font-weight:400;font-size:20px;margin:0 0 18px;letter-spacing:-.01em}
+  .panel { padding: 28px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+  .panel-head h2 { font-family: var(--serif); font-weight: 400; font-size: 23px; letter-spacing: -0.01em; }
+  .panel-link { font-size: 13.5px; font-weight: 700; color: var(--acc); text-decoration: none; transition: color .6s ease; }
+  .panel-link:hover { text-decoration: underline; }
 
-  .who{display:flex;align-items:center;gap:16px}
-  .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(140deg,#ffb088,#ff6b35);color:#fff;font-family:var(--font-serif);font-size:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .who-name{font-weight:600;font-size:17px}
-  .who-email{color:var(--muted);font-size:14px;margin-top:2px}
+  /* ── plan panel ── */
+  .plan-hero { position: relative; overflow: hidden; border-radius: 22px; padding: 26px; color: #fff; background: linear-gradient(140deg, #ff8a54, var(--solo) 45%, var(--solo-deep)); transition: background .6s ease; }
+  body.power-mode .plan-hero { background: linear-gradient(140deg, #6fa1d9, var(--power) 45%, var(--power-deep)); }
+  .plan-hero::after { content: ""; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,.12); top: -120px; right: -90px; }
+  .plan-hero-top { position: relative; display: flex; align-items: center; gap: 16px; }
+  .plan-hero img { width: 58px; height: 58px; border-radius: 15px; box-shadow: 0 14px 28px -10px rgba(0,0,0,.45); transition: transform .5s var(--ease-spring); }
+  .plan-hero img.pop { animation: ico-pop .55s var(--ease-spring); }
+  @keyframes ico-pop { 0% { transform: scale(.6) rotate(-12deg); } 100% { transform: none; } }
+  .plan-hero .nm { font-family: var(--serif); font-size: 30px; line-height: 1; }
+  .plan-hero .st { font-size: 12.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .88; margin-top: 6px; }
+  .plan-hero-rows { position: relative; display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .plan-pill { background: rgba(255,255,255,.16); backdrop-filter: blur(4px); border-radius: 99px; padding: 8px 15px; font-size: 13px; font-weight: 700; }
+  .cycle { position: relative; margin-top: 20px; }
+  .cycle-top { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; letter-spacing: .06em; opacity: .9; margin-bottom: 8px; }
+  .cycle-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
+  .cycle-bar i { display: block; height: 100%; width: 0; border-radius: 99px; background: #fff; transition: width 1.1s var(--ease-out) .3s; }
+  .plan-actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+  .plan-actions .btn { height: 48px; padding: 0 24px; font-size: 14.5px; flex: 1; min-width: 160px; }
+  .plan-actions .btn.alt { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line-2); }
+  .plan-actions .btn.alt::before { background: var(--cream-2); }
 
-  .badge{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px}
-  .badge.active{background:#e7f6ec;color:#1e7a45}
-  .badge.none{background:var(--bg-warm);color:var(--muted)}
-  .sub-tier{font-family:var(--font-serif);font-size:24px;margin:14px 0 2px}
-  .sub-note{color:var(--muted);font-size:13.5px;line-height:1.5}
-  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
-  .btn{height:48px;padding:0 22px;border:0;border-radius:13px;background:linear-gradient(140deg,var(--brand),#ff7d44);color:#fff;font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.3);display:inline-flex;align-items:center;justify-content:center;transition:transform .15s,opacity .15s}
-  .btn:hover{transform:translateY(-1px)}
-  .btn:disabled{opacity:.6;cursor:default;transform:none}
-  .btn-ghost{height:48px;padding:0 22px;border:1.5px solid var(--border-2);border-radius:13px;background:var(--surface);color:var(--text-dark);font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
-  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
-  .msg{font-size:13px;margin-top:14px;line-height:1.5;min-height:16px}
-  .msg.ok{color:var(--green)} .msg.err{color:#d24b32}
+  /* switch row */
+  .switch-row { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding: 16px 18px; border-radius: 16px; background: var(--cream); border: 1px solid var(--line); }
+  .switch-row img { width: 40px; height: 40px; border-radius: 11px; box-shadow: 0 8px 16px -6px rgba(0,0,0,.35); }
+  .switch-row .t { flex: 1; min-width: 0; }
+  .switch-row b { display: block; font-size: 14.5px; }
+  .switch-row span { font-size: 12.5px; color: var(--faint); font-weight: 600; }
+  .switch-row button { height: 40px; padding: 0 18px; border-radius: 99px; border: none; cursor: pointer; font-family: var(--sans); font-size: 13.5px; font-weight: 700; color: #fff; background: linear-gradient(120deg, var(--power), var(--power-deep)); transition: transform .25s var(--ease-spring), background .6s ease; }
+  body.power-mode .switch-row button { background: linear-gradient(120deg, var(--solo), var(--solo-deep)); }
+  .switch-row button:hover { transform: translateY(-2px); }
 
-  .sync{display:flex;gap:11px;align-items:flex-start;background:var(--bg-warm);border:1px solid var(--border);border-radius:14px;padding:14px 16px;font-size:13px;color:var(--text-mid);line-height:1.55}
-  .sync strong{color:var(--text-dark)}
-  .loading{color:var(--muted);font-size:14px;padding:8px 0}
-  @media(max-width:520px){.main{padding:32px 18px 48px}.card{padding:22px 18px}}
+  /* ── billing ── */
+  .bill-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .bill-row:last-child { border-bottom: none; }
+  .bill-row .l { color: var(--mid); font-weight: 600; }
+  .bill-row .v { font-weight: 700; text-align: right; }
+  .bill-row .v small { display: block; font-size: 12px; color: var(--faint); font-weight: 600; margin-top: 2px; }
+  .inv { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .inv:last-child { border-bottom: none; }
+  .inv .doc { width: 36px; height: 36px; border-radius: 10px; background: var(--acc-soft); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .6s ease; }
+  .inv .doc svg { stroke: var(--acc-deep); transition: stroke .6s ease; }
+  .inv b { display: block; font-size: 13.5px; }
+  .inv span { font-size: 12px; color: var(--faint); font-weight: 600; }
+  .inv .amt { margin-left: auto; font-weight: 700; }
+  .inv a { margin-left: 14px; color: var(--acc); text-decoration: none; display: flex; transition: color .6s ease; }
+
+  /* ── details ── */
+  .dt-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .dt-row:last-child { border-bottom: none; }
+  .dt-row .k { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .dt-row .val { font-size: 14.5px; font-weight: 600; margin-top: 3px; }
+  .dt-row .edit { font-size: 13px; font-weight: 700; color: var(--acc); text-decoration: none; flex-shrink: 0; transition: color .6s ease; }
+  .dt-row .edit:hover { text-decoration: underline; }
+
+  /* ── taste chips ── */
+  .taste { display: flex; flex-wrap: wrap; gap: 9px; }
+  .taste span { padding: 8px 15px; border-radius: 99px; background: var(--cream); border: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--mid); }
+  .taste span.hi { background: var(--acc-soft); border-color: transparent; color: var(--acc-deep); transition: background .6s ease, color .6s ease; }
+
+  /* ── invite ── */
+  .invite { position: relative; overflow: hidden; }
+  .invite .gift { width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(140deg, var(--acc), var(--acc-deep)); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; animation: gift-wiggle 3.4s ease-in-out infinite; transition: background .6s ease; }
+  @keyframes gift-wiggle { 0%, 86%, 100% { transform: rotate(0); } 90% { transform: rotate(-8deg); } 94% { transform: rotate(8deg); } 98% { transform: rotate(-4deg); } }
+  .invite h2 { font-family: var(--serif); font-weight: 400; font-size: 23px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .invite p { font-size: 14px; color: var(--mid); line-height: 1.6; margin-bottom: 18px; }
+  .invite-code { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 18px; border-radius: 14px; background: var(--cream); border: 1.5px dashed var(--line-2); }
+  .invite-code code { flex: 1; font-family: var(--sans); font-size: 15px; font-weight: 700; letter-spacing: .08em; }
+  .invite-code button { height: 40px; padding: 0 18px; border-radius: 10px; border: none; cursor: pointer; font-family: var(--sans); font-size: 13px; font-weight: 700; color: #fff; background: var(--ink); transition: transform .25s var(--ease-spring), background .3s ease; }
+  .invite-code button:hover { transform: translateY(-2px); }
+  .invite-code button.copied { background: linear-gradient(120deg, var(--acc), var(--acc-deep)); }
+
+  /* ── danger ── */
+  .danger-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 2px; }
+  .danger-row p { font-size: 13px; color: var(--faint); line-height: 1.55; margin: 0; max-width: 34ch; }
+  .danger-btn { flex-shrink: 0; height: 40px; padding: 0 18px; border-radius: 99px; border: 1.5px solid #eab19a; background: none; cursor: pointer; font-family: var(--sans); font-size: 13px; font-weight: 700; color: #c23c15; transition: background .2s ease, transform .25s var(--ease-spring); }
+  .danger-btn:hover { background: #fdeee6; transform: translateY(-2px); }
+
+  @media (max-width: 880px) { .ac-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="index.html"><span class="brand-mark"><span>e.</span></span></a>
-      <nav class="nav-links">
-        <a href="pricing.html">Pricing</a>
-        <a href="faq.html">FAQ</a>
-        <button class="nav-cta" id="signout">Sign out</button>
-      </nav>
+  <nav class="nav"><div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat" id="nav-ico"/></a>
+    <div class="nav-links">
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="account.html" class="active">Account</a>
+      <a href="index.html#get" class="nav-cta"><span>Get Eat</span></a>
     </div>
+  </div></nav>
+
+  <header class="wrap ac-head" data-screen-label="Account head">
+    <div class="ac-hello rv">
+      <button type="button" class="ac-avatar" id="avatar" aria-label="Change profile picture">A<span class="photo" id="avatar-photo"></span><span class="cam"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/></svg></span></button>
+      <input type="file" id="avatar-input" accept="image/*" style="display:none;"/>
+      <div>
+        <h1>Hi, <em id="hello-name">Alex.</em></h1>
+        <div class="since">Eating well since March 2026</div>
+        <button type="button" class="avatar-remove" id="avatar-remove">Remove photo</button>
+      </div>
+    </div>
+    <a class="ac-signout rv" style="--d:.1s;" href="signin.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      Sign out
+    </a>
   </header>
 
-  <main class="main">
-    <div id="loading" class="loading">Loading your account…</div>
-
-    <div id="content" style="display:none">
-      <h1 class="page-title">Your <em>account.</em></h1>
-      <p class="page-sub">Manage your details and subscription.</p>
-
-      <div class="card">
-        <div class="who">
-          <div class="avatar" id="avatar">E</div>
-          <div>
-            <div class="who-name" id="who-name">—</div>
-            <div class="who-email" id="who-email">—</div>
+  <main class="wrap ac-grid" data-screen-label="Account dashboard">
+    <div class="ac-col">
+      <!-- plan -->
+      <section class="panel card rv">
+        <div class="panel-head"><h2>Your plan</h2><a class="panel-link" href="pricing.html">Compare plans</a></div>
+        <div class="plan-hero">
+          <div class="plan-hero-top">
+            <img id="plan-ico" src="icon-solo.png" alt=""/>
+            <div>
+              <div class="nm" id="plan-name">Eat Solo</div>
+              <div class="st" id="plan-status">Active · Monthly</div>
+            </div>
+          </div>
+          <div class="plan-hero-rows">
+            <span class="plan-pill" id="plan-price">£4.99 / month</span>
+            <span class="plan-pill" id="plan-renew">Renews 28 July 2026</span>
+          </div>
+          <div class="cycle">
+            <div class="cycle-top"><span>This billing cycle</span><span id="cycle-days">25 days to go</span></div>
+            <div class="cycle-bar"><i id="cycle-fill"></i></div>
           </div>
         </div>
-      </div>
-
-      <div class="card">
-        <h2>Subscription</h2>
-        <div id="sub-loading" class="loading">Checking your subscription…</div>
-        <div id="sub-body" style="display:none">
-          <span class="badge" id="sub-badge"></span>
-          <div class="sub-tier" id="sub-tier"></div>
-          <div class="sub-note" id="sub-note"></div>
-          <div class="actions" id="sub-actions"></div>
-          <div class="msg" id="sub-msg"></div>
+        <div class="switch-row" id="switch-row">
+          <img id="switch-ico" src="icon-power.png" alt=""/>
+          <div class="t">
+            <b id="switch-title">Upgrade to Power</b>
+            <span id="switch-sub">Adds macro coaching and the restaurant menu helper.</span>
+          </div>
+          <button type="button" id="switch-btn">Upgrade</button>
         </div>
-      </div>
-
-      <div class="card">
-        <h2>Using the app</h2>
-        <div class="sync">
-          <span aria-hidden="true">📱</span>
-          <div>Sign into the Eat app with <strong id="sync-email">this email</strong> and your subscription unlocks automatically — no codes, no extra steps.</div>
+        <div class="plan-actions">
+          <a class="btn alt" href="pricing.html"><span>Change billing</span></a>
+          <a class="btn alt" href="contact.html"><span>Pause or cancel</span></a>
         </div>
-      </div>
+      </section>
+
+      <!-- billing -->
+      <section class="panel card rv" style="--d:.08s;">
+        <div class="panel-head"><h2>Billing</h2><a class="panel-link" href="#">Manage on Stripe</a></div>
+        <div class="bill-row"><span class="l">Payment method</span><span class="v">Visa ·· 4242<small>Expires 09 / 28</small></span></div>
+        <div class="bill-row"><span class="l">Next charge</span><span class="v" id="bill-next">£4.99 on 28 July 2026</span></div>
+        <div class="bill-row"><span class="l">Billing email</span><span class="v">alex@email.com</span></div>
+        <div style="margin-top: 18px;">
+          <div class="inv">
+            <span class="doc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></span>
+            <div><b>June 2026</b><span>Eat Solo · Monthly</span></div>
+            <span class="amt">£4.99</span>
+            <a href="#" aria-label="Download invoice"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></a>
+          </div>
+          <div class="inv">
+            <span class="doc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></span>
+            <div><b>May 2026</b><span>Eat Solo · Monthly</span></div>
+            <span class="amt">£4.99</span>
+            <a href="#" aria-label="Download invoice"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="ac-col">
+      <!-- details -->
+      <section class="panel card rv" style="--d:.06s;">
+        <div class="panel-head"><h2>Your details</h2></div>
+        <div class="dt-row"><div><div class="k">Name</div><div class="val">Alex Whitmore</div></div><a class="edit" href="#">Edit</a></div>
+        <div class="dt-row"><div><div class="k">Email</div><div class="val">alex@email.com</div></div><a class="edit" href="#">Edit</a></div>
+        <div class="dt-row"><div><div class="k">Password</div><div class="val">••••••••••</div></div><a class="edit" href="#">Change</a></div>
+        <div class="dt-row"><div><div class="k">Date of birth</div><div class="val">14 March 1998</div></div><a class="edit" href="#">Edit</a></div>
+      </section>
+
+      <!-- referral -->
+      <section class="panel card invite rv" style="--d:.15s;">
+        <div class="gift"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></div>
+        <h2>Give a week, get a week.</h2>
+        <p>Share your code and your friend's free trial doubles to two weeks. When they subscribe, you get a free week too.</p>
+        <div class="invite-code">
+          <code>EAT-ALEX-26</code>
+          <button type="button" id="copy-btn">Copy code</button>
+        </div>
+      </section>
+
+      <!-- danger -->
+      <section class="panel card rv" style="--d:.2s;">
+        <div class="danger-row">
+          <p>Deleting your account removes your plans and history within 30 days. This can't be undone.</p>
+          <button type="button" class="danger-btn">Delete account</button>
+        </div>
+      </section>
     </div>
   </main>
 
+  <footer class="footer">
+    <div class="footer-glow g1"></div><div class="footer-glow g2"></div>
+    <div class="wrap">
+      <div class="footer-big">eat<i>.</i></div>
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat" style="width:30px;height:30px;border-radius:8px;"/></a>
+          <p class="footer-tagline">A personal meal plan, shopping list and cook mode, built around you.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col"><h4>Product</h4><a href="index.html">Download</a><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a></div>
+          <div class="footer-col"><h4>Account</h4><a href="signin.html">Sign in</a><a href="join.html">Invites</a><a href="checkout.html">Checkout</a></div>
+          <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Policy</a><a href="contact.html">Contact</a></div>
+        </div>
+      </div>
+      <div class="footer-base"><span>© 2026 Eat. Made with care.</span><span>theeat.app</span></div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
   <script type="module">
-    import { auth, WORKER } from "./firebase-init.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+    import { auth, storage, WORKER } from "./firebase-init.js";
+    import { onAuthStateChanged, signOut, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+    import { ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 
     const $ = id => document.getElementById(id);
     const TIER = { power: "Power", solo: "Solo" };
+    const planIco = $('plan-ico'), navIco = $('nav-ico');
 
+    // ── Sign out ──
+    document.querySelector('.ac-signout')?.addEventListener('click', async (e) => { e.preventDefault(); await signOut(auth); location.replace('signin.html'); });
+
+    // ── Auth guard + identity ──
     onAuthStateChanged(auth, async (user) => {
-      if (!user) { location.replace("login.html?next=account.html"); return; }
+      if (!user) { location.replace('signin.html?next=account.html'); return; }
       try { await user.reload(); } catch (_) {}
       user = auth.currentUser || user;
-      $("loading").style.display = "none";
-      $("content").style.display = "";
+      const name = user.displayName || (user.email || '').split('@')[0];
+      const email = user.email || '';
+      $('hello-name').textContent = (name ? name.split(' ')[0] : 'there') + '.';
+      $('avatar').firstChild.textContent = (name[0] || 'E').toUpperCase();
+      const since = user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) : '';
+      document.querySelector('.since').textContent = since ? ('Eating well since ' + since) : 'Welcome to Eat';
 
-      const name = user.displayName || (user.email || "").split("@")[0];
-      const email = user.email || "";
-      $("who-name").textContent = name;
-      $("who-email").textContent = email;
-      $("sync-email").textContent = email || "this email";
-      $("avatar").textContent = (name[0] || "E").toUpperCase();
-
-      await loadSubscription(email);
+      // avatar synced to the account (Firebase Storage + photoURL)
+      initAvatar(user);
+      // details panel — real name/email; password change = reset; DOB not fetched here
+      wireDetails(name, email);
+      // subscription + referral (need the ID token)
+      const token = await user.getIdToken();
+      loadSubscription(token, email);
+      loadReferral(user.uid);
     });
 
-    async function loadSubscription(email) {
-      const badge = $("sub-badge"), tier = $("sub-tier"), note = $("sub-note"), actions = $("sub-actions");
-      try {
-        const token = await auth.currentUser.getIdToken();
-        const r = await fetch(WORKER + "/subscription/status", { headers: { "Authorization": "Bearer " + token } });
-        const d = await r.json().catch(() => ({}));
-        $("sub-loading").style.display = "none";
-        $("sub-body").style.display = "";
-        if (d.active) {
-          badge.className = "badge active"; badge.textContent = "Active";
-          tier.textContent = "Eat " + (TIER[d.tier] || "Power");
-          note.textContent = "Your subscription is active. Manage billing, switch plans, or cancel any time.";
-          actions.innerHTML = '<button class="btn-ghost" id="manage">Manage billing</button>';
-          $("manage").onclick = manageBilling;
-        } else {
-          badge.className = "badge none"; badge.textContent = "No active plan";
-          tier.textContent = "Free";
-          note.textContent = "You don't have an active subscription yet. Start your free week any time.";
-          actions.innerHTML = '<a class="btn" href="checkout.html">Start your free week</a>';
+    // ── Subscription (real: {active, tier}) ──
+    async function loadSubscription(token, email) {
+      // billing detail (card, invoices, renewal date) lives on Stripe — hide the
+      // prototype's mock rows and route users there, so nothing fake is shown.
+      document.querySelectorAll('.inv').forEach(el => el.remove());
+      const billRows = document.querySelectorAll('.bill-row');
+      if (billRows[0]) billRows[0].style.display = 'none';                 // mock card
+      if (billRows[1]) billRows[1].style.display = 'none';                 // mock next-charge
+      if (billRows[2]) billRows[2].querySelector('.v').textContent = email; // real billing email
+      // hide the prototype's renewal date + cycle bar (worker gives no dates)
+      $('plan-renew').style.display = 'none';
+      document.querySelector('.cycle')?.style.setProperty('display', 'none');
+
+      let d = { active: false, tier: null };
+      try { d = await (await fetch(WORKER + '/subscription/status', { headers: { Authorization: 'Bearer ' + token } })).json(); } catch (_) {}
+
+      const power = d.tier === 'power';
+      document.body.classList.toggle('power-mode', power);
+      planIco.src = power ? 'icon-power.png' : 'icon-solo.png';
+      navIco.src = power ? 'icon-power.png' : 'icon-solo.png';
+
+      if (d.active) {
+        $('plan-name').textContent = 'Eat ' + (TIER[d.tier] || 'Power');
+        $('plan-status').textContent = 'Active';
+        $('plan-price').textContent = 'Manage billing on Stripe';
+        if (power) { $('switch-row').style.display = 'none'; }
+        else {
+          $('switch-ico').src = 'icon-power.png';
+          $('switch-title').textContent = 'Upgrade to Power';
+          $('switch-sub').textContent = 'Adds macro coaching and the restaurant menu helper.';
+          $('switch-btn').textContent = 'Upgrade';
+          $('switch-btn').onclick = () => location.href = 'checkout.html?plan=power';
         }
-      } catch (_) {
-        $("sub-loading").style.display = "none"; $("sub-body").style.display = "";
-        $("sub-msg").className = "msg err"; $("sub-msg").textContent = "Couldn't load your subscription. Please refresh.";
+      } else {
+        $('plan-name').textContent = 'Free';
+        $('plan-status').textContent = 'No active plan';
+        $('plan-price').style.display = 'none';
+        $('switch-ico').src = 'icon-solo.png';
+        $('switch-title').textContent = 'Start your free week';
+        $('switch-sub').textContent = 'Your personalised weekly plan, list and cook mode.';
+        $('switch-btn').textContent = 'Start';
+        $('switch-btn').onclick = () => location.href = 'checkout.html';
       }
     }
 
-    async function manageBilling() {
-      const email = auth.currentUser?.email; const m = $("sub-msg");
-      if (!email) return;
-      const btn = $("manage"); btn.disabled = true; btn.textContent = "Sending…";
-      m.className = "msg"; m.textContent = "";
+    // ── "Manage on Stripe" + "Change billing" → Stripe billing portal (emailed link) ──
+    async function openPortal(trigger) {
+      const email = auth.currentUser?.email; if (!email) return;
+      const old = trigger.textContent; trigger.textContent = 'Sending…';
       try {
-        await fetch(WORKER + "/stripe/portal", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
-        m.className = "msg ok"; m.textContent = "We've emailed you a secure link to manage your billing. Check your inbox.";
-      } catch (_) { m.className = "msg err"; m.textContent = "Network error, please try again."; }
-      btn.disabled = false; btn.textContent = "Manage billing";
+        await fetch(WORKER + '/stripe/portal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+        trigger.textContent = 'Link sent — check your inbox';
+      } catch (_) { trigger.textContent = 'Network error, try again'; }
+      setTimeout(() => { trigger.textContent = old; }, 3500);
+    }
+    document.querySelectorAll('.panel-link').forEach(a => { if (a.textContent.includes('Stripe')) a.addEventListener('click', (e) => { e.preventDefault(); openPortal(a); }); });
+    // "Change billing" button → also the Stripe portal
+    document.querySelectorAll('.plan-actions .btn.alt').forEach(a => { if (a.textContent.includes('Change billing')) a.addEventListener('click', (e) => { e.preventDefault(); openPortal(a.querySelector('span') || a); }); });
+
+    // ── Details panel ──
+    function wireDetails(name, email) {
+      const rows = document.querySelectorAll('.dt-row');
+      if (rows[0]) { rows[0].querySelector('.val').textContent = name || '—'; rows[0].querySelector('.edit')?.remove(); }
+      if (rows[1]) { rows[1].querySelector('.val').textContent = email || '—'; rows[1].querySelector('.edit')?.remove(); }
+      if (rows[2]) { const a = rows[2].querySelector('.edit'); if (a) { a.textContent = 'Reset'; a.addEventListener('click', async (e) => { e.preventDefault(); try { await sendPasswordResetEmail(auth, email); a.textContent = 'Sent ✓'; } catch (_) { a.textContent = 'Error'; } setTimeout(() => a.textContent = 'Reset', 3000); }); } }
+      if (rows[3]) rows[3].style.display = 'none';   // DOB not fetched on web
     }
 
-    $("signout").addEventListener("click", async () => { await signOut(auth); location.replace("login.html"); });
+    // ── Referral (real code from the worker) ──
+    async function loadReferral(uid) {
+      const codeEl = document.querySelector('.invite-code code');
+      const copyBtn = $('copy-btn');
+      let code = null;
+      try { code = (await (await fetch(WORKER + '/referral/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ uid }) })).json()).code; } catch (_) {}
+      if (!code) { document.querySelector('.panel.invite')?.remove(); return; }
+      if (codeEl) codeEl.textContent = code;
+      const link = 'https://theeat.app/join.html?ref=' + code;
+      copyBtn?.addEventListener('click', () => {
+        if (navigator.clipboard) navigator.clipboard.writeText(link).catch(() => {});
+        copyBtn.textContent = 'Copied!'; copyBtn.classList.add('copied');
+        setTimeout(() => { copyBtn.textContent = 'Copy link'; copyBtn.classList.remove('copied'); }, 1800);
+      });
+    }
+
+    // ── Delete account (handled in the app for security) ──
+    document.querySelector('.danger-btn')?.addEventListener('click', () => {
+      const p = document.querySelector('.danger-row p');
+      if (p) p.textContent = 'For your security, delete your account in the Eat app: Profile → Delete account. It removes your plans and history within 30 days.';
+    });
+
+    // ── Profile picture — REAL, synced to the account ──
+    // Uploads to Firebase Storage (avatars/<uid>/photo.jpg) and saves the URL on
+    // the Firebase user's photoURL, so it appears on every browser, every device,
+    // and in the iOS app (same Firebase project).
+    function initAvatar(user) {
+      const uid = user.uid;
+      const avatar = $('avatar'), avatarPhoto = $('avatar-photo'), avatarInput = $('avatar-input'), avatarRemove = $('avatar-remove');
+      const setAvatar = (url) => {
+        if (url) { avatarPhoto.style.backgroundImage = 'url("' + url + '")'; avatar.classList.add('has-photo'); avatarRemove.style.display = ''; }
+        else { avatarPhoto.style.backgroundImage = ''; avatar.classList.remove('has-photo'); avatarRemove.style.display = 'none'; }
+      };
+      setAvatar(user.photoURL || null);
+      avatar.addEventListener('click', () => avatarInput.click());
+      avatarInput.addEventListener('change', () => {
+        const file = avatarInput.files && avatarInput.files[0]; if (!file) return;
+        avatar.classList.add('uploading');
+        const img = new Image();
+        img.onload = () => {
+          const s = 256, c = document.createElement('canvas'); c.width = s; c.height = s;
+          const ctx = c.getContext('2d'); const m = Math.min(img.width, img.height);
+          ctx.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, s, s);
+          c.toBlob(async (blob) => {
+            try {
+              const r = storageRef(storage, 'avatars/' + uid + '/photo.jpg');
+              await uploadBytes(r, blob, { contentType: 'image/jpeg' });
+              const url = await getDownloadURL(r);
+              await updateProfile(auth.currentUser, { photoURL: url });
+              setAvatar(url);
+            } catch (e) { alert('Could not upload photo. Please try again.'); }
+            avatar.classList.remove('uploading');
+          }, 'image/jpeg', 0.85);
+        };
+        img.onerror = () => avatar.classList.remove('uploading');
+        img.src = URL.createObjectURL(file); avatarInput.value = '';
+      });
+      avatarRemove.addEventListener('click', async () => {
+        try { await updateProfile(auth.currentUser, { photoURL: '' }); } catch (_) {}
+        try { await deleteObject(storageRef(storage, 'avatars/' + uid + '/photo.jpg')); } catch (_) {}
+        setAvatar(null);
+      });
+    }
   </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 // safe to ship in the browser. (The secret service-account key is NOT here.)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, OAuthProvider } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDG5u_fKf7UONsaHIy_8ECfUC1pgyixdE0",
@@ -16,6 +17,7 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 export const appleProvider = new OAuthProvider("apple.com");
 appleProvider.addScope("email");
