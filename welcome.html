@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eat — Welcome aboard</title>
+<meta name="description" content="Your Eat subscription is active."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="site.css"/>
+<style>
+  .wl-stage { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 110px 20px 60px; }
+  .wl-card { max-width: 560px; width: 100%; text-align: center; padding: 52px 40px 44px; border-radius: 30px; position: relative; overflow: hidden; }
+  .wl-ico { width: 84px; height: 84px; border-radius: 22px; margin: 0 auto 24px; display: block; box-shadow: 0 22px 44px -18px rgba(240,106,58,.55); animation: wl-bob 3.4s ease-in-out infinite; }
+  @keyframes wl-bob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-9px) rotate(2deg); } }
+  .wl-card h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 6vw, 46px); letter-spacing: -0.02em; line-height: 1.05; }
+  .wl-card h1 em { color: var(--solo); }
+  .wl-lede { font-size: 16px; color: var(--mid); line-height: 1.6; margin: 14px auto 0; max-width: 420px; }
+  .wl-steps { text-align: left; margin: 30px auto 6px; max-width: 400px; display: flex; flex-direction: column; gap: 14px; }
+  .wl-step { display: flex; gap: 13px; align-items: flex-start; }
+  .wl-num { width: 26px; height: 26px; border-radius: 50%; background: var(--solo-soft); color: var(--solo-deep); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .wl-step b { display: block; font-size: 14.5px; }
+  .wl-step span { font-size: 13.5px; color: var(--mid); line-height: 1.5; }
+  .wl-ctas { display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
+  .wl-ctas .btn { width: 100%; }
+  .wl-sub { margin-top: 18px; font-size: 13px; color: var(--faint); }
+  .wl-sub a { color: var(--solo); font-weight: 700; text-decoration: none; }
+  @media (max-width: 520px) { .wl-card { padding: 42px 24px 36px; } }
+</style>
+</head>
+<body>
+  <nav class="nav"><div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat"/></a>
+    <div class="nav-links">
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="account.html">Account</a>
+      <a href="index.html#get" class="nav-cta"><span>Get Eat</span></a>
+    </div>
+  </div></nav>
+
+  <div class="wl-stage" data-screen-label="Welcome / payment success">
+    <div class="wl-card card rv-scale in">
+      <img class="wl-ico" src="icon-solo.png" alt="" id="wl-ico"/>
+      <h1>You're <em>in.</em></h1>
+      <p class="wl-lede" id="wl-lede">Your subscription is active and linked to your Eat account. Here's how to start eating well tonight:</p>
+
+      <div class="wl-steps">
+        <div class="wl-step"><span class="wl-num">1</span><div><b>Get the Eat app on your iPhone</b><span>Download it from the App Store.</span></div></div>
+        <div class="wl-step"><span class="wl-num">2</span><div><b>Sign in with this same email</b><span>Your subscription unlocks automatically — no codes, nothing to enter.</span></div></div>
+        <div class="wl-step"><span class="wl-num">3</span><div><b>Build your first plan</b><span>Answer a few questions and your week of meals, list and prices is ready in about a minute.</span></div></div>
+      </div>
+
+      <div class="wl-ctas">
+        <!-- Swap href for the real App Store URL at launch -->
+        <a class="btn" href="index.html#get"><span>Get Eat on iPhone</span></a>
+        <a class="btn btn-ghost" href="account.html"><span>View my account</span></a>
+      </div>
+      <p class="wl-sub">A receipt is on its way to your inbox. Questions? <a href="contact.html">We're here.</a></p>
+    </div>
+  </div>
+
+  <script src="site.js"></script>
+  <script>
+    // If they bought Power, celebrate in blue.
+    (function () {
+      var params = new URLSearchParams(location.search);
+      if ((params.get('plan') || '').toLowerCase() === 'power') {
+        document.body.classList.add('power-mode');
+        var i = document.getElementById('wl-ico'); if (i) i.src = 'icon-power.png';
+      }
+    })();
+  </script>
+</body>
+</html>
