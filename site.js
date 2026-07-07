@@ -43,13 +43,57 @@
     const onScroll = () => {
       const y = window.scrollY;
       nav.classList.toggle('scrolled', y > 24);
-      /* only hide once past the nav itself; always reveal when scrolling up */
+      /* only hide once past the nav itself; always reveal when scrolling up;
+         never hide while the mobile menu is open */
+      if (nav.classList.contains('menu-open')) { lastY = y; return; }
       if (y > lastY && y > 120) nav.classList.add('nav-hidden');
       else if (y < lastY) nav.classList.remove('nav-hidden');
       lastY = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /* Mobile menu — built from the desktop links so every page gets it for free */
+    const links = Array.from(nav.querySelectorAll('.nav-links a:not(.nav-cta)'));
+    const cta = nav.querySelector('.nav-links a.nav-cta');
+    if (links.length) {
+      const burger = document.createElement('button');
+      burger.className = 'nav-burger';
+      burger.setAttribute('aria-label', 'Menu');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line class="bl bl-1" x1="4" y1="7" x2="20" y2="7"/><line class="bl bl-2" x1="4" y1="12" x2="20" y2="12"/><line class="bl bl-3" x1="4" y1="17" x2="20" y2="17"/></svg>';
+      nav.querySelector('.nav-links').appendChild(burger);
+
+      const menu = document.createElement('div');
+      menu.className = 'nav-menu';
+      const chev = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+      links.forEach(a => {
+        const m = document.createElement('a');
+        m.href = a.getAttribute('href');
+        m.className = a.classList.contains('active') ? 'active' : '';
+        m.innerHTML = a.textContent + chev;
+        menu.appendChild(m);
+      });
+      if (cta) {
+        const m = document.createElement('a');
+        m.href = cta.getAttribute('href');
+        m.className = 'menu-cta';
+        m.textContent = cta.textContent;
+        menu.appendChild(m);
+      }
+      nav.appendChild(menu);
+
+      const setOpen = (open) => {
+        nav.classList.toggle('menu-open', open);
+        burger.setAttribute('aria-expanded', String(open));
+      };
+      burger.addEventListener('click', () => setOpen(!nav.classList.contains('menu-open')));
+      menu.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
+      document.addEventListener('click', (e) => {
+        if (nav.classList.contains('menu-open') && !nav.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    }
   }
 
   /* Magnetic buttons */

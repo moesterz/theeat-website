@@ -211,6 +211,51 @@
   .cta-band .big-e { width: 92px; height: 92px; border-radius: 24px; margin: 0 auto 30px; box-shadow: 0 30px 60px -20px rgba(240,106,58,.6); animation: bob 4.5s ease-in-out infinite; }
   @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
   .cta-band .lede { max-width: 40ch; margin: 20px auto 34px; }
+
+  /* ═══ MOBILE ═══ */
+  @media (max-width: 720px) {
+    .hero { padding: 128px 0 24px; }
+    .hero .lede { margin: 20px auto 28px; }
+    .hero-cta { flex-direction: column; align-items: stretch; padding: 0 6px; }
+    .hero-cta .btn { width: 100%; }
+    .phone-stage { margin-top: 52px; }
+    .phone { width: 288px; height: 584px; }
+    .meal-marquee { margin-top: 64px; padding: 18px 0; }
+
+    .journey { height: 330vh; margin-top: 36px; }
+    .journey-stage { height: 100svh; align-items: flex-start; padding-top: max(60px, 9svh); }
+    .journey-grid { gap: 18px; }
+    .j-copy { min-height: 216px; }
+    .j-h { font-size: 30px; }
+    .j-p { font-size: 15px; margin-top: 12px; }
+    .j-visual { height: 296px; }
+    .j-card { height: 280px; padding: 20px; gap: 11px; }
+    .j-card .jc-h { font-size: 20px; }
+    .jc-row { padding: 9px 11px; font-size: 12.5px; }
+    .jc-row .thumb { width: 30px; height: 30px; }
+    .jc-step { font-size: 16px; }
+    .jc-timer { padding: 11px 15px; }
+    .jc-timer b { font-size: 21px; }
+    .orb { width: 84px; height: 84px; left: auto; right: 7%; top: 7%; }
+    .j-dots { left: 20px; bottom: max(22px, env(safe-area-inset-bottom)); }
+
+    .section { padding-top: 84px; }
+    .features { gap: 14px; margin-top: 34px; }
+    .feature { padding: 26px 22px; }
+
+    .duo { margin-top: 36px; gap: 14px; }
+    .duo-half { padding: 30px 26px; border-radius: 26px; }
+    .duo-half img { width: 58px; height: 58px; margin-bottom: 18px; }
+    .duo-half ul { margin-top: 18px; gap: 9px; }
+    .duo-half li { font-size: 14.5px; }
+    .duo-price { padding-top: 22px; }
+    .duo-price b { font-size: 32px; }
+    .duo-go { right: 22px; bottom: 26px; width: 46px; height: 46px; }
+
+    .cta-band { margin-top: 84px; }
+    .cta-band .big-e { width: 76px; height: 76px; margin-bottom: 22px; }
+    .cta-band .btn { width: min(100%, 340px); }
+  }
 </style>
 </head>
 <body>
