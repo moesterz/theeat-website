@@ -4,6 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Eat — Your account</title>
+<link rel="icon" type="image/png" href="favicon-eat.png"/>
+<link rel="apple-touch-icon" href="favicon-eat.png"/>
+<script src="favicon.js"></script>
+
 <meta name="description" content="Manage your Eat plan, billing and details."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -272,7 +276,7 @@
     const planIco = $('plan-ico'), navIco = $('nav-ico');
 
     // ── Sign out ──
-    document.querySelector('.ac-signout')?.addEventListener('click', async (e) => { e.preventDefault(); await signOut(auth); location.replace('signin.html'); });
+    document.querySelector('.ac-signout')?.addEventListener('click', async (e) => { e.preventDefault(); try { localStorage.removeItem('eat_tier'); } catch (_) {} await signOut(auth); location.replace('signin.html'); });
 
     // ── Auth guard + identity ──
     onAuthStateChanged(auth, async (user) => {
@@ -313,6 +317,13 @@
       try { d = await (await fetch(WORKER + '/subscription/status', { headers: { Authorization: 'Bearer ' + token } })).json(); } catch (_) {}
 
       const power = d.tier === 'power';
+      // Cache tier so every page can colour the favicon (blue for Power) without
+      // loading Firebase. favicon.js reads this on the next page load.
+      try {
+        localStorage.setItem('eat_tier', power ? 'power' : (d.tier || 'solo'));
+        const fav = document.querySelector('link[rel="icon"]');
+        if (fav) fav.href = power ? 'favicon-eat-power.png' : 'favicon-eat.png';
+      } catch (_) {}
       document.body.classList.toggle('power-mode', power);
       planIco.src = power ? 'icon-power.png' : 'icon-solo.png';
       navIco.src = power ? 'icon-power.png' : 'icon-solo.png';

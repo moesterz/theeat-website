@@ -4,6 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Eat — Welcome aboard</title>
+<link rel="icon" type="image/png" href="favicon-eat.png"/>
+<link rel="apple-touch-icon" href="favicon-eat.png"/>
+<script src="favicon.js"></script>
+
 <meta name="description" content="Your Eat subscription is active."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -69,6 +73,9 @@
       if ((params.get('plan') || '').toLowerCase() === 'power') {
         document.body.classList.add('power-mode');
         var i = document.getElementById('wl-ico'); if (i) i.src = 'icon-power.png';
+        // Cache tier + flip the tab icon to blue straight after a Power purchase.
+        try { localStorage.setItem('eat_tier', 'power'); } catch (e) {}
+        var fav = document.querySelector('link[rel="icon"]'); if (fav) fav.href = 'favicon-eat-power.png';
       }
     })();
   </script>
