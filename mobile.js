@@ -1,0 +1,14 @@
+(()=>{const bar=document.querySelector(".nav .bar");if(!bar||document.querySelector(".burger-btn"))return;
+const cur=location.pathname.split("/").pop()||"index.html";
+const links=[["index.html","Home"],["pricing.html","Pricing"],["faq.html","FAQ"],["contact.html","Contact"],["signin.html","Sign in"]];
+const acct=JSON.parse(localStorage.getItem("eat.account")||"null");if(acct)links[4]=["account.html","Account"];
+const b=document.createElement("button");b.className="burger-btn";b.type="button";b.setAttribute("aria-label","Menu");b.setAttribute("aria-expanded","false");b.innerHTML='<span></span><span></span>';
+const m=document.createElement("div");m.className="sheet";m.setAttribute("role","dialog");m.setAttribute("aria-label","Menu");
+m.innerHTML='<div class="sheet-bg"></div><nav class="sheet-panel"><div class="grab"></div><div class="sheet-links">'+links.map(([h,t])=>'<a href="'+h+'"'+(h===cur?' aria-current="page"':'')+'>'+t+'</a>').join("")+'</div><a class="btn btn-dark btn-lg" href="https://theeat.app/ios">Get the app</a><div class="sheet-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a></div></nav>';
+bar.appendChild(b);document.body.appendChild(m);
+const open=o=>{m.classList.toggle("open",o);b.setAttribute("aria-expanded",o);document.documentElement.classList.toggle("menu-open",o)};
+b.addEventListener("click",()=>open(!m.classList.contains("open")));
+m.querySelector(".sheet-bg").addEventListener("click",()=>open(false));
+addEventListener("keydown",e=>{if(e.key==="Escape")open(false)});
+matchMedia("(min-width:761px)").addEventListener("change",e=>{if(e.matches)open(false)});
+})();

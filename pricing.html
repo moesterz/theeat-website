@@ -1,171 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Eat — Pricing</title>
-<link rel="icon" type="image/png" href="favicon-eat.png"/>
-<link rel="apple-touch-icon" href="favicon-eat.png"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pricing — Eat</title>
+<meta name="description" content="Eat Solo and Eat Power. Subscribe on the web, sign in on your phone. Same account, same plan.">
+<meta name="theme-color" content="#F6F1EA">
+<link rel="icon" href="icon-solo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <script src="favicon.js"></script>
-
-<meta name="description" content="Simple plans for Eat. Start free for 7 days. Solo or Power — pick the kitchen that fits you."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="site.css"/>
-<style>
-  /* billing toggle */
-  .toggle { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 32px 0 4px; }
-  .toggle span { font-size: 14.5px; font-weight: 700; color: var(--faint); transition: color .2s ease; cursor: pointer; }
-  .toggle span.on { color: var(--ink); }
-  .switch { width: 60px; height: 33px; border-radius: 99px; background: linear-gradient(120deg, var(--solo), var(--solo-deep)); border: none; cursor: pointer; position: relative; padding: 0; box-shadow: inset 0 2px 4px rgba(0,0,0,.2); }
-  .switch .knob { position: absolute; top: 3px; left: 3px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.28); transition: transform .3s var(--ease-spring); }
-  .switch[data-annual="true"] .knob { transform: translateX(27px); }
-  .save-pill { font-size: 11px; font-weight: 700; letter-spacing: .05em; color: var(--solo-deep); background: var(--solo-soft); padding: 5px 11px; border-radius: 99px; animation: pill-pulse 3s ease-in-out infinite; }
-  @keyframes pill-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
-
-  /* tiers */
-  .tiers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 52px; }
-  .tier { padding: 34px 30px 30px; border-radius: 28px; display: flex; flex-direction: column; position: relative; transition: transform .4s var(--ease-spring), box-shadow .4s ease; }
-  .tier:hover { transform: translateY(-8px); }
-  .tier-icon { width: 54px; height: 54px; border-radius: 14px; margin-bottom: 18px; box-shadow: 0 14px 28px -12px rgba(0,0,0,.35); transition: transform .45s var(--ease-spring); }
-  .tier:hover .tier-icon { transform: rotate(-8deg) scale(1.1); }
-  .tier-glyph { width: 54px; height: 54px; border-radius: 14px; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 26px; color: #fff; }
-  .tier.solo { box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 26px 60px -30px rgba(240,106,58,.45); border-color: #ffd2bd; }
-  .tier.power { border-color: var(--power); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 34px 70px -30px rgba(74,128,196,.5); }
-  .tier.power:hover { box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 44px 84px -30px rgba(74,128,196,.6); }
-  .tier-badge { position: absolute; top: -13px; left: 30px; white-space: nowrap; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; background: linear-gradient(120deg, var(--power), var(--power-deep)); padding: 6px 13px; border-radius: 99px; box-shadow: 0 8px 18px -6px rgba(74,128,196,.7); }
-  .tier-soon { position: absolute; top: -13px; left: 30px; white-space: nowrap; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); background: var(--cream-2); border: 1px solid var(--line); padding: 6px 13px; border-radius: 99px; }
-  .tier h3 { font-family: var(--serif); font-size: 29px; font-weight: 400; letter-spacing: -0.01em; }
-  .tier .sub { font-size: 13.5px; color: var(--faint); margin-top: 2px; font-weight: 600; }
-  .price { display: flex; align-items: baseline; gap: 5px; margin: 24px 0 4px; }
-  .price .amt { font-family: var(--serif); font-size: 48px; line-height: 1; letter-spacing: -0.02em; display: inline-block; }
-  .price .amt.flip { animation: amt-flip .45s var(--ease-spring); }
-  @keyframes amt-flip { 0% { opacity: 0; transform: translateY(14px) scale(.9); } 100% { opacity: 1; transform: none; } }
-  .price .per { font-size: 14px; color: var(--faint); font-weight: 600; }
-  .price-note { font-size: 12.5px; color: var(--faint); min-height: 18px; }
-  .feats { list-style: none; margin: 24px 0 28px; display: flex; flex-direction: column; gap: 13px; }
-  .feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; color: var(--mid); line-height: 1.4; font-weight: 500; }
-  .feats svg { flex-shrink: 0; margin-top: 1px; }
-  .tier .btn { width: 100%; margin-top: auto; }
-  .tier.power .btn { background: linear-gradient(120deg, var(--power), var(--power-deep)); box-shadow: 0 16px 34px -12px rgba(74,128,196,.6); }
-  .tier.power .btn::before { background: var(--ink); }
-  .tier.muted { opacity: .94; }
-  .tier.muted .tier-glyph { opacity: .9; }
-  .tier.muted .btn { background: var(--cream-2); color: var(--mid); box-shadow: none; border: 1px solid var(--line); cursor: default; }
-  .tier.muted .btn::before { display: none; }
-  .tier.muted .btn:hover { transform: none; box-shadow: none; }
-
-  .pricing-foot { text-align: center; margin-top: 44px; font-size: 13.5px; color: var(--faint); }
-  .pricing-foot a { color: var(--solo); text-decoration: none; font-weight: 700; }
-
-  @media (max-width: 760px) { .tiers { grid-template-columns: 1fr; } }
-</style>
+<script src="prices.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const t=document.getElementById("toggle");
+  const paint=()=>{const y=t.dataset.yearly==="true";document.querySelectorAll(".amt[data-plan]").forEach(el=>{el.textContent=EatPrices.fmt(EatPrices.price(el.dataset.plan,y?"yr":"mo"));});document.querySelectorAll("[data-per]").forEach(el=>el.textContent=y?"/ year":"/ month");document.querySelectorAll("a[data-checkout]").forEach(a=>{a.href="checkout.html?plan="+a.dataset.checkout+"&period="+(y?"annual":"monthly");});};
+  t.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{t.dataset.yearly=b.dataset.v==="y";t.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));paint();}));
+  document.addEventListener("eat:prices",paint);paint();
+});
+</script>
 </head>
 <body>
-  <nav class="nav"><div class="wrap nav-inner">
-    <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat"/></a>
-    <div class="nav-links">
-      <a href="pricing.html" class="active">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="signin.html">Sign in</a>
-      <a href="index.html#get" class="nav-cta"><span>Get Eat</span></a>
-    </div>
-  </div></nav>
+<header class="nav"><div class="wrap bar">
+<a class="logo" href="index.html"><img src="icon-solo.png" alt="Eat"></a>
+<nav class="links"><a href="pricing.html" aria-current="page">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
+<div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
+</div></header>
+<script type="module" src="nav.js"></script>
 
-  <header class="wrap page-head" data-screen-label="Pricing head">
-    <div class="eyebrow rv">Simple pricing</div>
-    <h1 class="h-hero rv" style="--d:.08s;">Pick your <em>kitchen.</em></h1>
-    <p class="lede rv" style="--d:.16s;">Start free for 7 days. Cancel anytime, no charge until you're hooked.</p>
-
-    <div class="toggle rv" style="--d:.24s;">
-      <span class="on" id="lbl-mo">Monthly</span>
-      <button class="switch" id="switch" data-annual="false" aria-label="Toggle annual billing"><span class="knob"></span></button>
-      <span id="lbl-yr">Annual</span>
-      <span class="save-pill">2 months free</span>
-    </div>
-  </header>
-
-  <section class="wrap" data-screen-label="Pricing tiers">
-    <div class="tiers">
-      <!-- SOLO -->
-      <div class="tier card solo rv" style="--d:0s;">
-        <img class="tier-icon" src="icon-solo.png" alt="Solo icon"/>
-        <h3>Solo</h3>
-        <div class="sub">Just you</div>
-        <div class="price"><span class="amt" data-mo="£4.99" data-yr="£49.90">£4.99</span><span class="per" data-per>/ month</span></div>
-        <div class="price-note" data-note data-trial="1">Billed monthly · 7-day free trial</div>
-        <ul class="feats">
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f06a3a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>1 personalised plan</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f06a3a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Weekly shopping list</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f06a3a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Smart meal swaps</li>
-        </ul>
-        <a class="btn btn-solid-solo" href="Checkout.html?plan=solo"><span>Start free</span></a>
-      </div>
-
-      <!-- POWER -->
-      <div class="tier card power rv" style="--d:.1s;">
-        <div class="tier-badge">Most popular</div>
-        <img class="tier-icon" src="icon-power.png" alt="Power icon"/>
-        <h3>Power</h3>
-        <div class="sub">Solo + coaching</div>
-        <div class="price"><span class="amt" data-mo="£9.99" data-yr="£99.90">£9.99</span><span class="per" data-per>/ month</span></div>
-        <div class="price-note" data-note>Billed monthly</div>
-        <ul class="feats">
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4a80c4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Solo</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4a80c4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Macro &amp; calorie coaching</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4a80c4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Restaurant menu helper</li>
-        </ul>
-        <a class="btn" href="Checkout.html?plan=power" style="background:linear-gradient(120deg, var(--power), var(--power-deep)); box-shadow:0 16px 34px -12px rgba(74,128,196,.6);"><span>Choose Power</span></a>
-      </div>
-
-    </div>
-
-    <p class="pricing-foot rv">Solo includes a 7-day free trial. Prices in GBP. Questions? Read the <a href="faq.html">FAQ</a>.</p>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-glow g1"></div><div class="footer-glow g2"></div>
-    <div class="wrap">
-      <div class="footer-big">eat<i>.</i></div>
-      <div class="footer-inner">
-        <div>
-          <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat" style="width:30px;height:30px;border-radius:8px;"/></a>
-          <p class="footer-tagline">A personal meal plan, shopping list and cook mode, built around you.</p>
-        </div>
-        <div class="footer-cols">
-          <div class="footer-col"><h4>Product</h4><a href="index.html">Download</a><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a></div>
-          <div class="footer-col"><h4>Account</h4><a href="signin.html">Sign in</a><a href="join.html">Invites</a><a href="checkout.html">Checkout</a></div>
-          <div class="footer-col"><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Policy</a><a href="contact.html">Contact</a></div>
-        </div>
-      </div>
-      <div class="footer-base"><span>© 2026 Eat. Made with care.</span><span>theeat.app</span></div>
-    </div>
-  </footer>
-
-  <script src="site.js"></script>
-  <script>
-    const sw = document.getElementById('switch');
-    const lblMo = document.getElementById('lbl-mo');
-    const lblYr = document.getElementById('lbl-yr');
-    function setAnnual(annual) {
-      sw.dataset.annual = annual;
-      lblMo.classList.toggle('on', !annual);
-      lblYr.classList.toggle('on', annual);
-      document.querySelectorAll('.price .amt').forEach(a => {
-        a.classList.remove('flip'); void a.offsetWidth;
-        a.textContent = annual ? a.dataset.yr : a.dataset.mo;
-        a.classList.add('flip');
-      });
-      document.querySelectorAll('[data-per]').forEach(p => { p.textContent = annual ? '/ year' : '/ month'; });
-      document.querySelectorAll('[data-note]').forEach(n => {
-        const trial = n.dataset.trial === '1';
-        n.textContent = (annual ? 'Billed annually · 2 months free' : 'Billed monthly') + (trial ? ' · 7-day free trial' : '');
-      });
-    }
-    sw.addEventListener('click', () => setAnnual(sw.dataset.annual !== 'true'));
-    lblMo.addEventListener('click', () => setAnnual(false));
-    lblYr.addEventListener('click', () => setAnnual(true));
-  </script>
+<section class="wrap hero" style="padding-bottom:0">
+<h1 class="h-xl" style="font-size:clamp(40px,6vw,68px)">Pick your plan<span class="dot">.</span></h1>
+<p class="lede">Subscribe on the web, sign in on your phone. Same account, same plan.</p>
+<div class="toggle" data-yearly="false" id="toggle"><span class="pill"></span><button aria-pressed="true" data-v="m">Monthly</button><button aria-pressed="false" data-v="y">Yearly</button></div>
+</section>
+<section class="wrap">
+<div class="plans">
+<div class="card plan" id="solo"><div class="top"><img src="icon-solo.png" alt=""><div><div class="name">Eat Solo<span class="dot">.</span></div><div class="tag">Your week, planned, priced and listed.</div></div></div>
+<div class="price"><span class="amt" data-plan="solo">£4.99</span><span class="per" data-per>/ month</span></div>
+<p class="was">Two months free on the yearly plan</p>
+<ul class="perks"><li>Unlimited weekly meal plans</li><li>Shopping list split by store, with live prices</li><li>Swap and remake any meal</li><li>Saved favourites and nutrient targeting</li><li>Cupboard staples and protein powder support</li></ul>
+<a class="btn btn-dark btn-lg" data-checkout="solo" href="checkout.html?plan=solo">Start Eat Solo</a>
+<p class="fine" style="text-align:center;margin-top:-4px">7-day free trial · Cancel anytime</p></div>
+<div class="card plan power" id="power"><span class="badge">MOST POPULAR</span><div class="top"><img src="icon-power.png" alt=""><div><div class="name">Eat Power<span class="dot">.</span></div><div class="tag">Everything in Solo, plus logging and imports.</div></div></div>
+<div class="price"><span class="amt" data-plan="power">£9.99</span><span class="per" data-per>/ month</span></div>
+<p class="was">Two months free on the yearly plan</p>
+<ul class="perks"><li>Everything in Solo</li><li>Photo logging: snap a meal, get its macros</li><li>Barcode scanning for packaged food</li><li>Import recipes from any link</li><li>The Power icon and blue accent</li></ul>
+<a class="btn btn-accent btn-lg" data-checkout="power" href="checkout.html?plan=power">Start Eat Power</a>
+<p class="fine" style="text-align:center;margin-top:-4px">Billed today · Cancel anytime</p></div>
+</div>
+<div class="card compare"><table>
+<thead><tr><th>What you get</th><th>Free</th><th>Solo</th><th>Power</th></tr></thead>
+<tbody>
+<tr><td>Weekly meal plan</td><td class="ok">1 plan</td><td class="ok">Unlimited</td><td class="ok">Unlimited</td></tr>
+<tr><td>Shopping list with live supermarket prices</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+<tr><td>Swap and remake meals</td><td class="no">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+<tr><td>Saved favourites</td><td class="no">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+<tr><td>Photo and barcode logging</td><td class="no">—</td><td class="no">—</td><td class="ok">✓</td></tr>
+<tr><td>Import recipes from any link</td><td class="no">—</td><td class="no">—</td><td class="ok">✓</td></tr>
+<tr><td>Same account on iPhone and web</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+</tbody></table></div>
+<div class="faq-group narrow" style="margin-top:64px"><h2>Questions about billing</h2><div class="faq">
+<details><summary>How do I use a web subscription in the app?</summary><div class="a">Sign in on your iPhone with the same account you used here. Your plan is already there.</div></details>
+<details><summary>Is the price the same as in the app?</summary><div class="a">Monthly is the same everywhere. Yearly prices are set separately on the web and in the App Store, and you always see the exact amount before you pay.</div></details>
+<details><summary>Can I cancel?</summary><div class="a">Any time. Web subscriptions are managed from your account; App Store subscriptions from your iPhone's Settings. You keep access until the end of the period.</div></details>
+</div></div>
+</section>
+<div class="wrap one-foot" style="padding-top:48px"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
+<div class="dock mobile-only"><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
+<script src="mobile.js"></script>
 </body>
 </html>

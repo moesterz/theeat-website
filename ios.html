@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Eat for iPhone — Eat</title>
+<meta name="theme-color" content="#F6F1EA">
+<link rel="icon" href="icon-solo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script>
+// ── App Store link ─────────────────────────────────────────────────────────
+// Every "Get the app" link on the site points at theeat.app/ios, so the store
+// URL lives in exactly one place. Set it once Apple approves the app; until
+// then this page explains the app is on its way.
+var APP_STORE_URL = "";
+if (APP_STORE_URL) location.replace(APP_STORE_URL);
+</script>
+<style>
+html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+.one{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.one h1{font-size:clamp(40px,7vw,84px)}.one .lede{margin-left:0}
+.one-foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding:0 0 32px}
+.one-links{display:flex;gap:22px;align-items:center;font-size:13.5px;font-weight:500}.one-links a{color:var(--faint)}.one-links a:hover{color:var(--ink)}.one-links span{color:var(--faint)}
+@media (max-width:760px){body{overflow:auto}.one{justify-content:flex-start;padding-top:8vh}}
+</style>
+<script src="favicon.js"></script>
+</head>
+<body>
+<header class="nav"><div class="wrap bar">
+<a class="logo" href="index.html"><img src="icon-solo.png" alt="Eat"></a>
+<nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
+<div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
+</div></header>
+<script type="module" src="nav.js"></script>
+<main class="one"><section class="wrap">
+<h1>Eat for iPhone is on its way<span class="dot">.</span></h1>
+<p class="lede">The app is with Apple for review. Subscribe on the web now and your plan will be waiting when you sign in on your phone.</p>
+<div class="cta" style="justify-content:flex-start"><a class="btn btn-dark btn-lg" href="pricing.html">See plans</a><a class="btn btn-ghost btn-lg" href="index.html">Back home</a></div>
+</section></main>
+<div class="wrap one-foot"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
+<script src="mobile.js"></script>
+</body>
+</html>
