@@ -31,16 +31,20 @@ export function applyPower(on) {
 export function paintNav(a) {
   const act = document.querySelector(".nav .actions");
   if (!act) return;
+  // theme.js adds the dark-mode toggle into .actions; keep it across repaints
+  const themeBtn = act.querySelector(".theme-btn");
+  const keep = () => { if (themeBtn) act.prepend(themeBtn); };
   if (!a) {
-    if (act.dataset.signedIn) { act.innerHTML = act.dataset.signedOutHtml; delete act.dataset.signedIn; }
+    if (act.dataset.signedIn) { act.innerHTML = act.dataset.signedOutHtml; delete act.dataset.signedIn; keep(); }
     return;
   }
-  if (!act.dataset.signedOutHtml) act.dataset.signedOutHtml = act.innerHTML;
+  if (!act.dataset.signedOutHtml) act.dataset.signedOutHtml = Array.from(act.children).filter(c => !c.classList.contains("theme-btn")).map(c => c.outerHTML).join("");
   const n = a.name || (a.email || "").split("@")[0] || "E";
   const l = n.charAt(0).toUpperCase();
   act.dataset.signedIn = "1";
   act.innerHTML = '<a class="nav-av" href="account.html" aria-label="Account"><span' +
     (a.photo ? ' class="photo" style="background-image:url(' + a.photo + ')"' : "") + ">" + l + "</span></a>";
+  keep();
   applyPower(a.plan === "power");
 }
 
