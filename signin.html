@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sign in — Eat</title>
+<title>Sign in · Eat</title>
 <meta name="theme-color" content="#F6F1EA">
 <link rel="icon" href="icon-solo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script src="theme.js"></script>
 <style>
 html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
 .si{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;overflow:auto;padding:16px 0}
@@ -19,14 +20,14 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 .say input{font:inherit;color:var(--ink);background:transparent;border:0;outline:0;padding:0 .08em;margin:0;flex:0 1 auto;min-width:0;width:auto;max-width:calc(100% - 1.4em);border-bottom:3px solid var(--accent);border-radius:0;caret-color:var(--accent);letter-spacing:-.04em;transition:border-color .2s,font-size .2s}
 .say input[type=password]{width:7.5em;letter-spacing:.05em}
 .say .m{position:absolute;visibility:hidden;white-space:pre;pointer-events:none;letter-spacing:-.04em;font-weight:700;font-family:inherit}
-.say input::placeholder{color:#C9BFB3;font-weight:500}
+.say input::placeholder{color:var(--ph);font-weight:500}
 .say input:focus{border-color:var(--ink)}
 .say .hint{display:block;margin-top:.5em;font-size:clamp(15px,1.4vw,18px);font-weight:500;letter-spacing:-.01em;color:var(--mid);line-height:1.45}
-.say .hint kbd{font:inherit;font-weight:700;color:var(--ink);background:#fff;border-radius:7px;padding:1px 8px;box-shadow:inset 0 0 0 1px var(--line)}
-.say .hint a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}.say .hint a:hover{color:var(--accent)}
-.say .hint input{font:inherit;font-size:.95em;color:var(--ink);background:#fff;border:0;border-radius:9px;padding:6px 10px;box-shadow:inset 0 0 0 1px var(--line);outline:0;max-width:16ch}.say .hint input:focus{box-shadow:inset 0 0 0 2px var(--accent)}
+.say .hint kbd{font:inherit;font-weight:700;color:var(--ink);background:var(--card);border-radius:7px;padding:1px 8px;box-shadow:inset 0 0 0 1px var(--line)}
+.say .hint a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}.say .hint a:hover{color:var(--accent)}
+.say .hint input{font:inherit;font-size:.95em;color:var(--ink);background:var(--card);border:0;border-radius:9px;padding:6px 10px;box-shadow:inset 0 0 0 1px var(--line);outline:0;max-width:16ch}.say .hint input:focus{box-shadow:inset 0 0 0 2px var(--accent)}
 .say .err{color:var(--deep)}
-.say .go{font:inherit;flex:none;display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;border:0;transition:transform .3s var(--spring),background .2s}.say .go:hover{transform:translateX(3px)}.say .go svg{width:.5em;height:.5em}.say .go[disabled]{opacity:.5}
+.say .go{font:inherit;flex:none;display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;border-radius:50%;background:var(--ink);color:var(--dark-fg);cursor:pointer;border:0;transition:transform .3s var(--spring),background .2s}.say .go:hover{transform:translateX(3px)}.say .go svg{width:.5em;height:.5em}.say .go[disabled]{opacity:.5}
 .say .ok{color:var(--green)}
 .step{display:none;animation:rise .55s var(--spring) both}.step.on{display:block}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -51,23 +52,27 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <span class="plan-chip" id="chip" hidden><img src="icon-solo.png" alt="">Subscribing to <b>Eat Solo</b></span>
 
 <div class="step on" id="s1">
-<h1 class="say"><span class="q">Hi. What's your email?</span><br><form id="f1"><span class="m" id="meas" aria-hidden="true"></span><input id="email" type="email" placeholder="you@somewhere.com" autocomplete="email" spellcheck="false" aria-label="Email"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint">Press <kbd>return</kbd> to continue. One account for the app and the web.</span></h1>
+<h1 class="say"><span class="q" id="s1q">Hi. What's your email?</span><br><form id="f1"><span class="m" id="meas" aria-hidden="true"></span><input id="email" type="email" placeholder="you@somewhere.com" autocomplete="email" spellcheck="false" aria-label="Email"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h1">Press <kbd>return</kbd> and we'll email you a sign-in link. No password needed.</span></h1>
 </div>
 
 <div class="step" id="s2">
-<h1 class="say"><span class="q">Welcome back,</span> <span id="echo"></span><span class="q">. Your password</span><br><form id="f2"><input id="pw" type="password" placeholder="••••••••" autocomplete="current-password" aria-label="Password"><button class="go" type="submit" aria-label="Sign in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h2"><a href="#" id="forgot">Forgot it?</a> · <a href="#" id="toCreate">New here? Create an account</a> · <a href="#" id="back2">Wrong email?</a></span></h1>
+<h1 class="say"><span class="q">Sent to</span> <span id="echo"></span><span class="q">.</span><br><span class="q">Open the link on this device and you're in.</span><span class="hint" id="h2">Check spam if it's slow. <a id="resend">Resend</a> · <a id="usepw">Use a password instead</a> · <a id="back2">Wrong email?</a></span></h1>
 </div>
 
 <div class="step" id="s3">
-<h1 class="say"><span class="q">New here. Pick a password</span><br><form id="f3"><input id="pw2" type="password" placeholder="at least 6 characters" autocomplete="new-password" minlength="6" aria-label="New password"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h3"><a href="#" id="toSignin">Already have an account? Sign in</a> · <a href="#" id="back3">Wrong email?</a></span></h1>
+<h1 class="say"><span class="q">Welcome back,</span> <span id="echo3"></span><span class="q">. Your password</span><br><form id="f3"><input id="pw" type="password" placeholder="••••••••" autocomplete="current-password" aria-label="Password"><button class="go" type="submit" aria-label="Sign in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h3"><a id="forgot">Forgot it?</a> · <a id="toCreate">New here? Create an account</a> · <a id="back3">Wrong email?</a></span></h1>
 </div>
 
 <div class="step" id="s4">
-<h1 class="say"><span class="q">Last thing. Your name</span><br><form id="f4"><input id="name" type="text" placeholder="First name" autocomplete="given-name" maxlength="40" aria-label="Name"><button class="go" type="submit" aria-label="Create account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h4">Date of birth <input id="dob" type="date" aria-label="Date of birth" form="f4"> You need to be 13 or over.</span></h1>
+<h1 class="say"><span class="q">New here. Pick a password</span><br><form id="f4"><input id="pw2" type="password" placeholder="at least 6 characters" autocomplete="new-password" minlength="6" aria-label="New password"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h4"><a id="toSignin">Already have an account? Sign in</a> · <a id="back4">Wrong email?</a></span></h1>
 </div>
 
 <div class="step" id="s5">
-<h1 class="say"><span class="ok">You're in.</span><br><span class="q" id="s5msg">Taking you to your account…</span></h1>
+<h1 class="say"><span class="q">Last thing. Your name</span><br><form id="f5"><input id="name" type="text" placeholder="First name" autocomplete="given-name" maxlength="40" aria-label="Name"><button class="go" type="submit" aria-label="Finish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h5">Date of birth <input id="dob" type="date" aria-label="Date of birth" form="f5"> You need to be 13 or over.</span></h1>
+</div>
+
+<div class="step" id="s6">
+<h1 class="say"><span class="ok">You're in.</span><br><span class="q" id="going">Taking you to your account…</span></h1>
 </div>
 
 <div class="alt"><a id="apple"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1.9-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3.1 2.4 1.2 0 1.7-.8 3.2-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.4-2.8-.1 0-2.8-1.1-2.8-4Zm-2.5-7.1c.7-.8 1.1-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"/></svg>Continue with Apple</a><span class="sep"></span><a id="google"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.1 2.7-2.4 3.6v3h3.9c2.3-2.1 3.5-5.1 3.5-8.7Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.7-4.9H1.4v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.3 14.3A7.2 7.2 0 0 1 4.9 12c0-.8.1-1.6.4-2.3V6.6H1.4A12 12 0 0 0 0 12c0 1.9.5 3.8 1.4 5.4l3.9-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.6l3.9 3.1c1-2.8 3.6-4.9 6.7-4.9Z"/></svg>Continue with Google</a></div><p class="consent">New here? Same door. By continuing you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
@@ -78,19 +83,21 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <script type="module">
 import { auth, googleProvider, appleProvider, WORKER } from "./firebase-init.js";
 import { applyPower } from "./nav.js";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, updateProfile, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+import { sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, updateProfile, deleteUser, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
 const $ = id => document.getElementById(id);
-const params = new URLSearchParams(location.search);
-let next = params.get("next") || "account.html";
-if (params.get("plan")) next = "checkout.html?plan=" + params.get("plan") + (params.get("period") ? "&period=" + params.get("period") : "");
-// plan chip when this sign-in leads to a checkout
+const qs = new URLSearchParams(location.search);
+let next = qs.get("next") || "account.html";
+if (qs.get("plan")) next = "checkout.html?plan=" + qs.get("plan") + (qs.get("cycle") ? "&cycle=" + qs.get("cycle") : "");
 const nextPlan = (next.match(/[?&]plan=(solo|power)/) || [])[1];
 if (nextPlan) { const c = $("chip"); c.hidden = false; c.querySelector("b").textContent = nextPlan === "power" ? "Eat Power" : "Eat Solo"; if (nextPlan === "power") { applyPower(true); c.querySelector("img").src = "icon-power.png"; } }
+const PENDING = "eat.pendingEmail";
 
-let busy = false;
-onAuthStateChanged(auth, u => { if (u && !busy) location.replace(next); });
-
+let busy = false, newUserFinish = false;   // newUserFinish: link sign-in created the account → collect name + DOB
+const steps = ["s1","s2","s3","s4","s5","s6"];
+const show = id => { steps.forEach(s => $(s).classList.toggle("on", s === id)); const inp = $(id).querySelector("input"); if (inp) setTimeout(() => inp.focus(), 60); };
+const hints = {}; steps.forEach(s => { const h = $("h" + s.slice(1)); if (h) hints[s] = h.innerHTML; });
+const err = (step, msg) => { const h = $("h" + step.slice(1)); if (!h) return; h.innerHTML = msg ? '<span class="err">' + msg + "</span> · " + hints[step] : hints[step]; wire(); };
 const friendly = code => ({
   "auth/invalid-email": "That email doesn't look right.",
   "auth/missing-password": "Please enter your password.",
@@ -102,56 +109,92 @@ const friendly = code => ({
   "auth/too-many-requests": "Too many attempts. Try again in a few minutes.",
   "auth/popup-closed-by-user": "Sign-in was cancelled.",
   "auth/popup-blocked": "Your browser blocked the sign-in window.",
+  "auth/invalid-action-code": "That link has expired. Ask for a new one.",
+  "auth/expired-action-code": "That link has expired. Ask for a new one.",
 }[code] || "Something went wrong. Please try again.");
-
-const steps = ["s1","s2","s3","s4","s5"];
-const show = id => { steps.forEach(s => $(s).classList.toggle("on", s === id)); const inp = $(id).querySelector("input"); if (inp) setTimeout(() => inp.focus(), 60); };
-const hints = { s2: $("h2").innerHTML, s3: $("h3").innerHTML };
-const err = (step, msg) => { const h = $("h" + step.slice(1)); if (!h) return; h.innerHTML = msg ? '<span class="err">' + msg + "</span> · " + hints[step] : hints[step]; wire(); };
 
 // email line auto-sizes to fit (template behaviour)
 const email = $("email"), meas = $("meas");
 const size = () => { const v = email.value || email.placeholder; const avail = document.querySelector(".si-wrap").clientWidth; let fs = parseFloat(getComputedStyle(email.closest(".say")).fontSize); meas.style.fontSize = fs + "px"; meas.textContent = v; while (fs > 20 && (meas.offsetWidth + fs * 1.5) > avail) { fs -= 1; meas.style.fontSize = fs + "px"; } email.style.fontSize = fs + "px"; email.style.width = (meas.offsetWidth + fs * .6) + "px"; };
 email.addEventListener("input", size); addEventListener("resize", size); size();
 
-$("f1").addEventListener("submit", e => { e.preventDefault(); if (!email.checkValidity() || !email.value) { email.reportValidity(); return; } $("echo").textContent = email.value.trim(); show("s2"); });
+const finish = (msg) => { busy = true; if (msg) $("going").textContent = msg; else if (next.startsWith("checkout")) $("going").textContent = "Taking you to checkout…"; show("s6"); setTimeout(() => location.replace(next), 900); };
+const ageOf = dob => { const b = new Date(dob), now = new Date(); let a = now.getFullYear() - b.getFullYear(); const m = now.getMonth() - b.getMonth(); if (m < 0 || (m === 0 && now.getDate() < b.getDate())) a--; return isNaN(b) || a > 120 ? null : a; };
 
-function wire() {
-  $("forgot").onclick = async e => { e.preventDefault(); try { await sendPasswordResetEmail(auth, email.value.trim()); $("h2").innerHTML = '<span class="ok">Reset link sent. Check your inbox.</span> · ' + hints.s2; wire(); } catch (e2) { err("s2", friendly(e2.code)); } };
-  $("toCreate").onclick = e => { e.preventDefault(); err("s2"); show("s3"); };
-  $("toSignin").onclick = e => { e.preventDefault(); err("s3"); show("s2"); };
-  $("back2").onclick = $("back3").onclick = e => { e.preventDefault(); $("pw").value = ""; $("pw2").value = ""; err("s2"); err("s3"); show("s1"); };
+// ── Passwordless: emailed sign-in link (Firebase). Same account as the app. ──
+async function sendLink() {
+  const e = email.value.trim();
+  const url = location.origin + location.pathname + (next !== "account.html" ? "?next=" + encodeURIComponent(next) : "");
+  await sendSignInLinkToEmail(auth, e, { url, handleCodeInApp: true });
+  try { localStorage.setItem(PENDING, e); } catch (_) {}
 }
-wire();
-
-async function finish(msg) { busy = true; if (msg) $("s5msg").textContent = msg; show("s5"); setTimeout(() => location.replace(next), 900); }
-
-$("f2").addEventListener("submit", async e => {
-  e.preventDefault(); const pw = $("pw").value; if (!pw) return err("s2", friendly("auth/missing-password"));
-  busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithEmailAndPassword(auth, email.value.trim(), pw); finish(); }
-  catch (e2) { busy = false; err("s2", friendly(e2.code)); }
+let landing = false;
+$("f1").addEventListener("submit", async e => {
+  e.preventDefault(); if (landing) return;
+  if (!email.checkValidity() || !email.value) { email.reportValidity(); return; }
+  $("echo").textContent = $("echo3").textContent = email.value.trim();
+  try { await sendLink(); show("s2"); }
+  catch (e2) {
+    // Link sign-in not switched on in Firebase yet → password flow (same account either way)
+    if (e2.code === "auth/operation-not-allowed") show("s3");
+    else err("s1", friendly(e2.code));
+  }
 });
 
-$("f3").addEventListener("submit", e => { e.preventDefault(); const pw = $("pw2").value; if (pw.length < 6) return err("s3", friendly("auth/weak-password")); show("s4"); });
+// Coming back from the link
+if (isSignInWithEmailLink(auth, location.href)) {
+  landing = true;
+  let stored = null; try { stored = localStorage.getItem(PENDING); } catch (_) {}
+  const complete = async (addr) => {
+    busy = true;
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      const cred = await signInWithEmailLink(auth, addr, location.href);
+      try { localStorage.removeItem(PENDING); } catch (_) {}
+      const m = cred.user.metadata;
+      const isNew = !cred.user.displayName && m.creationTime === m.lastSignInTime;
+      if (isNew) { newUserFinish = true; busy = false; show("s5"); return; }
+      finish();
+    } catch (e2) { busy = false; landing = false; show("s1"); err("s1", friendly(e2.code)); }
+  };
+  if (stored) complete(stored);
+  else { $("s1q").textContent = "Almost in. Confirm your email"; $("h1").textContent = "The same address the link was sent to."; $("f1").addEventListener("submit", ev => { ev.preventDefault(); if (email.checkValidity() && email.value) complete(email.value.trim()); }); }
+}
 
-$("f4").addEventListener("submit", async e => {
+// ── Password path (fallback + existing accounts) ─────────────────────────────
+onAuthStateChanged(auth, u => { if (u && !busy && !newUserFinish && !landing) location.replace(next); });
+function wire() {
+  $("resend").onclick = async e => { e.preventDefault(); try { await sendLink(); $("h2").innerHTML = '<span class="ok">Sent again.</span> · ' + hints.s2; wire(); } catch (e2) { err("s2", friendly(e2.code)); } };
+  $("usepw").onclick = e => { e.preventDefault(); show("s3"); };
+  $("forgot").onclick = async e => { e.preventDefault(); try { await sendPasswordResetEmail(auth, email.value.trim()); $("h3").innerHTML = '<span class="ok">Reset link sent. Check your inbox.</span> · ' + hints.s3; wire(); } catch (e2) { err("s3", friendly(e2.code)); } };
+  $("toCreate").onclick = e => { e.preventDefault(); err("s3"); show("s4"); };
+  $("toSignin").onclick = e => { e.preventDefault(); err("s4"); show("s3"); };
+  ["back2","back3","back4"].forEach(id => $(id).onclick = e => { e.preventDefault(); $("pw").value = ""; $("pw2").value = ""; err("s2"); err("s3"); err("s4"); show("s1"); });
+}
+wire();
+$("f3").addEventListener("submit", async e => {
+  e.preventDefault(); const pw = $("pw").value; if (!pw) return err("s3", friendly("auth/missing-password"));
+  busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithEmailAndPassword(auth, email.value.trim(), pw); finish(); }
+  catch (e2) { busy = false; err("s3", friendly(e2.code)); }
+});
+$("f4").addEventListener("submit", e => { e.preventDefault(); if ($("pw2").value.length < 6) return err("s4", friendly("auth/weak-password")); show("s5"); });
+$("f5").addEventListener("submit", async e => {
   e.preventDefault();
   const dob = $("dob").value, name = $("name").value.trim();
   if (!dob) { $("dob").focus(); return; }
-  const b = new Date(dob), now = new Date(); let age = now.getFullYear() - b.getFullYear(); const m = now.getMonth() - b.getMonth(); if (m < 0 || (m === 0 && now.getDate() < b.getDate())) age--;
-  if (isNaN(b) || age > 120) { $("h4").innerHTML = '<span class="err">Please enter a valid date of birth.</span>'; return; }
-  if (age < 13) { $("h4").innerHTML = '<span class="err">Sorry, you need to be 13 or over to use Eat.</span>'; return; }
+  const age = ageOf(dob);
+  if (age === null) { $("h5").innerHTML = '<span class="err">Please enter a valid date of birth.</span>'; return; }
+  if (age < 13) { $("h5").innerHTML = '<span class="err">Sorry, you need to be 13 or over to use Eat.</span>'; if (newUserFinish && auth.currentUser) { try { await deleteUser(auth.currentUser); } catch (_) {} newUserFinish = false; landing = false; } return; }
   busy = true;
   try {
     await setPersistence(auth, browserLocalPersistence);
-    const cred = await createUserWithEmailAndPassword(auth, email.value.trim(), $("pw2").value);
-    if (name) { try { await updateProfile(cred.user, { displayName: name }); } catch (_) {} }
-    try { const idToken = await cred.user.getIdToken(); await fetch(WORKER + "/profile", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, birthday: dob, name }) }); } catch (_) {}
-    finish("Account created. Taking you through…");
-  } catch (e2) { busy = false; if (e2.code === "auth/email-already-in-use") { err("s2", "That email already has an account. Sign in instead."); show("s2"); } else { $("h4").innerHTML = '<span class="err">' + friendly(e2.code) + "</span>"; } }
+    const user = newUserFinish ? auth.currentUser : (await createUserWithEmailAndPassword(auth, email.value.trim(), $("pw2").value)).user;
+    if (name) { try { await updateProfile(user, { displayName: name }); } catch (_) {} }
+    try { const idToken = await user.getIdToken(); await fetch(WORKER + "/profile", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, birthday: dob, name }) }); } catch (_) {}
+    newUserFinish = false; finish("Account created. Taking you through…");
+  } catch (e2) { busy = false; if (e2.code === "auth/email-already-in-use") { err("s3", "That email already has an account. Sign in instead."); show("s3"); } else $("h5").innerHTML = '<span class="err">' + friendly(e2.code) + "</span>"; }
 });
-
-const popup = async provider => { busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithPopup(auth, provider); finish(); } catch (e2) { busy = false; err("s1"); const h = $("s1").querySelector(".hint"); h.innerHTML = '<span class="err">' + friendly(e2.code) + "</span>"; } };
+const popup = async provider => { busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithPopup(auth, provider); finish(); } catch (e2) { busy = false; err("s1", friendly(e2.code)); } };
 $("google").addEventListener("click", e => { e.preventDefault(); popup(googleProvider); });
 $("apple").addEventListener("click", e => { e.preventDefault(); popup(appleProvider); });
 </script>

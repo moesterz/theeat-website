@@ -3,30 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Checkout — Eat</title>
+<title>Checkout · Eat</title>
+<meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F1EA">
 <link rel="icon" href="icon-solo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script src="theme.js"></script>
 <style>
 html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
-.co{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,7vw,120px);align-items:center;width:min(1120px,calc(100% - 48px));margin:0 auto;padding:12px 0;overflow:auto}
-.co h1{font-size:clamp(34px,4.4vw,56px);letter-spacing:-.045em;line-height:1}.co h1 .dot{color:var(--accent)}
-.co .sub-l{font-size:16px;color:var(--mid);margin-top:14px;max-width:32ch;line-height:1.45}
-.co .toggle{margin:28px 0 0}
-.steps{display:flex;flex-direction:column;gap:12px;margin-top:28px}
-.steps div{display:flex;gap:12px;align-items:center;font-size:14.5px;color:var(--mid)}.steps b{width:26px;height:26px;border-radius:50%;background:var(--card);box-shadow:0 1px 0 var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;color:var(--ink);flex:none}.steps .done b{background:var(--green);color:#fff}.steps a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
-.plan{padding:26px;display:flex;flex-direction:column;gap:18px}
-.plan .top{display:flex;align-items:center;gap:14px}.plan .top img{width:48px;height:48px;border-radius:14px;box-shadow:0 10px 24px -12px var(--accent)}.plan .name{font-size:22px;font-weight:700;letter-spacing:-.03em}.plan .tag{font-size:14px;color:var(--mid);margin-top:2px}
-.plan .price{display:flex;align-items:baseline;gap:6px}.plan .amt{font-size:44px;font-weight:700;letter-spacing:-.05em;line-height:1}.plan .per{color:var(--faint);font-weight:500}
-.sum{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:16px}
-.sum div{display:flex;justify-content:space-between;font-size:14.5px;color:var(--mid)}.sum b{color:var(--ink);font-weight:600}.sum .due{font-size:17px;padding-top:6px;border-top:1px solid var(--line)}.sum .due b{font-size:20px}
-.plan .fine{margin-top:0}
-.swap{font-size:13.5px;color:var(--mid)}.swap a{color:var(--ink);font-weight:600}
+.co{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(32px,6vw,96px);align-items:safe center;align-content:safe center;width:min(1040px,calc(100% - 48px));margin:0 auto;padding:16px 0;overflow:auto}
+.co h1{font-size:clamp(34px,4.6vw,58px);letter-spacing:-.045em;line-height:1.02}.co h1 .dot{color:var(--accent)}
+.co .lede{margin:14px 0 0;font-size:16.5px;max-width:42ch}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-radius:18px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;transition:box-shadow .2s,transform .3s var(--spring);font:inherit;text-align:left;color:var(--ink);width:100%}
+.opt:hover{transform:translateY(-1px)}.opt[aria-checked="true"]{box-shadow:inset 0 0 0 2px var(--accent)}
+.opt .l{display:flex;align-items:center;gap:14px}.opt .r{display:flex;align-items:center;gap:14px}
+.opt .ck{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--line);flex:none;position:relative;transition:background .2s,box-shadow .2s}.opt[aria-checked="true"] .ck{background:var(--accent);box-shadow:none}.opt[aria-checked="true"] .ck::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff}
+.opt .t{font-weight:700;font-size:16px;letter-spacing:-.01em}.opt .s{font-size:13.5px;color:var(--mid);margin-top:2px}
+.opt .amt{font-weight:700;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.opt .save{font-size:12px;font-weight:700;color:var(--deep);background:var(--tint);padding:4px 9px;border-radius:99px;letter-spacing:.02em}
+.who{display:flex;align-items:center;gap:12px;margin-top:22px;font-size:14px;color:var(--mid)}.who .av{width:30px;height:30px;border-radius:50%;background:radial-gradient(90% 90% at 32% 22%,var(--light),var(--accent) 62%,var(--deep));color:#fff;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;background-size:cover;background-position:center}.who .av.photo{color:transparent}.who b{color:var(--ink);font-weight:600}.who a{color:var(--faint);margin-left:auto;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.who a:hover{color:var(--ink)}
+.sum{background:var(--ink);color:#fff;border-radius:28px;padding:clamp(24px,3vw,36px);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:22px}
+.sum::before{content:"";position:absolute;right:-90px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 60%,transparent),transparent 70%);filter:blur(16px)}.sum>*{position:relative}
+.sum .plan{display:flex;align-items:center;gap:14px}.sum .plan img{width:48px;height:48px;border-radius:14px}.sum .plan .n{font-size:20px;font-weight:700;letter-spacing:-.02em}.sum .plan .n .dot{color:var(--accent)}.sum .plan .p{color:rgba(255,255,255,.6);font-size:14px;margin-top:2px}
+.sum .lines{display:flex;flex-direction:column;gap:10px;font-size:14.5px;color:rgba(255,255,255,.7)}.sum .lines div{display:flex;justify-content:space-between;gap:12px}.sum .lines b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+.sum .total{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;display:flex;justify-content:space-between;align-items:baseline}.sum .total .k{font-size:14px;color:rgba(255,255,255,.6)}.sum .total .k b{display:block;color:#fff;font-size:16px;font-weight:700;margin-bottom:2px}.sum .total .v{font-size:clamp(34px,3.6vw,44px);font-weight:700;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.sum .pay{height:56px;border-radius:16px;background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:16px;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .3s var(--spring)}.sum .pay:hover{transform:translateY(-1px)}.sum .pay svg{width:18px;height:18px}.sum .pay[disabled]{opacity:.6;cursor:default}
+.sum .fine{font-size:12.5px;color:rgba(255,255,255,.5);text-align:center;line-height:1.5;margin:-6px 0 0}.sum .fine a{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:2px}
+.sum .secure{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,.5);font-weight:500}.sum .secure svg{width:14px;height:14px}
 .one-foot{margin-top:0;padding:16px 0 20px;flex:none}
-@media (max-width:820px){body{overflow:auto}.co{grid-template-columns:1fr;gap:28px;align-items:start}}
-/*m*/@media (max-width:760px){.co{grid-template-columns:1fr;gap:22px;align-items:start;padding:20px 0 0;overflow:visible}.co h1{font-size:34px}.plan{padding:22px}.plan .amt{font-size:38px}}
+@media (max-width:820px){body{overflow:auto}.co{grid-template-columns:1fr;gap:28px;align-items:start;padding:20px 0 0;overflow:visible}.co h1{font-size:36px}.sum{border-radius:24px}.co .lede{font-size:15.5px}.opt{padding:16px}}
 </style>
 <script src="favicon.js"></script>
 <script src="prices.js"></script>
@@ -34,87 +41,121 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <body>
 <header class="nav"><div class="wrap bar">
 <a class="logo" href="index.html"><img src="icon-solo.png" alt="Eat"></a>
-<nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
+<nav class="links"><a href="pricing.html" aria-current="page">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
 </div></header>
 <script type="module" src="nav.js"></script>
-<main class="co">
+<main class="co" id="main" style="visibility:hidden">
 <div>
-<h1>Almost there<span class="dot">.</span></h1>
-<p class="sub-l">Pay securely with Stripe. Then sign in on your iPhone and your plan is already waiting.</p>
-<div class="toggle" data-yearly="false" id="toggle"><span class="pill"></span><button aria-pressed="true" data-v="m">Monthly</button><button aria-pressed="false" data-v="y">Yearly</button></div>
-<div class="steps">
-<div class="done" id="st1"><b>1</b><span id="st1t">Signed in</span></div>
-<div><b>2</b><span>Pay with Stripe</span></div>
-<div><b>3</b><span>Sign in on your phone</span></div>
+<h1 id="h1">Almost there<span class="dot">.</span></h1>
+<p class="lede" id="lede">Choose how you'd like to pay. Your first 7 days are free, cancel before <span id="tdate"></span> and you won't be charged.</p>
+<div class="opts" role="radiogroup" aria-label="Billing cycle">
+<button class="opt" role="radio" data-c="m" aria-checked="true"><span class="l"><span class="ck"></span><span><div class="t">Monthly</div><div class="s">Flexible. Cancel any time.</div></span></span><span class="r"><span class="amt" id="pm"></span></span></button>
+<button class="opt" role="radio" data-c="y" aria-checked="false"><span class="l"><span class="ck"></span><span><div class="t">Yearly</div><div class="s">One payment, twelve months.</div></span></span><span class="r"><span class="save" id="pct"></span><span class="amt" id="py"></span></span></button>
 </div>
+<div class="who"><span class="av" id="wav"></span><span>Paying as <b id="wn"></b> · <span id="we"></span></span><a id="notyou">Not you?</a></div>
 </div>
-<div class="card plan" id="card">
-<div class="top"><img src="icon-solo.png" alt="" id="ico"><div><div class="name" id="pname">Eat Solo<span class="dot">.</span></div><div class="tag" id="ptag">Your week, planned, priced and listed.</div></div></div>
-<div class="price"><span class="amt" id="amt">£4.99</span><span class="per" id="per">/ month</span></div>
-<div class="sum" id="sum"></div>
-<button class="btn btn-dark btn-lg" id="go" type="button">Continue to payment</button>
-<p class="fine" id="fine" style="text-align:center"></p>
-<p class="swap" style="text-align:center"><a href="#" id="swap">Switch to Eat Power</a></p>
-</div>
+<aside class="sum">
+<div class="plan"><img src="icon-solo.png" alt="" data-plan-icon><div><div class="n"><span data-plan>Eat Solo</span><span class="dot">.</span></div><div class="p">Web subscription · works in the app</div></div></div>
+<div class="lines"><div><span><span id="cyc">Monthly</span> plan</span><b id="sub"></b></div><div id="trialline"><span>7-day free trial</span><b>−100%</b></div></div>
+<div class="total"><div class="k"><b>Due today</b>Then <span id="then"></span></div><div class="v" id="due"></div></div>
+<button class="pay" id="pay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg><span id="paytxt">Continue to payment</span></button>
+<p class="fine" id="fine">You'll be taken to Stripe to add a card. Renews automatically; cancel in your account. <a href="terms.html">Terms</a></p>
+<div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secured by Stripe</div>
+</aside>
 </main>
 <div class="wrap one-foot"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
 <script src="mobile.js"></script>
 
 <script type="module">
-import { WORKER } from "./firebase-init.js";
-import { onUser, applyPower } from "./nav.js";
+import { auth, WORKER } from "./firebase-init.js";
+import { onUser, applyPower, writeCache } from "./nav.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 const $ = id => document.getElementById(id);
-const P = new URLSearchParams(location.search);
-let plan = P.get("plan") === "power" ? "power" : "solo";
-let yearly = P.get("period") === "annual";
-let user = null, trialed = false;
-const TAG = { solo: "Your week, planned, priced and listed.", power: "Everything in Solo, plus logging and imports." };
-const t = $("toggle");
+const q = new URLSearchParams(location.search);
+const plan = q.get("plan") === "power" ? "power" : "solo";
+let cycle = q.get("cycle") === "y" ? "y" : "m";
+const period = () => cycle === "y" ? "annual" : "monthly";
+let user = null, status = null, mode = "new";   // new | upgrade
+const f = n => EatPrices.fmt(n);
+const P = () => ({ m: EatPrices.price(plan, "mo"), y: EatPrices.price(plan, "yr") });
+const trialEnd = new Date(); trialEnd.setDate(trialEnd.getDate() + 7);
+
 function render() {
-  const per = yearly ? "yr" : "mo", price = EatPrices.price(plan, per), fmt = EatPrices.fmt;
-  t.dataset.yearly = String(yearly); t.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.v === "y") === yearly));
-  applyPower(plan === "power"); $("ico").src = plan === "power" ? "icon-power.png" : "icon-solo.png";
-  $("pname").innerHTML = (plan === "power" ? "Eat Power" : "Eat Solo") + '<span class="dot">.</span>'; $("ptag").textContent = TAG[plan];
-  $("amt").textContent = fmt(price); $("per").textContent = yearly ? "/ year" : "/ month";
-  $("swap").textContent = plan === "power" ? "Switch to Eat Solo" : "Switch to Eat Power";
-  const trial = plan === "solo" && !trialed;
-  const renew = yearly ? "each year" : "each month";
-  if (trial) {
-    const d = new Date(); d.setDate(d.getDate() + 7);
-    $("sum").innerHTML = "<div><span>7-day free trial</span><b>" + fmt(0) + "</b></div><div><span>Then</span><b>" + fmt(price) + " " + (yearly ? "/ year" : "/ month") + "</b></div><div class=\"due\"><span>Due today</span><b>" + fmt(0) + "</b></div>";
-    $("go").textContent = "Start my free week";
-    $("fine").textContent = "Your trial ends " + d.toLocaleDateString("en-GB", { day: "numeric", month: "long" }) + ". Cancel before then and you pay nothing.";
+  const p = P(), amt = cycle === "y" ? p.y : p.m;
+  document.querySelectorAll(".opt").forEach(o => o.setAttribute("aria-checked", o.dataset.c === cycle));
+  $("pm").textContent = f(p.m) + " / month"; $("py").textContent = f(p.y) + " / year";
+  const pct = p.m ? Math.round((1 - p.y / (p.m * 12)) * 100) : 0; $("pct").textContent = pct ? "Save " + pct + "%" : "2 months free";
+  $("cyc").textContent = cycle === "y" ? "Yearly" : "Monthly"; $("sub").textContent = f(amt);
+  $("then").textContent = f(amt) + (cycle === "y" ? " a year" : " a month");
+  const trial = mode === "new" && plan === "solo" && !(status && status.trialed);
+  $("trialline").style.display = trial ? "" : "none";
+  $("due").textContent = f(trial ? 0 : amt);
+  if (mode === "upgrade") {
+    $("h1").innerHTML = 'Upgrade to Power<span class="dot">.</span>';
+    $("lede").textContent = "You're already subscribed, so there's no new trial. You pay the difference today and Power unlocks straight away.";
+    $("fine").innerHTML = 'Charged to your card on file via Stripe, pro-rata for the rest of this period. Renews automatically; cancel in your account. <a href="terms.html">Terms</a>';
+    $("paytxt").textContent = "Confirm upgrade";
+  } else if (trial) {
+    $("lede").innerHTML = 'Choose how you\'d like to pay. Your first 7 days are free, cancel before <span id="tdate"></span> and you won\'t be charged.';
+    $("tdate").textContent = trialEnd.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    $("paytxt").textContent = "Continue to payment";
   } else {
-    $("sum").innerHTML = "<div><span>" + (plan === "power" ? "Eat Power" : "Eat Solo") + " (" + (yearly ? "yearly" : "monthly") + ")</span><b>" + fmt(price) + "</b></div><div><span>Renews</span><b>" + fmt(price) + " " + renew + "</b></div><div class=\"due\"><span>Due today</span><b>" + fmt(price) + "</b></div>";
-    $("go").textContent = "Continue to payment";
-    $("fine").textContent = "Billed today, renews " + renew + ". Cancel any time from your account.";
+    $("lede").textContent = plan === "power" ? "Power is billed today and unlocks straight away in the app." : "Your free week has been used, so Solo is billed today.";
+    $("paytxt").textContent = "Continue to payment";
   }
-  $("st1t").textContent = user ? "Signed in as " + (user.email || "your account") : "Sign in";
-  history.replaceState(null, "", "checkout.html?plan=" + plan + "&period=" + (yearly ? "annual" : "monthly"));
+  history.replaceState(null, "", "checkout.html?plan=" + plan + "&cycle=" + cycle);
 }
-t.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { yearly = b.dataset.v === "y"; render(); }));
-$("swap").addEventListener("click", e => { e.preventDefault(); plan = plan === "power" ? "solo" : "power"; render(); });
+document.querySelectorAll(".opt").forEach(o => o.addEventListener("click", () => { cycle = o.dataset.c; render(); }));
 document.addEventListener("eat:prices", render);
+const name = plan === "power" ? "Eat Power" : "Eat Solo";
+document.querySelectorAll("[data-plan]").forEach(e => e.textContent = name);
+applyPower(plan === "power");
 
-onUser((u, s) => {
-  user = u; trialed = !!(s && s.trialed);
-  if (!u) { location.replace("signin.html?next=" + encodeURIComponent("checkout.html?plan=" + plan + "&period=" + (yearly ? "annual" : "monthly"))); return; }
-  if (s && s.active && s.tier === "power") { location.replace("account.html"); return; }   // already on the top plan
-  render();
+onUser(async (u, s) => {
+  user = u; status = s;
+  // 1. signed out → sign in, then come straight back here
+  if (!u) { location.replace("signin.html?next=" + encodeURIComponent("checkout.html?plan=" + plan + "&cycle=" + cycle)); return; }
+  if (s && s.active && s.source !== "referral") {
+    const cur = s.tier === "power" ? "power" : "solo";
+    // 2. already on this plan → account (cycle changes go through billing on the account page)
+    if (cur === plan) { location.replace("account.html"); return; }
+    // 3. downgrade → never a payment; schedule it for the next renewal, then account
+    if (cur === "power" && plan === "solo") {
+      $("h1").innerHTML = 'Switching to Solo<span class="dot">.</span>'; $("lede").textContent = "Nothing to pay. Scheduling the switch for your next renewal."; $("main").style.visibility = "visible";
+      try {
+        const idToken = await u.getIdToken();
+        const r = await (await fetch(WORKER + "/stripe/change-plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, plan: "solo", period: s.period || "monthly" }) })).json();
+        location.replace("account.html" + (r.ok ? "?scheduled=solo" : (r.error === "same_plan" ? "" : "?err=change")));
+      } catch (_) { location.replace("account.html?err=change"); }
+      return;
+    }
+    // 4. upgrade → immediate, pro-rata, no new trial
+    mode = "upgrade";
+  }
+  const first = (u.displayName || (u.email || "").split("@")[0]);
+  $("wn").textContent = u.displayName || first; $("we").textContent = u.email || "";
+  const av = $("wav"); if (u.photoURL) { av.classList.add("photo"); av.style.backgroundImage = "url(" + u.photoURL + ")"; } else av.textContent = first.charAt(0).toUpperCase();
+  render(); $("main").style.visibility = "visible";
 });
+$("notyou").addEventListener("click", async () => { writeCache(null); await signOut(auth); });
 
-$("go").addEventListener("click", async () => {
+$("pay").addEventListener("click", async () => {
   if (!user) return;
-  $("go").disabled = true; $("go").textContent = "Opening Stripe";
+  const b = $("pay"); b.disabled = true;
   try {
     const idToken = await user.getIdToken();
-    const r = await fetch(WORKER + "/stripe/create-checkout", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idToken, plan, period: yearly ? "annual" : "monthly", currency: EatPrices.cur }) });
-    const d = await r.json();
-    if (d.url) { location.href = d.url; return; }
-    throw new Error(d.error || "no url");
-  } catch (_) { $("go").disabled = false; $("go").textContent = "Something went wrong. Try again"; setTimeout(render, 2500); }
+    if (mode === "upgrade") {
+      $("paytxt").textContent = "Upgrading";
+      const r = await (await fetch(WORKER + "/stripe/change-plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, plan, period: period() }) })).json();
+      if (r.ok || r.error === "same_plan") { location.href = "account.html?upgraded=power"; return; }
+      throw new Error(r.detail || r.error);
+    }
+    $("paytxt").textContent = "Opening Stripe";
+    const r = await (await fetch(WORKER + "/stripe/create-checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, plan, period: period(), currency: EatPrices.cur }) })).json();
+    if (r.url) { location.href = r.url; return; }
+    throw new Error(r.error || "no url");
+  } catch (e) { b.disabled = false; $("paytxt").textContent = "Something went wrong. Try again"; setTimeout(render, 2500); }
 });
 render();
 </script>

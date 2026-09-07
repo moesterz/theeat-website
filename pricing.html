@@ -3,19 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Pricing — Eat</title>
+<title>Pricing · Eat</title>
 <meta name="description" content="Eat Solo and Eat Power. Subscribe on the web, sign in on your phone. Same account, same plan.">
 <meta name="theme-color" content="#F6F1EA">
 <link rel="icon" href="icon-solo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script src="theme.js"></script>
+<style>
+html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+.pr{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:safe center;width:min(1040px,calc(100% - 48px));margin:0 auto;padding:12px 0 8px;overflow:auto}
+.pr-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:0 0 clamp(16px,3vh,28px)}
+.pr-head h1{font-size:clamp(34px,4.6vh,54px);letter-spacing:-.045em;line-height:1}.pr-head .lede{margin:8px 0 0;font-size:15.5px;max-width:48ch}
+.pr-head .toggle{margin-top:0}
+.plans{margin:0;max-width:none;gap:16px}
+.plan{padding:24px 26px;gap:14px}.plan .top{min-height:48px}.plan .top img{width:48px;height:48px;border-radius:14px}
+.price .amt{font-size:clamp(34px,4.4vh,44px)}
+.perks{gap:8px}.perks li{font-size:14.5px}
+.plan .fine{margin-top:-4px;text-align:center}
+.pr-note{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;margin-top:clamp(14px,2.4vh,24px);font-size:13.5px;color:var(--faint);font-weight:500}.pr-note b{color:var(--mid);font-weight:600}.pr-note a{color:var(--ink);font-weight:600}
+.one-foot{margin-top:0;padding:16px 0 20px;flex:none}
+@media (max-width:820px){body{overflow:auto}.pr{justify-content:flex-start;padding:20px 0 0;overflow:visible}.pr-head{margin:0 0 18px;align-items:flex-start}.pr-head h1{font-size:36px}.pr-head .toggle{width:100%}.plans{grid-template-columns:1fr}.pr-note{flex-direction:column;gap:8px;align-items:flex-start}}
+.plan .btn.current{background:var(--tint);color:var(--deep);box-shadow:inset 0 0 0 1.5px var(--accent);cursor:default;gap:8px}.plan .btn.current:hover{transform:none;box-shadow:inset 0 0 0 1.5px var(--accent)}.plan.mine{box-shadow:inset 0 0 0 2px var(--accent),0 1px 0 var(--line)}
+</style>
 <script src="favicon.js"></script>
 <script src="prices.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
   const t=document.getElementById("toggle");
-  const paint=()=>{const y=t.dataset.yearly==="true";document.querySelectorAll(".amt[data-plan]").forEach(el=>{el.textContent=EatPrices.fmt(EatPrices.price(el.dataset.plan,y?"yr":"mo"));});document.querySelectorAll("[data-per]").forEach(el=>el.textContent=y?"/ year":"/ month");document.querySelectorAll("a[data-checkout]").forEach(a=>{a.href="checkout.html?plan="+a.dataset.checkout+"&period="+(y?"annual":"monthly");});};
+  const paint=()=>{const y=t.dataset.yearly==="true";document.querySelectorAll(".amt[data-plan]").forEach(el=>{el.textContent=EatPrices.fmt(EatPrices.price(el.dataset.plan,y?"yr":"mo"));});document.querySelectorAll("[data-per]").forEach(el=>el.textContent=y?"/ year":"/ month");document.querySelectorAll("a[data-go]").forEach(a=>{a.href="checkout.html?plan="+a.dataset.go+"&cycle="+(y?"y":"m");});};
   t.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{t.dataset.yearly=b.dataset.v==="y";t.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));paint();}));
   document.addEventListener("eat:prices",paint);paint();
 });
@@ -28,46 +45,43 @@ document.addEventListener("DOMContentLoaded",()=>{
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
 </div></header>
 <script type="module" src="nav.js"></script>
-
-<section class="wrap hero" style="padding-bottom:0">
-<h1 class="h-xl" style="font-size:clamp(40px,6vw,68px)">Pick your plan<span class="dot">.</span></h1>
-<p class="lede">Subscribe on the web, sign in on your phone. Same account, same plan.</p>
-<div class="toggle" data-yearly="false" id="toggle"><span class="pill"></span><button aria-pressed="true" data-v="m">Monthly</button><button aria-pressed="false" data-v="y">Yearly</button></div>
-</section>
-<section class="wrap">
+<main class="pr">
+<div class="pr-head"><div><h1>Pick your plan<span class="dot">.</span></h1><p class="lede" id="lede">Subscribe on the web, sign in on your phone. Same account, same plan.</p></div><div class="toggle" data-yearly="false" id="toggle"><span class="pill"></span><button aria-pressed="true" data-v="m">Monthly</button><button aria-pressed="false" data-v="y">Yearly</button></div></div>
 <div class="plans">
 <div class="card plan" id="solo"><div class="top"><img src="icon-solo.png" alt=""><div><div class="name">Eat Solo<span class="dot">.</span></div><div class="tag">Your week, planned, priced and listed.</div></div></div>
 <div class="price"><span class="amt" data-plan="solo">£4.99</span><span class="per" data-per>/ month</span></div>
 <p class="was">Two months free on the yearly plan</p>
 <ul class="perks"><li>Unlimited weekly meal plans</li><li>Shopping list split by store, with live prices</li><li>Swap and remake any meal</li><li>Saved favourites and nutrient targeting</li><li>Cupboard staples and protein powder support</li></ul>
-<a class="btn btn-dark btn-lg" data-checkout="solo" href="checkout.html?plan=solo">Start Eat Solo</a>
+<a class="btn btn-dark btn-lg" href="checkout.html?plan=solo" data-go="solo">Start Eat Solo</a>
 <p class="fine" style="text-align:center;margin-top:-4px">7-day free trial · Cancel anytime</p></div>
 <div class="card plan power" id="power"><span class="badge">MOST POPULAR</span><div class="top"><img src="icon-power.png" alt=""><div><div class="name">Eat Power<span class="dot">.</span></div><div class="tag">Everything in Solo, plus logging and imports.</div></div></div>
 <div class="price"><span class="amt" data-plan="power">£9.99</span><span class="per" data-per>/ month</span></div>
 <p class="was">Two months free on the yearly plan</p>
 <ul class="perks"><li>Everything in Solo</li><li>Photo logging: snap a meal, get its macros</li><li>Barcode scanning for packaged food</li><li>Import recipes from any link</li><li>The Power icon and blue accent</li></ul>
-<a class="btn btn-accent btn-lg" data-checkout="power" href="checkout.html?plan=power">Start Eat Power</a>
+<a class="btn btn-accent btn-lg" href="checkout.html?plan=power" data-go="power">Start Eat Power</a>
 <p class="fine" style="text-align:center;margin-top:-4px">Billed today · Cancel anytime</p></div>
 </div>
-<div class="card compare"><table>
-<thead><tr><th>What you get</th><th>Free</th><th>Solo</th><th>Power</th></tr></thead>
-<tbody>
-<tr><td>Weekly meal plan</td><td class="ok">1 plan</td><td class="ok">Unlimited</td><td class="ok">Unlimited</td></tr>
-<tr><td>Shopping list with live supermarket prices</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-<tr><td>Swap and remake meals</td><td class="no">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-<tr><td>Saved favourites</td><td class="no">—</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-<tr><td>Photo and barcode logging</td><td class="no">—</td><td class="no">—</td><td class="ok">✓</td></tr>
-<tr><td>Import recipes from any link</td><td class="no">—</td><td class="no">—</td><td class="ok">✓</td></tr>
-<tr><td>Same account on iPhone and web</td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-</tbody></table></div>
-<div class="faq-group narrow" style="margin-top:64px"><h2>Questions about billing</h2><div class="faq">
-<details><summary>How do I use a web subscription in the app?</summary><div class="a">Sign in on your iPhone with the same account you used here. Your plan is already there.</div></details>
-<details><summary>Is the price the same as in the app?</summary><div class="a">Monthly is the same everywhere. Yearly prices are set separately on the web and in the App Store, and you always see the exact amount before you pay.</div></details>
-<details><summary>Can I cancel?</summary><div class="a">Any time. Web subscriptions are managed from your account; App Store subscriptions from your iPhone's Settings. You keep access until the end of the period.</div></details>
-</div></div>
-</section>
-<div class="wrap one-foot" style="padding-top:48px"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
+<div class="pr-note"><span><b>Works in the app.</b> Sign in with the same account on your phone.</span><span><b>Real prices.</b> Monthly is the same everywhere; yearly is set separately on the web and in the App Store.</span><span><b>Cancel any time.</b> You keep access until the period ends. <a href="faq.html">More questions</a></span></div>
+</main>
+<div class="wrap one-foot"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
 <div class="dock mobile-only"><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
 <script src="mobile.js"></script>
+<script type="module">
+// Subscribed users: "Your current plan" on their tier, Upgrade / Switch on the other (real status from the worker).
+import { onUser } from "./nav.js";
+onUser((u, s) => {
+  if (!u || !s || !s.active) return;
+  const mine = s.tier === "power" ? "power" : "solo";
+  document.querySelectorAll("[data-go]").forEach(b => {
+    const t = b.dataset.go, card = b.closest(".plan"), fine = card.querySelector(".fine");
+    if (t === mine) {
+      b.outerHTML = '<a class="btn btn-lg current" href="account.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Your current plan</a>';
+      fine.textContent = "Manage in your account"; card.classList.add("mine");
+    } else if (t === "power") { b.textContent = "Upgrade to Eat Power"; fine.textContent = "Upgrade takes effect today, pro-rata, no new trial"; }
+    else { b.textContent = "Switch to Eat Solo"; fine.textContent = s.pendingTier === "solo" ? "Already scheduled for your next renewal" : "Switches at your next renewal, nothing charged"; }
+  });
+  document.getElementById("lede").textContent = "You're subscribed. Change plans any time, no new trial needed.";
+});
+</script>
 </body>
 </html>

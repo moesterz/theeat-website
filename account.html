@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Account — Eat</title>
+<title>Account · Eat</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F1EA">
 <link rel="icon" href="icon-solo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<script src="theme.js"></script>
 <style>
 html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
 .acct{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;width:min(960px,calc(100% - 48px));margin:0 auto;padding:12px 0 8px;overflow:auto}
@@ -21,29 +22,30 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 .blk header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .blk h2{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:600}
 .blk header a,.blk header button{font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}.blk header a:hover,.blk header button:hover{color:var(--accent)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0;padding-top:0}
-.row .k{color:var(--mid);font-size:14.5px;flex:none}.row .v{font-weight:600;font-size:15px;text-align:right;flex:1;min-width:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0;padding-top:0}.row[hidden]{display:none}
+.row .k{color:var(--mid);font-size:14.5px;flex:none}.row .v{font-weight:600;font-size:15px;text-align:right;flex:1;min-width:0}.row .v a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .planline{display:flex;align-items:center;gap:14px}.planline img{width:44px;height:44px;border-radius:13px}
 .planline .n{font-size:20px;font-weight:700;letter-spacing:-.02em}.planline .p{color:var(--mid);font-size:14px;margin-top:2px}
 .status{font-size:13.5px;color:var(--mid);font-weight:500}.status b{color:var(--ink);font-weight:600}
-.ledger{background:var(--ink);color:#fff;position:relative;overflow:hidden;box-shadow:none}.ledger::before{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 60%,transparent),transparent 70%);filter:blur(14px)}.ledger>*{position:relative}.ledger h2{color:rgba(255,255,255,.5)}
+.ledger{background:var(--ink);color:var(--dark-fg);position:relative;overflow:hidden;box-shadow:none}.ledger::before{content:"";position:absolute;right:-70px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 60%,transparent),transparent 70%);filter:blur(14px)}.ledger>*{position:relative}.ledger h2{color:rgba(255,255,255,.5)}
 .ledger .big{font-size:clamp(40px,5vh,56px);font-weight:700;letter-spacing:-.05em;line-height:.95;font-variant-numeric:tabular-nums}.ledger .big small{font-size:.42em;font-weight:600;letter-spacing:-.02em;color:rgba(255,255,255,.55);margin-left:.15em}
 .ledger .line{font-size:14px;color:rgba(255,255,255,.7);line-height:1.45;margin-top:auto}.ledger .line b{color:#fff;font-weight:600}
 .ledger .strip{height:5px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:10px}.ledger .strip i{display:block;height:100%;border-radius:99px;background:var(--accent);width:0;transition:width 1.2s var(--spring)}
 .note{font-size:13.5px;color:var(--faint);line-height:1.45}.note a{color:var(--ink);font-weight:600}
 .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
-.btn-sub{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:99px;font-weight:600;font-size:14px;border:1px solid var(--line);color:var(--ink);background:#fff;cursor:pointer;font-family:inherit;transition:background .2s}.btn-sub:hover{background:var(--sunk)}.btn-sub[hidden]{display:none}
-.btn-sub.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.btn-sub.primary:hover{background:#2a231d}
-.btn-sub.danger{color:#B23B2E}.btn-sub.danger:hover{background:#FBEDEA}
-.me{display:flex;align-items:center;gap:14px;min-width:0}.me-av{width:52px;height:52px;flex:none;border-radius:50%;padding:2px;background:rgba(255,255,255,.6);box-shadow:0 0 0 .5px rgba(255,255,255,.9),0 6px 16px -8px color-mix(in srgb,var(--accent) 70%,transparent);display:flex;overflow:hidden}.me-av>span{flex:1;border-radius:50%;background:radial-gradient(90% 90% at 32% 22%,var(--light),var(--accent) 62%,var(--deep));color:#FEF8F1;font-weight:700;font-size:20px;letter-spacing:-.03em;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center}.me-av>span.photo{color:transparent}.me-n{font-size:17px;font-weight:700;letter-spacing:-.02em}.me-e{font-size:14px;color:var(--mid);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-sub{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:99px;font-weight:600;font-size:14px;border:1px solid var(--line);color:var(--ink);background:var(--card);cursor:pointer;font-family:inherit;transition:background .2s}.btn-sub:hover{background:var(--sunk)}.btn-sub[hidden]{display:none}
+.btn-sub.primary{background:var(--ink);color:var(--dark-fg);border-color:var(--ink)}.btn-sub.primary:hover{background:var(--ink-hover)}
+.btn-sub.danger{color:var(--danger)}.btn-sub.danger:hover{background:var(--danger-bg)}
+.me{display:flex;align-items:center;gap:14px;min-width:0}.me-av{width:52px;height:52px;flex:none;border-radius:50%;padding:2px;background:var(--glass);box-shadow:0 0 0 .5px var(--glass-hi),0 6px 16px -8px color-mix(in srgb,var(--accent) 70%,transparent);display:flex;overflow:hidden}.me-av>span{flex:1;border-radius:50%;background:radial-gradient(90% 90% at 32% 22%,var(--light),var(--accent) 62%,var(--deep));color:#FEF8F1;font-weight:700;font-size:20px;letter-spacing:-.03em;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center}.me-av>span.photo{color:transparent}.me-n{font-size:17px;font-weight:700;letter-spacing:-.02em}.me-e{font-size:14px;color:var(--mid);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .devices .row .k b{color:var(--ink);display:block;font-weight:600}
-.saved{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:10px 18px;border-radius:99px;transition:all .35s var(--spring);pointer-events:none;max-width:calc(100% - 32px);text-align:center}.saved.on{opacity:1;transform:translateX(-50%)}
+.saved{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--dark-fg);font-size:14px;font-weight:600;padding:10px 18px;border-radius:99px;transition:all .35s var(--spring);pointer-events:none;max-width:calc(100% - 32px);text-align:center}.saved.on{opacity:1;transform:translateX(-50%)}
 .one-foot{margin-top:0;padding:16px 0 20px;flex:none}
 .devices{grid-column:1/3}.devices>div{display:flex;gap:28px;flex-wrap:wrap}.devices .row{border-top:0;padding:0}
 @media (max-width:760px){body{overflow:auto}.grid{grid-template-columns:1fr}.grid .sub-blk{grid-row:auto}.devices{grid-column:auto}.devices>div{flex-direction:column;gap:10px}}
 /*m*/@media (max-width:760px){.acct{justify-content:flex-start;padding:20px 0 0;overflow:visible}.hello{margin:0 0 20px;align-items:flex-start}.hello h1{font-size:34px}.grid{grid-template-columns:1fr;gap:12px}.grid .sub-blk{grid-row:auto}.devices{grid-column:auto}.devices>div{flex-direction:column;gap:12px}.blk{padding:18px}.ctas .btn-sub{flex:1 1 auto;justify-content:center}.ledger .big{font-size:44px}}
 </style>
 <script src="favicon.js"></script>
+<script src="prices.js"></script>
 </head>
 <body>
 <header class="nav"><div class="wrap bar">
@@ -57,7 +59,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <div class="grid">
 <section class="blk sub-blk"><header><h2>Subscription</h2><span class="status" id="status"></span></header>
 <div class="planline"><img src="icon-solo.png" alt="" data-plan-icon id="pico"><div><div class="n" id="pn">Eat Solo</div><div class="p" id="pp"></div></div></div>
-<div><div class="row"><span class="k">Billing</span><span class="v" id="billing">Managed securely by Stripe</span></div></div>
+<div><div class="row"><span class="k">Billing</span><span class="v" id="billing">Managed securely by Stripe</span></div><div class="row" id="pendrow" hidden><span class="k">Next renewal</span><span class="v" id="pend"></span></div></div>
 <div class="ctas"><a class="btn-sub primary" id="swap" href="checkout.html?plan=power">Upgrade to Power</a><button class="btn-sub" id="yearly">Yearly billing</button><button class="btn-sub" id="card">Update card</button><button class="btn-sub danger" id="cancel">Cancel</button></div>
 </section>
 <section class="blk"><header><h2>Profile</h2><a href="profile.html">Edit</a></header>
@@ -82,14 +84,41 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 
 <script type="module">
 import { auth, WORKER } from "./firebase-init.js";
-import { onUser, applyPower, writeCache } from "./nav.js";
+import { onUser, applyPower, writeCache, fetchStatus, toCache, paintNav } from "./nav.js";
 import { signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 const $ = id => document.getElementById(id);
 const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+const fd = ms => ms ? new Date(ms).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
 let user = null, toastT;
-const toast = m => { $("toast").textContent = m; $("toast").classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => $("toast").classList.remove("on"), 2600); };
+const toast = m => { $("toast").textContent = m; $("toast").classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => $("toast").classList.remove("on"), 3000); };
+const q = new URLSearchParams(location.search);
 
-onUser((u, s) => {
+function paintSub(s) {
+  const active = !!(s && s.active), power = active && s.tier === "power", web = active && s.source !== "referral";
+  applyPower(power);
+  const endMs = s && s.currentPeriodEnd ? s.currentPeriodEnd * 1000 : 0;
+  if (active) {
+    $("pn").textContent = "Eat " + (power ? "Power" : "Solo");
+    const per = s.period === "annual" ? "yr" : "mo";
+    $("pp").textContent = web ? (window.EatPrices ? EatPrices.fmt(EatPrices.price(power ? "power" : "solo", per)) + (per === "yr" ? " a year" : " a month") + ", billed on the web" : "Billed on the web") : "Free week from a friend";
+    $("status").innerHTML = s.cancelAtPeriodEnd ? "Ends <b>" + fd(endMs) + "</b>" : (endMs ? "Renews <b>" + fd(endMs) + "</b>" : "<b>Active</b>");
+    $("billing").textContent = web ? "Managed securely by Stripe" : "No card on file";
+    // scheduled downgrade
+    if (s.pendingTier) { $("pendrow").hidden = false; $("pend").innerHTML = "Switches to Eat " + cap(s.pendingTier) + " on " + fd(s.pendingAt) + " · <a id=\"undo\">Keep " + (power ? "Power" : "Solo") + "</a>"; $("undo").onclick = undo; }
+    else $("pendrow").hidden = true;
+    $("swap").hidden = false;
+    if (power) { $("swap").textContent = "Switch to Solo"; $("swap").href = "checkout.html?plan=solo"; $("swap").classList.remove("primary"); if (s.pendingTier === "solo") $("swap").hidden = true; }
+    else { $("swap").textContent = "Upgrade to Power"; $("swap").href = "checkout.html?plan=power"; $("swap").classList.add("primary"); }
+    $("yearly").hidden = !web || s.period === "annual"; $("card").hidden = $("cancel").hidden = !web;
+  } else {
+    $("pn").textContent = "Free"; $("pp").textContent = "No web subscription"; $("status").textContent = "";
+    $("billing").textContent = "Subscribed in the app? Manage it in iPhone Settings"; $("pendrow").hidden = true;
+    $("swap").hidden = false; $("swap").textContent = "Start your free week"; $("swap").href = "checkout.html?plan=solo"; $("swap").classList.add("primary");
+    $("yearly").hidden = $("card").hidden = $("cancel").hidden = true;
+  }
+}
+
+onUser(async (u, s) => {
   if (!u) { location.replace("signin.html?next=account.html"); return; }
   user = u;
   const name = u.displayName || (u.email || "").split("@")[0];
@@ -97,36 +126,22 @@ onUser((u, s) => {
   $("who").textContent = first;
   $("meName").textContent = u.displayName || first; $("meEmail").textContent = u.email || "";
   if (u.photoURL) { $("meavl").classList.add("photo"); $("meavl").style.backgroundImage = "url(" + u.photoURL + ")"; } else $("meavl").textContent = first[0];
-  // time with Eat: real, from the account's creation date
   const since = u.metadata && u.metadata.creationTime ? new Date(u.metadata.creationTime) : new Date();
   const weeks = Math.max(1, Math.floor((Date.now() - since) / 6048e5));
   $("wk").textContent = weeks; $("wku").textContent = weeks === 1 ? "week" : "weeks";
   $("sinceD").textContent = since.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   requestAnimationFrame(() => requestAnimationFrame(() => { $("bar").style.width = Math.min(100, weeks / 52 * 100) + "%"; }));
-  // subscription (real: {active, tier})
-  const active = !!(s && s.active), power = active && s.tier === "power";
-  applyPower(power);
-  if (active) {
-    $("pn").textContent = "Eat " + (power ? "Power" : "Solo");
-    $("pp").textContent = "Active, billed on the web";
-    $("status").innerHTML = "<b>Active</b>";
-    $("swap").hidden = power; $("swap").textContent = "Upgrade to Power"; $("swap").href = "checkout.html?plan=power";
-    $("yearly").hidden = $("card").hidden = $("cancel").hidden = false;
-  } else {
-    $("pn").textContent = "Free";
-    $("pp").textContent = "No web subscription";
-    $("status").textContent = "";
-    $("billing").textContent = "Subscribed in the app? Manage it in iPhone Settings";
-    $("swap").hidden = false; $("swap").textContent = "Start your free week"; $("swap").href = "checkout.html?plan=solo";
-    $("yearly").hidden = $("card").hidden = $("cancel").hidden = true;
-  }
-  // password reset only makes sense for email accounts
-  const pwAccount = (u.providerData || []).some(p => p.providerId === "password");
-  $("pwreset").hidden = !pwAccount;
-  $("main").style.visibility = "visible";
+  $("pwreset").hidden = !(u.providerData || []).some(p => p.providerId === "password");
+  paintSub(s); $("main").style.visibility = "visible";
+  if (q.get("upgraded")) toast("Upgraded to Power. It's live in the app now.");
+  if (q.get("scheduled")) toast("Switch to Solo scheduled for your next renewal.");
+  if (q.get("err")) toast("Couldn't change your plan. Try again or contact us.");
+  // Just paid on Stripe? The webhook can land a few seconds after the redirect.
+  if (q.get("paid") && !(s && s.active)) { for (let i = 0; i < 6 && !(s && s.active); i++) { await new Promise(r => setTimeout(r, 2500)); s = await fetchStatus(u); } const a = toCache(u, s); writeCache(a); paintNav(a); paintSub(s); if (s && s.active) toast("You're subscribed. Sign in on your iPhone and it's there."); }
+  if (q.toString()) history.replaceState(null, "", "account.html");
 });
 
-// Stripe billing portal: the worker emails a secure link (never reveals whether an account exists)
+// Stripe billing portal (card, invoices, cancel, cycle): the worker emails a secure link
 async function portal(btn) {
   if (!user || !user.email) return;
   const old = btn.textContent; btn.textContent = "Sending link"; btn.disabled = true;
@@ -134,9 +149,29 @@ async function portal(btn) {
   catch (_) { toast("Couldn't send the link. Try again."); }
   setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 3000);
 }
-["yearly", "card", "cancel"].forEach(id => $(id).addEventListener("click", e => portal(e.currentTarget)));
-
-$("pwreset").addEventListener("click", async e => { try { await sendPasswordResetEmail(auth, user.email); toast("Password reset link sent"); } catch (_) { toast("Couldn't send the reset link"); } });
+$("card").addEventListener("click", e => portal(e.currentTarget));
+$("cancel").addEventListener("click", e => portal(e.currentTarget));
+// Yearly billing = same plan, annual cycle: immediate, pro-rated, no new trial
+$("yearly").addEventListener("click", async e => {
+  const b = e.currentTarget; if (!user) return; b.disabled = true; b.textContent = "Switching";
+  try {
+    const idToken = await user.getIdToken(); const s0 = await fetchStatus(user);
+    const r = await (await fetch(WORKER + "/stripe/change-plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, plan: s0.tier || "solo", period: "annual" }) })).json();
+    if (!r.ok) throw new Error(r.detail || r.error);
+    const s = await fetchStatus(user); const a = toCache(user, s); writeCache(a); paintNav(a); paintSub(s); toast("You're now billed yearly.");
+  } catch (_) { toast("Couldn't switch to yearly. Try again."); }
+  b.disabled = false; b.textContent = "Yearly billing";
+});
+async function undo(e) {
+  e.preventDefault(); if (!user) return;
+  try {
+    const idToken = await user.getIdToken();
+    const r = await (await fetch(WORKER + "/stripe/change-plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, action: "undo" }) })).json();
+    if (!r.ok) throw new Error(r.error);
+    const s = await fetchStatus(user); const a = toCache(user, s); writeCache(a); paintNav(a); paintSub(s); toast("You'll stay on your current plan.");
+  } catch (_) { toast("Couldn't undo that. Try again."); }
+}
+$("pwreset").addEventListener("click", async () => { try { await sendPasswordResetEmail(auth, user.email); toast("Password reset link sent"); } catch (_) { toast("Couldn't send the reset link"); } });
 $("delete").addEventListener("click", () => { $("delnote").hidden = false; });
 $("out").addEventListener("click", async () => { writeCache(null); await signOut(auth); location.href = "index.html"; });
 </script>

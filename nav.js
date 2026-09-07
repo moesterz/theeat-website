@@ -62,6 +62,9 @@ export function toCache(user, s) {
     plan: s && s.active ? (s.tier || "solo") : "free",
     active: !!(s && s.active),
     trialed: !!(s && s.trialed),
+    period: (s && s.period) || null,
+    pendingTier: (s && s.pendingTier) || null,
+    source: (s && s.source) || null,
     since: user.metadata && user.metadata.creationTime ? Date.parse(user.metadata.creationTime) : Date.now(),
   };
 }
@@ -72,10 +75,12 @@ paintNav(readCache());
 // 2. reconcile with the real session
 const listeners = [];
 export function onUser(fn) { listeners.push(fn); }
+// One page's listener failing must never stop the others (or hide the page).
+const call = (user, s) => listeners.forEach(f => { try { const r = f(user, s); if (r && r.catch) r.catch(e => console.error("[nav] listener", e)); } catch (e) { console.error("[nav] listener", e); } });
 onAuthStateChanged(auth, async (user) => {
-  if (!user) { writeCache(null); paintNav(null); listeners.forEach(f => f(null, null)); return; }
+  if (!user) { writeCache(null); paintNav(null); call(null, null); return; }
   const s = await fetchStatus(user);
   const a = toCache(user, s);
   writeCache(a); paintNav(a);
-  listeners.forEach(f => f(user, s));
+  call(user, s);
 });
