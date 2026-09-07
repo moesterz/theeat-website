@@ -1,285 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Eat — Sign in</title>
-<link rel="icon" type="image/png" href="favicon-eat.png"/>
-<link rel="apple-touch-icon" href="favicon-eat.png"/>
-<script src="favicon.js"></script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="site.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sign in — Eat</title>
+<meta name="theme-color" content="#F6F1EA">
+<link rel="icon" href="icon-solo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <style>
-  .si-shell { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
-  /* left: animated brand panel */
-  .si-left { position: relative; overflow: hidden; background: linear-gradient(160deg, #ff9160 0%, var(--solo) 45%, var(--solo-deep) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 56px; color: #fff; }
-  .si-blob { position: absolute; border-radius: 50%; background: rgba(255,255,255,.1); animation: si-drift 9s ease-in-out infinite alternate; }
-  .si-blob.b1 { width: 460px; height: 460px; top: -160px; right: -120px; }
-  .si-blob.b2 { width: 300px; height: 300px; bottom: 10%; left: -110px; animation-delay: 2s; }
-  @keyframes si-drift { from { transform: translateY(-16px); } to { transform: translateY(18px); } }
-  .si-left img { width: 84px; height: 84px; border-radius: 21px; box-shadow: 0 26px 50px -18px rgba(0,0,0,.5); animation: si-bob 4.5s ease-in-out infinite; position: relative; }
-  @keyframes si-bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
-  .si-quote { position: relative; margin-top: 40px; font-family: var(--serif); font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; max-width: 13ch; }
-  .si-quote i { font-style: italic; opacity: .92; }
-  .si-sub { position: relative; margin-top: 16px; font-size: 15px; opacity: .88; font-weight: 600; }
-  /* right: form */
-  .si-right { display: flex; align-items: center; justify-content: center; padding: 100px 28px 60px; }
-  .si-box { width: 100%; max-width: 400px; }
-  .si-head h1 { font-family: var(--serif); font-weight: 400; font-size: 38px; letter-spacing: -0.02em; line-height: 1.05; }
-  .si-head h1 em { font-style: italic; color: var(--solo); }
-  .si-head p { color: var(--mid); margin-top: 10px; font-size: 15px; }
-  .sso { display: flex; flex-direction: column; gap: 11px; margin: 30px 0 0; }
-  .sso-btn { display: flex; align-items: center; justify-content: center; gap: 11px; height: 52px; border-radius: 14px; border: 1.5px solid var(--line-2); background: var(--paper); cursor: pointer; font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ink); transition: transform .25s var(--ease-spring), border-color .2s ease, box-shadow .25s ease; }
-  .sso-btn:hover { transform: translateY(-2px); border-color: var(--faint); box-shadow: 0 14px 26px -18px rgba(90,45,10,.4); }
-  .or-divide { display: flex; align-items: center; gap: 14px; margin: 24px 0; color: var(--faint); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-  .or-divide::before, .or-divide::after { content: ""; height: 1.5px; background: var(--line); flex: 1; }
-  .field { margin-bottom: 18px; }
-  .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-  .field-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-  .field-top label { margin-bottom: 0; }
-  .field-top a { font-size: 12.5px; color: var(--solo); font-weight: 700; text-decoration: none; }
-  .input-wrap { position: relative; }
-  .input { width: 100%; height: 52px; padding: 0 16px; border: 1.5px solid var(--line-2); border-radius: 14px; background: var(--paper); font-family: var(--sans); font-size: 15px; color: var(--ink); transition: border-color .2s ease, box-shadow .2s ease; }
-  .input::placeholder { color: #c4b5a3; }
-  .input:focus { outline: none; border-color: var(--solo); box-shadow: 0 0 0 4px rgba(240,106,58,.14); }
-  .input.with-btn { padding-right: 48px; }
-  .peek { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border: none; background: none; cursor: pointer; color: var(--faint); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-  .peek:hover { background: var(--cream-2); color: var(--mid); }
-  .remember { display: flex; align-items: center; gap: 10px; margin: 4px 0 24px; cursor: pointer; font-size: 14px; color: var(--mid); font-weight: 600; user-select: none; }
-  .remember input { position: absolute; opacity: 0; pointer-events: none; }
-  .remember .checkbox { width: 21px; height: 21px; border-radius: 7px; border: 1.5px solid var(--line-2); background: var(--paper); display: flex; align-items: center; justify-content: center; transition: background .2s ease, border-color .2s ease, transform .25s var(--ease-spring); }
-  .remember .checkbox svg { opacity: 0; transform: scale(.4); transition: opacity .2s ease, transform .25s var(--ease-spring); }
-  .remember input:checked + .checkbox { background: var(--solo); border-color: var(--solo); transform: scale(1.08); }
-  .remember input:checked + .checkbox svg { opacity: 1; transform: none; }
-  .si-box .btn { width: 100%; }
-  .si-foot { text-align: center; margin-top: 26px; font-size: 14px; color: var(--mid); }
-  .si-foot a { color: var(--solo); font-weight: 700; text-decoration: none; }
-  .err-note { display: none; margin-top: 14px; text-align: center; font-size: 13.5px; color: #c23c15; font-weight: 600; }
-  .err-note.show { display: block; animation: shake .4s ease; }
-  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-  @media (max-width: 860px) { .si-shell { grid-template-columns: 1fr; } .si-left { display: none; } }
-
-  /* ── mode tabs (Sign in / Create account) ── */
-  .si-tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin: 26px 0 0; padding: 4px; border-radius: 99px; background: var(--cream-2); border: 1px solid var(--line); }
-  .si-tabs .pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 99px; background: var(--paper); box-shadow: 0 4px 14px -6px rgba(90,45,10,.35); transition: transform .35s var(--ease-spring); }
-  .si-tabs[data-mode="create"] .pill { transform: translateX(100%); }
-  .si-tabs button { position: relative; z-index: 1; height: 42px; border: none; background: none; border-radius: 99px; cursor: pointer; font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--faint); transition: color .25s ease; }
-  .si-tabs button.on { color: var(--ink); }
-  /* create-only fields collapse smoothly */
-  .create-only { max-height: 0; overflow: hidden; opacity: 0; transform: translateY(-6px); transition: max-height .45s var(--ease-out), opacity .35s ease, transform .45s var(--ease-out); }
-  .si-box[data-mode="create"] .create-only { max-height: 260px; opacity: 1; transform: none; }
-  .signin-only { max-height: 80px; overflow: hidden; opacity: 1; transition: max-height .45s var(--ease-out), opacity .3s ease; }
-  .si-box[data-mode="create"] .signin-only { max-height: 0; opacity: 0; }
-  .field-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .dob-note { font-size: 12px; color: var(--faint); margin-top: 7px; line-height: 1.5; }
-  .age-err { display: none; font-size: 12.5px; color: #c23c15; font-weight: 600; margin-top: 7px; }
-  .age-err.show { display: block; animation: shake .4s ease; }
+html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+.si{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;overflow:auto;padding:16px 0}
+.si-wrap{width:min(960px,calc(100% - 48px));margin:auto}
+.say{font-size:clamp(34px,5.2vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.12;text-wrap:pretty;margin:0}
+.say .q{color:var(--faint);font-weight:500}
+.say form{display:inline-flex;align-items:center;gap:.18em;max-width:100%;flex-wrap:nowrap}
+.say input{font:inherit;color:var(--ink);background:transparent;border:0;outline:0;padding:0 .08em;margin:0;flex:0 1 auto;min-width:0;width:auto;max-width:calc(100% - 1.4em);border-bottom:3px solid var(--accent);border-radius:0;caret-color:var(--accent);letter-spacing:-.04em;transition:border-color .2s,font-size .2s}
+.say input[type=password]{width:7.5em;letter-spacing:.05em}
+.say .m{position:absolute;visibility:hidden;white-space:pre;pointer-events:none;letter-spacing:-.04em;font-weight:700;font-family:inherit}
+.say input::placeholder{color:#C9BFB3;font-weight:500}
+.say input:focus{border-color:var(--ink)}
+.say .hint{display:block;margin-top:.5em;font-size:clamp(15px,1.4vw,18px);font-weight:500;letter-spacing:-.01em;color:var(--mid);line-height:1.45}
+.say .hint kbd{font:inherit;font-weight:700;color:var(--ink);background:#fff;border-radius:7px;padding:1px 8px;box-shadow:inset 0 0 0 1px var(--line)}
+.say .hint a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}.say .hint a:hover{color:var(--accent)}
+.say .hint input{font:inherit;font-size:.95em;color:var(--ink);background:#fff;border:0;border-radius:9px;padding:6px 10px;box-shadow:inset 0 0 0 1px var(--line);outline:0;max-width:16ch}.say .hint input:focus{box-shadow:inset 0 0 0 2px var(--accent)}
+.say .err{color:var(--deep)}
+.say .go{font:inherit;flex:none;display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;border:0;transition:transform .3s var(--spring),background .2s}.say .go:hover{transform:translateX(3px)}.say .go svg{width:.5em;height:.5em}.say .go[disabled]{opacity:.5}
+.say .ok{color:var(--green)}
+.step{display:none;animation:rise .55s var(--spring) both}.step.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.alt{display:flex;gap:26px;align-items:center;margin-top:clamp(20px,3vh,40px);font-size:14.5px;font-weight:500;color:var(--mid);flex-wrap:wrap}.consent{display:block;margin:12px 0 0;max-width:60ch;font-size:13.5px;line-height:1.5;color:var(--faint);text-wrap:pretty}.consent a{color:var(--mid);display:inline;text-decoration:underline;text-underline-offset:2px}
+.alt a{color:var(--ink);display:inline-flex;align-items:center;gap:8px;cursor:pointer}.alt a:hover{color:var(--accent)}
+.alt .sep{width:1px;height:14px;background:var(--line)}
+.plan-chip{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--deep);background:var(--tint);padding:6px 12px 6px 6px;border-radius:99px;margin-bottom:22px}.plan-chip[hidden]{display:none}.plan-chip img{width:22px;height:22px;border-radius:7px}
+.one-foot{margin-top:0;padding-bottom:20px}
+@media (max-width:640px){.say .hint kbd{display:none}}
+/*m*/@media (max-width:760px){.si{justify-content:flex-start;padding-top:10vh}.si-wrap{width:calc(100% - 40px)}.say{font-size:clamp(30px,9vw,40px)}.say form{display:flex;width:100%}.say input{flex:1;width:auto!important;font-size:inherit!important;min-width:0}.say .go{width:44px;height:44px;font-size:16px}.say .go svg{width:20px;height:20px}.alt{flex-direction:column;align-items:flex-start;gap:14px}.alt .sep{display:none}}
 </style>
+<script src="favicon.js"></script>
 </head>
 <body>
-  <nav class="nav"><div class="wrap nav-inner">
-    <a class="brand" href="index.html" aria-label="Eat home"><img src="icon-solo.png" alt="Eat"/></a>
-    <div class="nav-links">
-      <a href="pricing.html">Pricing</a>
-      <a href="faq.html">FAQ</a>
-      <a href="signin.html" class="active">Sign in</a>
-      <a href="index.html#get" class="nav-cta"><span>Get Eat</span></a>
-    </div>
-  </div></nav>
+<header class="nav"><div class="wrap bar">
+<a class="logo" href="index.html"><img src="icon-solo.png" alt="Eat"></a>
+<nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
+<div class="actions"><a class="btn btn-ghost" href="signin.html" aria-current="page">Sign in</a><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
+</div></header>
+<script type="module" src="nav.js"></script>
+<main class="si"><div class="si-wrap">
+<span class="plan-chip" id="chip" hidden><img src="icon-solo.png" alt="">Subscribing to <b>Eat Solo</b></span>
 
-  <div class="si-shell" data-screen-label="Sign in">
-    <div class="si-left">
-      <div class="si-blob b1"></div><div class="si-blob b2"></div>
-      <img src="icon-solo.png" alt=""/>
-      <div class="si-quote">Dinner's already <i>decided.</i></div>
-      <div class="si-sub">Your plan, list and cook mode are waiting.</div>
-    </div>
+<div class="step on" id="s1">
+<h1 class="say"><span class="q">Hi. What's your email?</span><br><form id="f1"><span class="m" id="meas" aria-hidden="true"></span><input id="email" type="email" placeholder="you@somewhere.com" autocomplete="email" spellcheck="false" aria-label="Email"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint">Press <kbd>return</kbd> to continue. One account for the app and the web.</span></h1>
+</div>
 
-    <div class="si-right">
-      <div class="si-box">
-        <div class="si-head rv">
-          <h1 id="si-title">Welcome <em>back.</em></h1>
-          <p id="si-sub">Sign in to pick up your plan where you left off.</p>
-        </div>
+<div class="step" id="s2">
+<h1 class="say"><span class="q">Welcome back,</span> <span id="echo"></span><span class="q">. Your password</span><br><form id="f2"><input id="pw" type="password" placeholder="••••••••" autocomplete="current-password" aria-label="Password"><button class="go" type="submit" aria-label="Sign in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h2"><a href="#" id="forgot">Forgot it?</a> · <a href="#" id="toCreate">New here? Create an account</a> · <a href="#" id="back2">Wrong email?</a></span></h1>
+</div>
 
-        <div class="si-tabs rv" style="--d:.05s;" data-mode="signin" id="si-tabs">
-          <span class="pill"></span>
-          <button type="button" class="on" data-mode="signin">Sign in</button>
-          <button type="button" data-mode="create">Create account</button>
-        </div>
+<div class="step" id="s3">
+<h1 class="say"><span class="q">New here. Pick a password</span><br><form id="f3"><input id="pw2" type="password" placeholder="at least 6 characters" autocomplete="new-password" minlength="6" aria-label="New password"><button class="go" type="submit" aria-label="Continue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h3"><a href="#" id="toSignin">Already have an account? Sign in</a> · <a href="#" id="back3">Wrong email?</a></span></h1>
+</div>
 
-        <div class="sso rv" style="--d:.08s;">
-          <button type="button" class="sso-btn" id="apple">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .7 1.1 1.6 2.3 2.8 2.2 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1.1 2.7-2.1.8-1.2 1.2-2.4 1.2-2.4s-2.3-.9-2.3-3.5zM14.2 5.9c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.3-.6.7-1.1 1.7-1 2.7 1 0 2-.5 2.7-1.1z"/></svg>
-            Continue with Apple
-          </button>
-          <button type="button" class="sso-btn" id="google">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18A10.97 10.97 0 0 0 1 12c0 1.77.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-            Continue with Google
-          </button>
-        </div>
+<div class="step" id="s4">
+<h1 class="say"><span class="q">Last thing. Your name</span><br><form id="f4"><input id="name" type="text" placeholder="First name" autocomplete="given-name" maxlength="40" aria-label="Name"><button class="go" type="submit" aria-label="Create account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form><span class="hint" id="h4">Date of birth <input id="dob" type="date" aria-label="Date of birth" form="f4"> You need to be 13 or over.</span></h1>
+</div>
 
-        <div class="or-divide rv" style="--d:.14s;">or</div>
+<div class="step" id="s5">
+<h1 class="say"><span class="ok">You're in.</span><br><span class="q" id="s5msg">Taking you to your account…</span></h1>
+</div>
 
-        <form id="si-form" novalidate class="rv" style="--d:.2s;">
-          <div class="create-only">
-            <div class="field">
-              <label for="name">Your name</label>
-              <input class="input" type="text" id="name" name="name" placeholder="Alex Whitmore" autocomplete="name"/>
-            </div>
-            <div class="field">
-              <label for="dob">Date of birth</label>
-              <input class="input" type="date" id="dob" name="dob" autocomplete="bday"/>
-              <div class="dob-note">You need to be 13 or older to use Eat. We use this only to check your age.</div>
-              <div class="age-err" id="age-err">Sorry, you need to be at least 13 to create an Eat account.</div>
-            </div>
-          </div>
-          <div class="field">
-            <label for="email">Email address</label>
-            <input class="input" type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email"/>
-          </div>
-          <div class="field">
-            <div class="field-top">
-              <label for="password">Password</label>
-              <a href="#" id="forgot" class="signin-only" style="display:inline-block;">Forgot?</a>
-            </div>
-            <div class="input-wrap">
-              <input class="input with-btn" type="password" id="password" name="password" placeholder="Your password" autocomplete="current-password"/>
-              <button type="button" class="peek" id="peek" aria-label="Show password">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-            </div>
-          </div>
-          <label class="remember">
-            <input type="checkbox" id="remember" checked/>
-            <span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            Keep me signed in
-          </label>
-          <button type="submit" class="btn btn-solid-solo"><span id="si-btn">Sign in</span></button>
-          <div class="err-note" id="err">Hmm, check your email and password and try again.</div>
-        </form>
+<div class="alt"><a id="apple"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1.9-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3.1 2.4 1.2 0 1.7-.8 3.2-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.4-2.8-.1 0-2.8-1.1-2.8-4Zm-2.5-7.1c.7-.8 1.1-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4Z"/></svg>Continue with Apple</a><span class="sep"></span><a id="google"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.1 2.7-2.4 3.6v3h3.9c2.3-2.1 3.5-5.1 3.5-8.7Z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.7-4.9H1.4v3.1C3.4 21.4 7.4 24 12 24Z"/><path fill="#FBBC05" d="M5.3 14.3A7.2 7.2 0 0 1 4.9 12c0-.8.1-1.6.4-2.3V6.6H1.4A12 12 0 0 0 0 12c0 1.9.5 3.8 1.4 5.4l3.9-3.1Z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.6l3.9 3.1c1-2.8 3.6-4.9 6.7-4.9Z"/></svg>Continue with Google</a></div><p class="consent">New here? Same door. By continuing you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+</div></main>
+<div class="wrap one-foot"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
+<script src="mobile.js"></script>
 
-        <div class="si-foot rv" style="--d:.26s;" id="si-foot">New to Eat? <a href="#" id="foot-switch">Create your account</a></div>
-      </div>
-    </div>
-  </div>
+<script type="module">
+import { auth, googleProvider, appleProvider, WORKER } from "./firebase-init.js";
+import { applyPower } from "./nav.js";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, updateProfile, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-  <script src="site.js"></script>
-  <script type="module">
-    import { auth, googleProvider, appleProvider, WORKER } from "./firebase-init.js";
-    import {
-      signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup,
-      sendPasswordResetEmail, updateProfile, onAuthStateChanged,
-      setPersistence, browserLocalPersistence, browserSessionPersistence
-    } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+let next = params.get("next") || "account.html";
+if (params.get("plan")) next = "checkout.html?plan=" + params.get("plan") + (params.get("period") ? "&period=" + params.get("period") : "");
+// plan chip when this sign-in leads to a checkout
+const nextPlan = (next.match(/[?&]plan=(solo|power)/) || [])[1];
+if (nextPlan) { const c = $("chip"); c.hidden = false; c.querySelector("b").textContent = nextPlan === "power" ? "Eat Power" : "Eat Solo"; if (nextPlan === "power") { applyPower(true); c.querySelector("img").src = "icon-power.png"; } }
 
-    const params = new URLSearchParams(location.search);
-    const next = params.get('next') || 'account.html';
-    onAuthStateChanged(auth, (u) => { if (u) location.replace(next); });
+let busy = false;
+onAuthStateChanged(auth, u => { if (u && !busy) location.replace(next); });
 
-    const friendly = (code) => ({
-      "auth/invalid-email": "That email doesn't look right.",
-      "auth/missing-password": "Please enter your password.",
-      "auth/weak-password": "Password must be at least 6 characters.",
-      "auth/email-already-in-use": "An account already exists for that email. Try signing in.",
-      "auth/invalid-credential": "Email or password is incorrect.",
-      "auth/wrong-password": "Email or password is incorrect.",
-      "auth/user-not-found": "No account found for that email.",
-      "auth/too-many-requests": "Too many attempts, please try again in a bit.",
-      "auth/popup-closed-by-user": "Sign-in was cancelled.",
-    }[code] || "Something went wrong, please try again.");
-    async function applyPersistence(){ try { await setPersistence(auth, document.getElementById('remember').checked ? browserLocalPersistence : browserSessionPersistence); } catch(_){} }
+const friendly = code => ({
+  "auth/invalid-email": "That email doesn't look right.",
+  "auth/missing-password": "Please enter your password.",
+  "auth/weak-password": "Password must be at least 6 characters.",
+  "auth/email-already-in-use": "An account already exists for that email.",
+  "auth/invalid-credential": "That password isn't right.",
+  "auth/wrong-password": "That password isn't right.",
+  "auth/user-not-found": "No account for that email yet.",
+  "auth/too-many-requests": "Too many attempts. Try again in a few minutes.",
+  "auth/popup-closed-by-user": "Sign-in was cancelled.",
+  "auth/popup-blocked": "Your browser blocked the sign-in window.",
+}[code] || "Something went wrong. Please try again.");
 
-    const peek = document.getElementById('peek');
-    const pw = document.getElementById('password');
-    peek.addEventListener('click', () => { pw.type = pw.type === 'password' ? 'text' : 'password'; });
+const steps = ["s1","s2","s3","s4","s5"];
+const show = id => { steps.forEach(s => $(s).classList.toggle("on", s === id)); const inp = $(id).querySelector("input"); if (inp) setTimeout(() => inp.focus(), 60); };
+const hints = { s2: $("h2").innerHTML, s3: $("h3").innerHTML };
+const err = (step, msg) => { const h = $("h" + step.slice(1)); if (!h) return; h.innerHTML = msg ? '<span class="err">' + msg + "</span> · " + hints[step] : hints[step]; wire(); };
 
-    /* ── mode toggle ── */
-    const tabs = document.getElementById('si-tabs');
-    const box = document.querySelector('.si-box');
-    const title = document.getElementById('si-title');
-    const sub = document.getElementById('si-sub');
-    const siBtn = document.getElementById('si-btn');
-    const foot = document.getElementById('si-foot');
-    const err = document.getElementById('err');
-    function setMode(mode) {
-      tabs.dataset.mode = mode;
-      box.dataset.mode = mode;
-      tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.mode === mode));
-      const create = mode === 'create';
-      title.innerHTML = create ? 'Pull up a <em>chair.</em>' : 'Welcome <em>back.</em>';
-      sub.textContent = create ? 'Create your account and get your first plan in minutes.' : 'Sign in to pick up your plan where you left off.';
-      siBtn.textContent = create ? 'Create account' : 'Sign in';
-      foot.innerHTML = create
-        ? 'Already have an account? <a href="#" id="foot-switch">Sign in</a>'
-        : 'New to Eat? <a href="#" id="foot-switch">Create your account</a>';
-      pw.setAttribute('autocomplete', create ? 'new-password' : 'current-password');
-      pw.setAttribute('placeholder', create ? 'Choose a password' : 'Your password');
-      err.classList.remove('show');
-      document.getElementById('age-err').classList.remove('show');
-    }
-    tabs.addEventListener('click', (e) => { const b = e.target.closest('button[data-mode]'); if (b) setMode(b.dataset.mode); });
-    document.addEventListener('click', (e) => {
-      if (e.target.id === 'foot-switch') { e.preventDefault(); setMode(box.dataset.mode === 'create' ? 'signin' : 'create'); }
-    });
-    box.dataset.mode = 'signin';
+// email line auto-sizes to fit (template behaviour)
+const email = $("email"), meas = $("meas");
+const size = () => { const v = email.value || email.placeholder; const avail = document.querySelector(".si-wrap").clientWidth; let fs = parseFloat(getComputedStyle(email.closest(".say")).fontSize); meas.style.fontSize = fs + "px"; meas.textContent = v; while (fs > 20 && (meas.offsetWidth + fs * 1.5) > avail) { fs -= 1; meas.style.fontSize = fs + "px"; } email.style.fontSize = fs + "px"; email.style.width = (meas.offsetWidth + fs * .6) + "px"; };
+email.addEventListener("input", size); addEventListener("resize", size); size();
 
-    if (params.get('mode') === 'signup') setMode('create');
+$("f1").addEventListener("submit", e => { e.preventDefault(); if (!email.checkValidity() || !email.value) { email.reportValidity(); return; } $("echo").textContent = email.value.trim(); show("s2"); });
 
-    function showErr(t){ err.textContent = t; err.classList.toggle('show', !!t); }
+function wire() {
+  $("forgot").onclick = async e => { e.preventDefault(); try { await sendPasswordResetEmail(auth, email.value.trim()); $("h2").innerHTML = '<span class="ok">Reset link sent. Check your inbox.</span> · ' + hints.s2; wire(); } catch (e2) { err("s2", friendly(e2.code)); } };
+  $("toCreate").onclick = e => { e.preventDefault(); err("s2"); show("s3"); };
+  $("toSignin").onclick = e => { e.preventDefault(); err("s3"); show("s2"); };
+  $("back2").onclick = $("back3").onclick = e => { e.preventDefault(); $("pw").value = ""; $("pw2").value = ""; err("s2"); err("s3"); show("s1"); };
+}
+wire();
 
-    /* ── submit: real Firebase auth (with 13+ age gate on create) ── */
-    document.getElementById('si-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const ageErr = document.getElementById('age-err'); ageErr.classList.remove('show'); showErr('');
-      const create = box.dataset.mode === 'create';
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const name = document.getElementById('name').value.trim();
-      const dob = document.getElementById('dob').value;
-      if (!email) return showErr('Please enter your email.');
-      if (!password) return showErr('Please enter your password.');
-      if (create) {
-        if (!dob) return showErr('Please enter your date of birth.');
-        const b = new Date(dob), now = new Date();
-        let age = now.getFullYear() - b.getFullYear();
-        const m = now.getMonth() - b.getMonth();
-        if (m < 0 || (m === 0 && now.getDate() < b.getDate())) age--;
-        if (isNaN(b) || age > 120) return showErr('Please enter a valid date of birth.');
-        if (age < 13) { ageErr.classList.add('show'); return; }
-      }
-      siBtn.textContent = 'Please wait…';
-      await applyPersistence();
-      try {
-        if (create) {
-          const cred = await createUserWithEmailAndPassword(auth, email, password);
-          if (name) { try { await updateProfile(cred.user, { displayName: name }); } catch(_){} }
-          try {
-            const idToken = await cred.user.getIdToken();
-            await fetch(WORKER + '/profile', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idToken, birthday: dob, name }) });
-          } catch(_){}
-        } else {
-          await signInWithEmailAndPassword(auth, email, password);
-        }
-        location.replace(next);
-      } catch(e2) {
-        showErr(friendly(e2.code));
-        setMode(box.dataset.mode);
-      }
-    });
+async function finish(msg) { busy = true; if (msg) $("s5msg").textContent = msg; show("s5"); setTimeout(() => location.replace(next), 900); }
 
-    document.getElementById('google').addEventListener('click', async () => { showErr(''); await applyPersistence(); try { await signInWithPopup(auth, googleProvider); location.replace(next); } catch(e2){ showErr(friendly(e2.code)); } });
-    document.getElementById('apple').addEventListener('click', async () => { showErr(''); await applyPersistence(); try { await signInWithPopup(auth, appleProvider); location.replace(next); } catch(e2){ showErr(friendly(e2.code)); } });
-    document.getElementById('forgot').addEventListener('click', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      if (!email) return showErr('Enter your email above, then tap Forgot.');
-      try { await sendPasswordResetEmail(auth, email); err.style.color = 'var(--solo)'; showErr('Password reset link sent, check your inbox.'); }
-      catch(e2){ err.style.color = ''; showErr(friendly(e2.code)); }
-    });
-  </script>
+$("f2").addEventListener("submit", async e => {
+  e.preventDefault(); const pw = $("pw").value; if (!pw) return err("s2", friendly("auth/missing-password"));
+  busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithEmailAndPassword(auth, email.value.trim(), pw); finish(); }
+  catch (e2) { busy = false; err("s2", friendly(e2.code)); }
+});
+
+$("f3").addEventListener("submit", e => { e.preventDefault(); const pw = $("pw2").value; if (pw.length < 6) return err("s3", friendly("auth/weak-password")); show("s4"); });
+
+$("f4").addEventListener("submit", async e => {
+  e.preventDefault();
+  const dob = $("dob").value, name = $("name").value.trim();
+  if (!dob) { $("dob").focus(); return; }
+  const b = new Date(dob), now = new Date(); let age = now.getFullYear() - b.getFullYear(); const m = now.getMonth() - b.getMonth(); if (m < 0 || (m === 0 && now.getDate() < b.getDate())) age--;
+  if (isNaN(b) || age > 120) { $("h4").innerHTML = '<span class="err">Please enter a valid date of birth.</span>'; return; }
+  if (age < 13) { $("h4").innerHTML = '<span class="err">Sorry, you need to be 13 or over to use Eat.</span>'; return; }
+  busy = true;
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+    const cred = await createUserWithEmailAndPassword(auth, email.value.trim(), $("pw2").value);
+    if (name) { try { await updateProfile(cred.user, { displayName: name }); } catch (_) {} }
+    try { const idToken = await cred.user.getIdToken(); await fetch(WORKER + "/profile", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken, birthday: dob, name }) }); } catch (_) {}
+    finish("Account created. Taking you through…");
+  } catch (e2) { busy = false; if (e2.code === "auth/email-already-in-use") { err("s2", "That email already has an account. Sign in instead."); show("s2"); } else { $("h4").innerHTML = '<span class="err">' + friendly(e2.code) + "</span>"; } }
+});
+
+const popup = async provider => { busy = true; try { await setPersistence(auth, browserLocalPersistence); await signInWithPopup(auth, provider); finish(); } catch (e2) { busy = false; err("s1"); const h = $("s1").querySelector(".hint"); h.innerHTML = '<span class="err">' + friendly(e2.code) + "</span>"; } };
+$("google").addEventListener("click", e => { e.preventDefault(); popup(googleProvider); });
+$("apple").addEventListener("click", e => { e.preventDefault(); popup(appleProvider); });
+</script>
 </body>
 </html>
