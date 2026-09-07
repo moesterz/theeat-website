@@ -36,6 +36,7 @@ export function paintNav(a) {
   const keep = () => { if (themeBtn) act.prepend(themeBtn); };
   if (!a) {
     if (act.dataset.signedIn) { act.innerHTML = act.dataset.signedOutHtml; delete act.dataset.signedIn; keep(); }
+    applyPower(false);   // signed out (or cache cleared): back to the Solo orange
     return;
   }
   if (!act.dataset.signedOutHtml) act.dataset.signedOutHtml = Array.from(act.children).filter(c => !c.classList.contains("theme-btn")).map(c => c.outerHTML).join("");
