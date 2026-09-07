@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 <nav class="links"><a href="pricing.html" aria-current="page">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="pr">
 <div class="pr-head"><div><h1>Pick your plan<span class="dot">.</span></h1><p class="lede" id="lede">Subscribe on the web, sign in on your phone. Same account, same plan.</p></div><div class="toggle" data-yearly="false" id="toggle"><span class="pill"></span><button aria-pressed="true" data-v="m">Monthly</button><button aria-pressed="false" data-v="y">Yearly</button></div></div>
 <div class="plans">
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 <script src="mobile.js"></script>
 <script type="module">
 // Subscribed users: "Your current plan" on their tier, Upgrade / Switch on the other (real status from the worker).
-import { onUser } from "./nav.js";
+import { onUser } from "./nav.js?v=3";
 onUser((u, s) => {
   if (!u || !s || !s.active) return;
   const mine = s.tier === "power" ? "power" : "solo";

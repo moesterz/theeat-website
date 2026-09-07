@@ -53,7 +53,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="acct" style="visibility:hidden" id="main">
 <div class="hello"><div><h1>Hi, <span id="who"></span><span class="dot">.</span></h1><p class="sub">Your subscription and account. Meals, goals and tastes live in the app.</p></div><button class="btn-sub" id="out">Sign out</button></div>
 <div class="grid">
@@ -84,7 +84,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 
 <script type="module">
 import { auth, WORKER } from "./firebase-init.js";
-import { onUser, applyPower, writeCache, fetchStatus, toCache, paintNav } from "./nav.js";
+import { onUser, applyPower, writeCache, fetchStatus, toCache, paintNav } from "./nav.js?v=3";
 import { signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 const $ = id => document.getElementById(id);
 const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;

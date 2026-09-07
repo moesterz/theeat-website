@@ -44,7 +44,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <nav class="links"><a href="pricing.html" aria-current="page">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="co" id="main" style="visibility:hidden">
 <div>
 <h1 id="h1">Almost there<span class="dot">.</span></h1>
@@ -69,7 +69,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 
 <script type="module">
 import { auth, WORKER } from "./firebase-init.js";
-import { onUser, applyPower, writeCache } from "./nav.js";
+import { onUser, applyPower, writeCache } from "./nav.js?v=3";
 import { signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 const $ = id => document.getElementById(id);
 const q = new URLSearchParams(location.search);

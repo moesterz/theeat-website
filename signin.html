@@ -47,7 +47,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html" aria-current="page">Sign in</a><a class="btn btn-dark" href="https://theeat.app/ios">Get the app</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="si"><div class="si-wrap">
 <span class="plan-chip" id="chip" hidden><img src="icon-solo.png" alt="">Subscribing to <b>Eat Solo</b></span>
 
@@ -82,7 +82,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 
 <script type="module">
 import { auth, googleProvider, appleProvider, WORKER } from "./firebase-init.js";
-import { applyPower } from "./nav.js";
+import { applyPower } from "./nav.js?v=3";
 import { sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail, updateProfile, deleteUser, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
 const $ = id => document.getElementById(id);

@@ -48,7 +48,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="ed" style="visibility:hidden" id="main">
 <div class="lead" style="margin-bottom:28px">
 <a class="back" href="account.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>Account</a>
@@ -78,7 +78,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 
 <script type="module">
 import { auth, storage, WORKER } from "./firebase-init.js";
-import { onUser, writeCache, toCache, fetchStatus, paintNav } from "./nav.js";
+import { onUser, writeCache, toCache, fetchStatus, paintNav } from "./nav.js?v=3";
 import { updateProfile, verifyBeforeUpdateEmail } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import { ref as sref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
 const $ = id => document.getElementById(id);

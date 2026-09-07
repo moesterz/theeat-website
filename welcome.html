@@ -31,7 +31,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <nav class="links"><a href="pricing.html">Pricing</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav>
 <div class="actions"><a class="btn btn-ghost" href="signin.html">Sign in</a></div>
 </div></header>
-<script type="module" src="nav.js"></script>
+<script type="module" src="nav.js?v=3"></script>
 <main class="wl">
 <span class="pill-plan" id="pill"><img src="icon-solo.png" alt="" id="pill-ico"><span id="pill-txt">Setting up your plan</span></span>
 <h1>You're in<span class="dot">.</span></h1>
@@ -46,7 +46,7 @@ html,body{height:100%}body{display:flex;flex-direction:column;min-height:100vh;o
 <div class="wrap one-foot"><nav class="one-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a><a href="contact.html">Contact</a><span>© 2026 Eat</span></nav></div>
 <script src="mobile.js"></script>
 <script type="module">
-import { onUser, fetchStatus, toCache, writeCache, paintNav, applyPower } from "./nav.js";
+import { onUser, fetchStatus, toCache, writeCache, paintNav, applyPower } from "./nav.js?v=3";
 const $ = id => document.getElementById(id);
 const paint = s => {
   const power = s && s.active && s.tier === "power";
