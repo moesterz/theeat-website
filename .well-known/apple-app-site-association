@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "63BAVFA4U7.com.mohammedalsafwani.eat",
+        "paths": ["/join", "/join/*", "/join.html", "/signin", "/signin.html", "/ios", "/ios.html"]
+      }
+    ]
+  },
+  "webcredentials": { "apps": ["63BAVFA4U7.com.mohammedalsafwani.eat"] }
+}
